@@ -101,17 +101,21 @@ export const resumeConfig: ResumeConfig = {
       id: 'axa-consultant',
       company: { en: 'AXA', fr: 'AXA' },
       role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product leader Data & IA' },
-      type: { en: 'Intrapreneurship', fr: 'Intrapreneuriat' },
+      type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
       period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
         en: 'Initiated and led end-to-end the strategic Ariane B2B project to address a critical tooling gap. Designed and delivered a functional prototype in 6 months via a pragmatic No-code approach (vs 18 months standard IT cycle), securing board adoption of the roadmap.',
         fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B pour combler un déficit d\'outillage critique. Conception et livraison d\'un prototype fonctionnel en 6 mois via une approche pragmatique No-code (vs 18 mois en cycle standard IT), sécurisant l\'adoption de la roadmap par le board.',
       },
-      techs: ['Data-Driven', 'No-Code', 'Product Leadership'],
+      techs: [
+        { en: 'Data-Driven', fr: 'Data-Driven' },
+        { en: 'No-Code', fr: 'No-Code' },
+        { en: 'Product Leadership', fr: 'Leadership Produit' },
+      ],
       details: {
         context: {
-          en: 'Intrapreneurship & Product Leadership within AXA ecosystem.',
-          fr: 'Intrapreneuriat & Leadership Produit au sein de l\'écosystème AXA.',
+          en: 'Entrepreneurship & Product Leadership within AXA ecosystem.',
+          fr: 'Entrepreneuriat & Leadership Produit au sein de l\'écosystème AXA.',
         },
         tasks: {
           en: [
@@ -145,7 +149,11 @@ export const resumeConfig: ResumeConfig = {
         en: 'Designed and deployed tailor-made training programs to transform distribution network resistance to AI into operational performance.',
         fr: 'Conçu et déployé des programmes de formation sur-mesure pour transformer la résistance des réseaux de distribution à l\'IA en performance opérationnelle.',
       },
-      techs: ['AI', 'Training', 'Change Management'],
+      techs: [
+        { en: 'AI', fr: 'IA' },
+        { en: 'Training', fr: 'Formation' },
+        { en: 'Change Management', fr: 'Conduite du changement' },
+      ],
       details: {
         context: {
           en: 'Strategic training for insurance distribution networks on AI adoption.',
@@ -181,7 +189,12 @@ export const resumeConfig: ResumeConfig = {
         en: 'Orchestrated the reinvention of an insurance agency by building performance on a dual pivot: strategic B2B orientation and a managerial pivot towards shared governance with a team of 4 experts.',
         fr: 'Orchestré la réinvention d\'une agence d\'assurance en fondant sa performance sur un double pivot : orientation stratégique vers le B2B et un pivot managérial vers une gouvernance partagée avec une équipe de 4 experts.',
       },
-      techs: ['B2B Strategy', 'Management', 'Web3', 'Innovation'],
+      techs: [
+        { en: 'B2B Strategy', fr: 'Stratégie B2B' },
+        { en: 'Management', fr: 'Management' },
+        { en: 'Web3', fr: 'Web3' },
+        { en: 'Innovation', fr: 'Innovation' },
+      ],
       details: {
         context: {
           en: 'Full ownership of a local insurance agency, strategic transformation over 9 years.',
@@ -219,7 +232,11 @@ export const resumeConfig: ResumeConfig = {
         en: 'Foundational managerial and commercial career path, from portfolio management to profit center direction.',
         fr: 'Parcours managérial et commercial fondateur, de la gestion de portefeuille à la direction d\'un centre de profit.',
       },
-      techs: ['Banking', 'Management', 'Sales'],
+      techs: [
+        { en: 'Banking', fr: 'Banque' },
+        { en: 'Management', fr: 'Management' },
+        { en: 'Sales', fr: 'Développement commercial' },
+      ],
       details: {
         context: {
           en: 'Banking sector — progressive career from portfolio management to branch direction.',
@@ -254,7 +271,10 @@ export const resumeConfig: ResumeConfig = {
         en: 'Co-founder and active member of the first board of directors of No-code France (2022).',
         fr: 'Créateur et membre actif du premier conseil d\'administration de No-code France (2022).',
       },
-      techs: ['No-Code', 'Community'],
+      techs: [
+        { en: 'No-Code', fr: 'No-Code' },
+        { en: 'Community', fr: 'Communauté' },
+      ],
     },
     {
       id: 'reussir-commissions',
@@ -263,7 +283,11 @@ export const resumeConfig: ResumeConfig = {
         en: 'Active member of digital and data commissions at Réussir, AXA agents union (2023-2024).',
         fr: 'Membre actif des commissions digitales et data de Réussir, syndicat des agents AXA (2023-2024).',
       },
-      techs: ['Digital', 'Data', 'Insurance'],
+      techs: [
+        { en: 'Digital', fr: 'Digital' },
+        { en: 'Data', fr: 'Data' },
+        { en: 'Insurance', fr: 'Assurance' },
+      ],
     },
   ],
 

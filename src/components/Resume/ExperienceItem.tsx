@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDownIcon } from '@/components/icons'
@@ -13,7 +14,7 @@ interface ExperienceItemProps {
   type?: string
   role: string
   description: string
-  techs: string[]
+  techs: (string | Record<string, string>)[]
   expanded: boolean
   onToggle: () => void
   details?: {
@@ -47,6 +48,7 @@ export function ExperienceItem({
   labels,
   isHighlighted = false,
 }: ExperienceItemProps) {
+  const { resolve } = useTranslation()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { isDesktop } = useBreakpoints()
   const handleClick = () => {
@@ -104,9 +106,10 @@ export function ExperienceItem({
             <p className="text-xs text-resume-text-secondary/80 mt-1 line-clamp-2">{description}</p>
 
             <div className="flex flex-wrap gap-1.5 mt-2">
-              {techs.map((tech) => (
-                <TechBadge key={tech} tech={tech} />
-              ))}
+              {techs.map((tech) => {
+                const techName = typeof tech === 'string' ? tech : resolve(tech)
+                return <TechBadge key={techName} tech={techName} />
+              })}
             </div>
 
             {subItem && (

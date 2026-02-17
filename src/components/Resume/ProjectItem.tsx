@@ -1,15 +1,18 @@
+import { useTranslation } from '@/lib/i18n'
 import { TechBadge } from './TechBadge'
 import { GitHubIcon, ExternalLinkIcon } from '@/components/icons'
 
 interface ProjectItemProps {
   title: string
   description: string
-  techs: string[]
+  techs: (string | Record<string, string>)[]
   url?: string
   github?: string
 }
 
 export function ProjectItem({ title, description, techs, url, github }: ProjectItemProps) {
+  const { resolve } = useTranslation()
+
   return (
     <div className="py-3 px-3 -mx-3 rounded-lg hover:bg-resume-primary/5 transition-colors">
       <div className="flex items-center gap-2 mb-1">
@@ -27,9 +30,10 @@ export function ProjectItem({ title, description, techs, url, github }: ProjectI
       </div>
       <p className="text-xs text-resume-text-secondary mb-2">{description}</p>
       <div className="flex flex-wrap gap-1.5">
-        {techs.map((tech) => (
-          <TechBadge key={tech} tech={tech} />
-        ))}
+        {techs.map((tech) => {
+          const techName = typeof tech === 'string' ? tech : resolve(tech)
+          return <TechBadge key={techName} tech={techName} />
+        })}
       </div>
     </div>
   )

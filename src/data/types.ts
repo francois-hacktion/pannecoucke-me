@@ -40,7 +40,7 @@ export interface Experience {
   type?: LocalizedString
   period: LocalizedString
   description: LocalizedString
-  techs: (TechName | (string & {}))[]
+  techs: (TechName | string | LocalizedString)[]
   isHighlighted?: boolean
   subItem?: {
     title: LocalizedString
@@ -60,7 +60,7 @@ export interface Project {
   id: string
   title: LocalizedString
   description: LocalizedString
-  techs: (TechName | (string & {}))[]
+  techs: (TechName | string | LocalizedString)[]
   url?: string
   github?: string
 }

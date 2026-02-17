@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n'
 import { TechBadge } from './TechBadge'
 
 interface ExperienceDetailsContentProps {
@@ -5,7 +6,7 @@ interface ExperienceDetailsContentProps {
   tasks?: string[]
   training?: string[]
   env: string
-  techs?: string[]
+  techs?: (string | Record<string, string>)[]
   description?: string
   labels: {
     mainTasks: string
@@ -27,6 +28,7 @@ export function ExperienceDetailsContent({
   labels,
   variant,
 }: ExperienceDetailsContentProps) {
+  const { resolve } = useTranslation()
   const MAX_INLINE_TASKS = 6
 
   return (
@@ -43,9 +45,10 @@ export function ExperienceDetailsContent({
         <div>
           <p className="text-xs font-semibold text-resume-text mb-2">{labels.technologies}</p>
           <div className="flex flex-wrap gap-2">
-            {techs.map((tech) => (
-              <TechBadge key={tech} tech={tech} />
-            ))}
+            {techs.map((tech) => {
+              const techName = typeof tech === 'string' ? tech : resolve(tech)
+              return <TechBadge key={techName} tech={techName} />
+            })}
           </div>
         </div>
       )}

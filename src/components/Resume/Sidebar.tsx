@@ -105,7 +105,7 @@ export function Sidebar() {
               {category.type === 'badges' && (
                 <div className="flex flex-wrap gap-1.5">
                   {category.items.map((item) => {
-                    const techName = typeof item.name === 'string' ? item.name : Object.values(item.name)[0]
+                    const techName = typeof item.name === 'string' ? item.name : resolve(item.name)
                     return <TechBadge key={techName} tech={techName} color={item.color} />
                   })}
                 </div>
