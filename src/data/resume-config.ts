@@ -4,11 +4,11 @@ export const resumeConfig: ResumeConfig = {
   // ===== INFORMATIONS PERSONNELLES =====
   personal: {
     name: 'François Pannecoucke',
-    photo: '/images/photo.jpg',
+    photo: '/images/profil_bureau.jpg',
     photoBackEmoji: '🚀',
     title: {
-      en: 'Transformation Architect | Product Strategy & Insurance Development',
-      fr: 'Architecte de la Transformation | Stratégie produit et développement en assurance',
+      en: 'Transformation Architect | Product Strategy & Development',
+      fr: 'Architecte de la Transformation | Stratégie produit et développement',
     },
     subtitle: {
       en: 'Turning innovation into measurable business value',
@@ -20,7 +20,7 @@ export const resumeConfig: ResumeConfig = {
   // ===== SEO =====
   seo: {
     title: 'François Pannecoucke — Architecte de la Transformation',
-    description: 'CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement en assurance. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés.',
+    description: 'CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés.',
   },
 
   // ===== LANGUES DU SITE =====
@@ -301,7 +301,7 @@ export const resumeConfig: ResumeConfig = {
   // ===== PDF =====
   pdf: {
     label: { en: 'Download PDF', fr: 'Télécharger le PDF' },
-    path: { en: '/cv/resume.pdf', fr: '/cv/resume.pdf' },
+    path: { en: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf', fr: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf' },
   },
 
   // ===== THÈME =====
