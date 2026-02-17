@@ -2,8 +2,6 @@ import { lazy, Suspense, useEffect } from 'react'
 import { LanguageProvider } from '@/lib/i18n'
 import { ThemeProvider, useTheme } from '@/lib/theme'
 import { Resume } from '@/components/Resume'
-import { presets } from '@/data/presets'
-import type { PresetName } from '@/data/types'
 import { resumeConfig } from '@/data/resume-config'
 
 const Agentation = lazy(() =>
@@ -56,26 +54,7 @@ function ThemeVarsInjector({ children }: { children: React.ReactNode }) {
   )
 }
 
-function DevPresetSelector() {
-  const { preset, setPreset } = useTheme()
-  const presetNames = Object.keys(presets) as PresetName[]
 
-  return (
-    <div className="fixed top-4 left-4 z-50 hidden md:block">
-      <select
-        value={preset}
-        onChange={(e) => setPreset(e.target.value as PresetName)}
-        className="px-2 py-1 text-xs rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm cursor-pointer"
-      >
-        {presetNames.map((name) => (
-          <option key={name} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
 
 export default function App() {
   return (
@@ -87,12 +66,9 @@ export default function App() {
         </ThemeVarsInjector>
       </LanguageProvider>
       {import.meta.env.DEV && (
-        <>
-          <DevPresetSelector />
-          <Suspense>
-            <Agentation />
-          </Suspense>
-        </>
+        <Suspense>
+          <Agentation />
+        </Suspense>
       )}
     </ThemeProvider>
   )

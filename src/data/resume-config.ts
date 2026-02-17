@@ -1,29 +1,29 @@
 import type { ResumeConfig } from './types'
 
 export const resumeConfig: ResumeConfig = {
-  // ===== PERSONAL INFO =====
+  // ===== INFORMATIONS PERSONNELLES =====
   personal: {
     name: 'François Pannecoucke',
-    photo: '/images/photo.jpg', // TODO: Add photo
+    photo: '/images/photo.jpg',
     photoBackEmoji: '🚀',
     title: {
-      en: 'Transformation Director & Digital Consultant',
-      fr: 'Directeur de la Transformation & Consultant Digital',
+      en: 'Transformation Architect | Product Strategy & Insurance Development',
+      fr: 'Architecte de la Transformation | Stratégie produit et développement en assurance',
     },
     subtitle: {
-      en: 'Building digital products & automating workflows',
-      fr: 'Création de produits digitaux & automatisation de workflows',
+      en: 'Turning innovation into measurable business value',
+      fr: 'Transformer les innovations en valeur business mesurable',
     },
-    location: 'France',
+    location: 'Arras, France',
   },
 
   // ===== SEO =====
   seo: {
-    title: 'François Pannecoucke — Transformation Director',
-    description: 'CV Interactif de François Pannecoucke, Directeur de la Transformation et expert en produits digitaux.',
+    title: 'François Pannecoucke — Architecte de la Transformation',
+    description: 'CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement en assurance. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés.',
   },
 
-  // ===== LANGUAGES =====
+  // ===== LANGUES DU SITE =====
   languages: {
     default: 'fr',
     available: ['fr', 'en'],
@@ -35,33 +35,54 @@ export const resumeConfig: ResumeConfig = {
 
   // ===== CONTACT =====
   contact: [
-    { type: 'github', label: 'hacktion', href: 'https://github.com/hacktion' },
+    { type: 'phone', label: '+33 6 07 69 98 34' },
+    { type: 'email', label: 'francois@pannecoucke.fr' },
     { type: 'linkedin', label: 'François Pannecoucke', href: 'https://linkedin.com/in/francois-pannecoucke' },
-    { type: 'email', label: 'francois.pannecoucke@example.com' },
-    { type: 'location', label: 'France' },
+    { type: 'github', label: 'hacktion', href: 'https://github.com/hacktion' },
+    { type: 'location', label: 'Arras, France (62000)' },
   ],
 
-  // ===== SKILLS =====
+  // ===== COMPÉTENCES =====
   skills: [
     {
-      title: { en: 'Expertise', fr: 'Expertise' },
+      title: { en: 'Strategy & Vision', fr: 'Stratégie & Vision' },
       type: 'badges',
       items: [
-        { name: 'Transformation Digitale' },
-        { name: 'Produit & No-Code' },
-        { name: 'Automatisation' },
-        { name: 'Architecture' },
+        { name: { en: 'Strategic planning', fr: 'Stratégie' } },
+        { name: { en: 'Product roadmap', fr: 'Roadmap' } },
+        { name: { en: 'Competitive intelligence', fr: 'Veille' } },
+        { name: { en: 'Business model innovation', fr: 'Business Model' } },
       ],
     },
     {
-      title: { en: 'Tech Stack', fr: 'Stack Technique' },
+      title: { en: 'Management', fr: 'Management' },
       type: 'badges',
       items: [
-        { name: 'Astro' },
-        { name: 'Tailwind CSS' },
-        { name: 'Cloudflare' },
-        { name: 'GitHub' },
-        { name: 'Make/n8n' },
+        { name: { en: 'Shared governance', fr: 'Gouvernance' } },
+        { name: { en: 'Management', fr: 'Management' } },
+        { name: { en: 'Change management', fr: 'Conduite du changement' } },
+        { name: { en: 'Training', fr: 'Formation' } },
+      ],
+    },
+    {
+      title: { en: 'Execution & Tech', fr: 'Exécution & Tech' },
+      type: 'badges',
+      items: [
+        { name: { en: 'Data/AI', fr: 'Data/IA' } },
+        { name: { en: 'No-code', fr: 'No-code' } },
+        { name: { en: 'Scrum', fr: 'Scrum' } },
+        { name: { en: 'OKR', fr: 'OKR' } },
+      ],
+    },
+    {
+      title: { en: 'Domain & Market', fr: 'Domaine & Marché' },
+      type: 'badges',
+      items: [
+        { name: { en: 'Insurance', fr: 'Insurance' } },
+        { name: { en: 'Banking', fr: 'Banking' } },
+        { name: { en: 'B2B', fr: 'B2B' } },
+        { name: { en: 'B2C', fr: 'B2C' } },
+        { name: { en: 'Business development', fr: 'Développement commercial' } },
       ],
     },
     {
@@ -74,94 +95,235 @@ export const resumeConfig: ResumeConfig = {
     },
   ],
 
-  // ===== PROFESSIONAL EXPERIENCES =====
+  // ===== EXPÉRIENCES PROFESSIONNELLES =====
   experiences: [
     {
-      id: 'current-role',
-      company: { en: 'Current Company', fr: 'Entreprise Actuelle' }, // À mettre à jour
-      role: { en: 'Transformation Director', fr: 'Directeur de la Transformation' },
-      type: { en: 'Full-time', fr: 'CDI' },
-      period: { en: 'Present', fr: 'Présent' },
+      id: 'axa-consultant',
+      company: { en: 'AXA', fr: 'AXA' },
+      role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product leader Data & IA' },
+      type: { en: 'Intrapreneurship', fr: 'Intrapreneuriat' },
+      period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
-        en: 'Leading digital transformation initiatives and product strategy.',
-        fr: 'Pilotage des initiatives de transformation digitale et stratégie produit.',
+        en: 'Initiated and led end-to-end the strategic Ariane B2B project to address a critical tooling gap. Designed and delivered a functional prototype in 6 months via a pragmatic No-code approach (vs 18 months standard IT cycle), securing board adoption of the roadmap.',
+        fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B pour combler un déficit d\'outillage critique. Conception et livraison d\'un prototype fonctionnel en 6 mois via une approche pragmatique No-code (vs 18 mois en cycle standard IT), sécurisant l\'adoption de la roadmap par le board.',
       },
-      techs: ['Strategy', 'Management', 'Tech'],
-      isHighlighted: true,
+      techs: ['Data-Driven', 'No-Code', 'Product Leadership'],
       details: {
         context: {
-          en: 'Strategic role in digital evolution.',
-          fr: 'Rôle stratégique dans l\'évolution numérique.',
+          en: 'Intrapreneurship & Product Leadership within AXA ecosystem.',
+          fr: 'Intrapreneuriat & Leadership Produit au sein de l\'écosystème AXA.',
         },
         tasks: {
-          en: ['Defining digital roadmap', 'Managing tech teams', 'Product delivery'],
-          fr: ['Définition de la roadmap digitale', 'Management des équipes tech', 'Livraison produit'],
+          en: [
+            'Initiated and led end-to-end the strategic Ariane B2B project',
+            'Designed and delivered a functional prototype in 6 months (No-code)',
+            'Secured board adoption of the strategic roadmap',
+            'Generated 800k business signals via a Data-Driven approach',
+            'Achieved 670 person-days saved in operational efficiency',
+          ],
+          fr: [
+            'Initiation et pilotage de bout en bout du projet stratégique Ariane B2B',
+            'Conception et livraison d\'un prototype fonctionnel en 6 mois (No-code)',
+            'Sécurisation de l\'adoption de la roadmap par le board',
+            '800k signaux d\'affaires générés via une approche Data-Driven',
+            'Gain de 670 jours/homme en efficacité opérationnelle',
+          ],
         },
         env: {
-          en: 'Digital Ecosystem',
-          fr: 'Écosystème Digital',
+          en: 'No-Code / Data & AI / B2B Strategy / Product Management',
+          fr: 'No-Code / Data & IA / Stratégie B2B / Product Management',
+        },
+      },
+    },
+    {
+      id: 'af2a-formateur',
+      company: { en: 'AF2A', fr: 'AF2A' },
+      role: { en: 'Strategic Trainer - AI Adoption in Insurance', fr: 'Formateur stratégique et adoption de l\'IA en assurance' },
+      type: { en: 'Training', fr: 'Formation' },
+      period: { en: 'Since 2024', fr: 'Depuis 2024' },
+      description: {
+        en: 'Designed and deployed tailor-made training programs to transform distribution network resistance to AI into operational performance.',
+        fr: 'Conçu et déployé des programmes de formation sur-mesure pour transformer la résistance des réseaux de distribution à l\'IA en performance opérationnelle.',
+      },
+      techs: ['AI', 'Training', 'Change Management'],
+      details: {
+        context: {
+          en: 'Strategic training for insurance distribution networks on AI adoption.',
+          fr: 'Formation stratégique des réseaux de distribution en assurance sur l\'adoption de l\'IA.',
+        },
+        tasks: {
+          en: [
+            'Designed and deployed tailor-made AI training programs',
+            'Transformed resistance to AI into operational performance',
+            '550+ agents and employees made autonomous with AI',
+            'Made AI a tangible competitive advantage for 2025',
+          ],
+          fr: [
+            'Conception et déploiement de programmes de formation IA sur-mesure',
+            'Transformation de la résistance à l\'IA en performance opérationnelle',
+            '+550 agents et collaborateurs rendus autonomes sur l\'IA',
+            'L\'IA devenue un avantage concurrentiel tangible pour 2025',
+          ],
+        },
+        env: {
+          en: 'AI / Insurance Distribution / Change Management / Training Design',
+          fr: 'IA / Distribution Assurance / Conduite du Changement / Ingénierie de Formation',
+        },
+      },
+    },
+    {
+      id: 'axa-agent',
+      company: { en: 'AXA', fr: 'AXA' },
+      role: { en: 'General Insurance Agent - Entrepreneur Director', fr: 'Agent Général d\'Assurances - Dirigeant Entrepreneur' },
+      type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
+      period: { en: '2015 - 2024', fr: '2015 - 2024' },
+      description: {
+        en: 'Orchestrated the reinvention of an insurance agency by building performance on a dual pivot: strategic B2B orientation and a managerial pivot towards shared governance with a team of 4 experts.',
+        fr: 'Orchestré la réinvention d\'une agence d\'assurance en fondant sa performance sur un double pivot : orientation stratégique vers le B2B et un pivot managérial vers une gouvernance partagée avec une équipe de 4 experts.',
+      },
+      techs: ['B2B Strategy', 'Management', 'Web3', 'Innovation'],
+      details: {
+        context: {
+          en: 'Full ownership of a local insurance agency, strategic transformation over 9 years.',
+          fr: 'Direction complète d\'une agence d\'assurance locale, transformation stratégique sur 9 ans.',
+        },
+        tasks: {
+          en: [
+            'Revenue doubled to 350k€ (+106% in 9 years), 4x market outperformance',
+            'B2B portfolio created from scratch, reaching 25% of total revenue',
+            'Implemented shared governance with a team of 4 experts',
+            'Launched the 1st insurance agency in the Metaverse — national media coverage (BFM, Les Echos, l\'Argus)',
+            'Built a trust bridge with Tech leaders through a strategic Web3 initiative',
+          ],
+          fr: [
+            'CA doublé à 350k€ (+106% en 9 ans), surperformance de 4x le marché',
+            'Portefeuille B2B créé de zéro, atteignant 25% du CA total',
+            'Mise en place d\'une gouvernance partagée avec une équipe de 4 experts',
+            'Lancement de la 1ère agence d\'assurance dans le Métavers — couverture nationale (BFM, Les Echos, l\'Argus)',
+            'Construction d\'un pont de confiance avec les leaders de la Tech via une initiative stratégique Web3',
+          ],
+        },
+        env: {
+          en: 'Insurance / B2B / B2C / Shared Governance / Web3 / Metaverse',
+          fr: 'Assurance / B2B / B2C / Gouvernance partagée / Web3 / Métavers',
+        },
+      },
+    },
+    {
+      id: 'cic-ce',
+      company: { en: 'CIC & Caisse d\'Épargne', fr: 'CIC & Caisse d\'Épargne' },
+      role: { en: 'Commercial Director & Management', fr: 'Direction Commerciale & Management' },
+      type: { en: 'Full-time', fr: 'CDI' },
+      period: { en: '2004 - 2015', fr: '2004 - 2015' },
+      description: {
+        en: 'Foundational managerial and commercial career path, from portfolio management to profit center direction.',
+        fr: 'Parcours managérial et commercial fondateur, de la gestion de portefeuille à la direction d\'un centre de profit.',
+      },
+      techs: ['Banking', 'Management', 'Sales'],
+      details: {
+        context: {
+          en: 'Banking sector — progressive career from portfolio management to branch direction.',
+          fr: 'Secteur bancaire — parcours progressif de la gestion de portefeuille à la direction d\'agence.',
+        },
+        tasks: {
+          en: [
+            'Portfolio management and client relationship development',
+            'Team management and profit center direction',
+            'Commercial development B2B and B2C',
+          ],
+          fr: [
+            'Gestion de portefeuille et développement relation client',
+            'Management d\'équipe et direction de centre de profit',
+            'Développement commercial B2B et B2C',
+          ],
+        },
+        env: {
+          en: 'Banking / CRM / Team Management / Sales Direction',
+          fr: 'Banque / CRM / Management d\'Équipe / Direction Commerciale',
         },
       },
     },
   ],
 
-  // ===== PROJECTS =====
+  // ===== PROJETS (Expériences Personnelles) =====
   projects: [
     {
-      id: 'resume-interactive',
-      title: { en: 'Interactive Resume', fr: 'CV Interactif' },
+      id: 'no-code-france',
+      title: { en: 'No-code France - Board Member', fr: 'No-code France - Conseil d\'Administration' },
       description: {
-        en: 'My personal interactive resume built with React and Vite.',
-        fr: 'Mon CV interactif personnel construit avec React et Vite.',
+        en: 'Co-founder and active member of the first board of directors of No-code France (2022).',
+        fr: 'Créateur et membre actif du premier conseil d\'administration de No-code France (2022).',
       },
-      techs: ['React', 'Vite', 'Tailwind'],
-      github: 'https://github.com/hacktion/interactive-resume-pannecoucke',
+      techs: ['No-Code', 'Community'],
+    },
+    {
+      id: 'reussir-commissions',
+      title: { en: 'Réussir - AXA Agents Union', fr: 'Réussir - Syndicat des agents AXA' },
+      description: {
+        en: 'Active member of digital and data commissions at Réussir, AXA agents union (2023-2024).',
+        fr: 'Membre actif des commissions digitales et data de Réussir, syndicat des agents AXA (2023-2024).',
+      },
+      techs: ['Digital', 'Data', 'Insurance'],
     },
   ],
 
-  // ===== EDUCATION =====
+  // ===== ÉDUCATION =====
   education: [
     {
-      school: { en: 'School Name', fr: 'École / Université' }, // À mettre à jour
-      degree: { en: 'Degree Name', fr: 'Diplôme' },
-      period: '20xx - 20xx',
+      school: { en: 'IUP Banking Finance Insurance - IAE Lille', fr: 'IUP Banque Finance Assurance - IAE Lille' },
+      degree: { en: 'Banking, Finance & Insurance', fr: 'Banque, Finance & Assurance' },
+      period: '2004',
+    },
+    {
+      school: { en: 'Sacré Cœur Tourcoing', fr: 'Sacré Cœur Tourcoing' },
+      degree: { en: 'Scientific Baccalaureate', fr: 'Baccalauréat scientifique' },
+      period: '2000',
     },
   ],
 
-  // ===== HOBBIES =====
+  // ===== LOISIRS =====
   hobbies: [
     {
-      title: { en: 'Tech', fr: 'Tech' },
+      title: { en: 'Tech & Innovation', fr: 'Tech & Innovation' },
       details: [
-        { en: 'Open Source', fr: 'Open Source' },
-        { en: 'Product Hunt', fr: 'Product Hunt' },
+        { en: 'Open Source projects', fr: 'Projets Open Source' },
+        { en: 'No-code community', fr: 'Communauté No-code' },
+      ],
+    },
+    {
+      title: { en: 'AI & Training', fr: 'IA & Formation' },
+      details: [
+        { en: 'Designing AI-powered learning experiences', fr: 'Conception d\'expériences d\'apprentissage augmentées par l\'IA' },
       ],
     },
   ],
-  
+
+  // ===== PDF =====
   pdf: {
     label: { en: 'Download PDF', fr: 'Télécharger le PDF' },
     path: { en: '/cv/resume.pdf', fr: '/cv/resume.pdf' },
   },
 
+  // ===== THÈME =====
   theme: {
     preset: 'slate',
   },
 
+  // ===== LABELS UI =====
   labels: {
-     sections: {
+    sections: {
       contact: { en: 'CONTACT', fr: 'CONTACT' },
-      skills: { en: 'SKILLS', fr: 'COMPÉTENCES' },
+      skills: { en: 'KEY SKILLS', fr: 'COMPÉTENCES CLÉS' },
       experience: { en: 'PROFESSIONAL EXPERIENCE', fr: 'EXPÉRIENCES PROFESSIONNELLES' },
       education: { en: 'EDUCATION', fr: 'FORMATION' },
-      projects: { en: 'PROJECTS', fr: 'PROJETS' },
-      hobbies: { en: 'HOBBIES', fr: 'LOISIRS' },
+      projects: { en: 'PERSONAL INITIATIVES', fr: 'EXPÉRIENCES PERSONNELLES' },
+      hobbies: { en: 'INTERESTS', fr: 'CENTRES D\'INTÉRÊT' },
     },
     experience: {
-      mainTasks: { en: 'Main tasks:', fr: 'Tâches principales :' },
-      moreTasks: { en: 'more tasks...', fr: 'autres tâches...' },
+      mainTasks: { en: 'Key achievements:', fr: 'Réalisations clés :' },
+      moreTasks: { en: 'more...', fr: 'plus...' },
       training: { en: 'Training:', fr: 'Formations :' },
-      techEnv: { en: 'Tech environment:', fr: 'Env. technique :' },
+      techEnv: { en: 'Environment:', fr: 'Environnement :' },
       technologies: { en: 'Technologies', fr: 'Technologies' },
     },
     actions: {
@@ -169,5 +331,5 @@ export const resumeConfig: ResumeConfig = {
       switchTheme: { en: 'Toggle dark mode', fr: 'Changer le thème' },
       downloadPdf: { en: 'Download PDF', fr: 'Télécharger le PDF' },
     },
-  }
+  },
 }
