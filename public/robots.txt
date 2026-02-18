@@ -1,0 +1,21 @@
+# robots.txt — François Pannecoucke CV Site
+
+User-agent: *
+Allow: /
+
+# Crawlers IA — autorisés explicitement
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Fichiers de référence
+# LLMs: /llms.txt
+# Security: /.well-known/security.txt

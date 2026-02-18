@@ -118,18 +118,31 @@ export function Sidebar() {
                 </p>
               )}
               {category.type === 'languages' && (
-                <div className="flex items-center gap-3 text-sm flex-wrap">
+                <div className="space-y-2.5">
                   {category.items.map((item, j) => {
                     const name = typeof item.name === 'string' ? item.name : resolve(item.name)
+                    const level = item.level ? resolve(item.level) : ''
+                    // Calcul du niveau en pourcentage selon le label
+                    const levelLower = level.toLowerCase()
+                    const pct =
+                      levelLower === 'native' || levelLower === 'natif' ? 100
+                        : levelLower === 'professional' || levelLower === 'professionnel' ? 80
+                          : levelLower === 'intermediate' || levelLower === 'intermédiaire' ? 60
+                            : levelLower === 'basic' || levelLower === 'débutant' ? 40
+                              : 70
                     return (
-                      <span key={`${name}-${j}`} className="flex items-center gap-1">
-                        <span className="text-resume-text-secondary">
-                          {name} {item.level ? resolve(item.level) : ''}
-                          {item.details && (
-                            <span className="text-xs opacity-70 ml-1">{item.details}</span>
-                          )}
-                        </span>
-                      </span>
+                      <div key={`${name}-${j}`}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-medium text-resume-text">{name}</span>
+                          <span className="text-xs text-resume-text-secondary">{level}</span>
+                        </div>
+                        <div className="h-1 bg-resume-primary/10 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-resume-primary rounded-full transition-all duration-700"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                      </div>
                     )
                   })}
                 </div>
@@ -142,7 +155,7 @@ export function Sidebar() {
       {/* Hobbies */}
       {hobbies && hobbies.length > 0 && labels.sections.hobbies && (
         <SidebarSection title={resolve(labels.sections.hobbies)}>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-3">
             {hobbies.map((hobby, i) => (
               <div key={`${resolve(hobby.title)}-${i}`}>
                 <p className="font-medium text-sm text-resume-text">{resolve(hobby.title)}</p>

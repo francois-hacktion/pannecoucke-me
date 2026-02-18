@@ -1,0 +1,48 @@
+# llms.txt — François Pannecoucke
+# Standard: https://llmstxt.org/
+# Ce fichier est destiné aux agents IA et LLMs qui indexent ce site.
+
+## Identité
+
+Nom: François Pannecoucke
+Titre: Architecte de la Transformation | Stratégie Produit & Développement
+Localisation: Arras, France (62000)
+Contact: francois@pannecoucke.fr
+LinkedIn: https://linkedin.com/in/francois-pannecoucke
+GitHub: https://github.com/hacktion
+
+## Résumé professionnel
+
+François Pannecoucke est un entrepreneur et consultant expert en transformation digitale,
+stratégie IA et leadership produit. Il est le fondateur de Hacktion, cabinet de conseil
+spécialisé dans l'accélération de la transformation digitale des organisations.
+
+Track-record mesurable :
+- Projet Ariane B2B (AXA) : prototype No-code livré en 6 mois vs 18 mois en cycle IT standard,
+  800k signaux d'affaires générés, 670 jours/homme économisés.
+- AF2A : +550 agents et collaborateurs rendus autonomes sur l'IA.
+- AXA Agent Général (2015-2024) : CA doublé à 350k€ (+106% en 10 ans),
+  surperformance de 4x le marché, lancement de la 1ère agence d'assurance dans le Métavers.
+
+## Compétences clés
+
+- Stratégie & Vision : Stratégie, Roadmap, Veille, Business Model, Innovation
+- Management : Gouvernance partagée, Management, Conduite du changement, Formation
+- Exécution & Tech : Data/IA, No-code, Agile, OKR, Open Data, Vibe Coding
+- Domaine & Marché : Assurance, Banque, B2B, B2C, Développement commercial
+
+## Formation
+
+- Mastère Spécialisé MSIT — Ecoles des Mines PSL (2026)
+- IUP Banque Finance Assurance — IAE Lille (2004)
+
+## Contenu de ce site
+
+Ce site est le CV interactif de François Pannecoucke.
+Il est disponible en français (défaut) et en anglais.
+Il présente ses expériences professionnelles, compétences, projets personnels et centres d'intérêt.
+
+## Autorisations
+
+Ce site autorise les agents IA et LLMs à indexer et résumer son contenu
+à des fins de recherche, de recrutement et de mise en relation professionnelle.

@@ -52,13 +52,14 @@ export const resumeConfig: ResumeConfig = {
         { name: { en: 'Product roadmap', fr: 'Roadmap' } },
         { name: { en: 'Competitive intelligence', fr: 'Veille' } },
         { name: { en: 'Business model innovation', fr: 'Business Model' } },
+        { name: { en: 'Innovation', fr: 'Innovation' } },
       ],
     },
     {
       title: { en: 'Management', fr: 'Management' },
       type: 'badges',
       items: [
-        { name: { en: 'Shared governance', fr: 'Gouvernance' } },
+        { name: { en: 'Shared governance', fr: 'Gouvernance partagée' } },
         { name: { en: 'Management', fr: 'Management' } },
         { name: { en: 'Change management', fr: 'Conduite du changement' } },
         { name: { en: 'Training', fr: 'Formation' } },
@@ -70,16 +71,18 @@ export const resumeConfig: ResumeConfig = {
       items: [
         { name: { en: 'Data/AI', fr: 'Data/IA' } },
         { name: { en: 'No-code', fr: 'No-code' } },
-        { name: { en: 'Scrum', fr: 'Scrum' } },
+        { name: { en: 'Agile', fr: 'Agile' } },
         { name: { en: 'OKR', fr: 'OKR' } },
+        { name: { en: 'Open Data', fr: 'Open Data' } },
+        { name: { en: 'Vibe Coding', fr: 'Vibe Coding' } },
       ],
     },
     {
       title: { en: 'Domain & Market', fr: 'Domaine & Marché' },
       type: 'badges',
       items: [
-        { name: { en: 'Insurance', fr: 'Insurance' } },
-        { name: { en: 'Banking', fr: 'Banking' } },
+        { name: { en: 'Insurance', fr: 'Assurance' } },
+        { name: { en: 'Banking', fr: 'Banque' } },
         { name: { en: 'B2B', fr: 'B2B' } },
         { name: { en: 'B2C', fr: 'B2C' } },
         { name: { en: 'Business development', fr: 'Développement commercial' } },
@@ -98,18 +101,37 @@ export const resumeConfig: ResumeConfig = {
   // ===== EXPÉRIENCES PROFESSIONNELLES =====
   experiences: [
     {
+      id: 'hacktion',
+      company: { en: 'Hacktion', fr: 'Hacktion' },
+      role: { en: 'Founder & Digital Transformation Consultant', fr: 'Fondateur & Consultant en Transformation Digitale' },
+      type: { en: 'Consulting', fr: 'Conseil' },
+      period: { en: 'Since 2024', fr: 'Depuis 2024' },
+      description: {
+        en: 'Consulting firm specializing in digital transformation, AI strategy and product leadership.',
+        fr: 'Cabinet de conseil spécialisé en transformation digitale, stratégie IA et leadership produit.',
+      },
+      techs: [
+        { en: 'Product Leadership', fr: 'Leadership Produit' },
+        { en: 'AI', fr: 'IA' },
+        { en: 'No-code', fr: 'No-code' },
+        { en: 'Innovation', fr: 'Innovation' },
+      ],
+      isHighlighted: true,
+    },
+    {
       id: 'axa-consultant',
       company: { en: 'AXA', fr: 'AXA' },
-      role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product leader Data & IA' },
+      role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product Leader Data & IA' },
       type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
       period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
-        en: 'Initiated and led end-to-end the strategic Ariane B2B project to address a critical tooling gap. Designed and delivered a functional prototype in 6 months via a pragmatic No-code approach (vs 18 months standard IT cycle), securing board adoption of the roadmap.',
-        fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B pour combler un déficit d\'outillage critique. Conception et livraison d\'un prototype fonctionnel en 6 mois via une approche pragmatique No-code (vs 18 mois en cycle standard IT), sécurisant l\'adoption de la roadmap par le board.',
+        en: 'Initiated and led end-to-end the strategic Ariane B2B project. No-code prototype delivered in 6 months (vs 18 months standard IT), 800k business signals generated, 670 person-days saved.',
+        fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B. Prototype No-code livré en 6 mois (vs 18 mois en cycle standard IT), 800k signaux d\'affaires générés, 670 jours/homme économisés.',
       },
       techs: [
+        { en: 'Hacktion', fr: 'Hacktion' },
         { en: 'Data-Driven', fr: 'Data-Driven' },
-        { en: 'No-Code', fr: 'No-Code' },
+        { en: 'Prototyping', fr: 'Prototype' },
         { en: 'Product Leadership', fr: 'Leadership Produit' },
       ],
       details: {
@@ -142,14 +164,15 @@ export const resumeConfig: ResumeConfig = {
     {
       id: 'af2a-formateur',
       company: { en: 'AF2A', fr: 'AF2A' },
-      role: { en: 'Strategic Trainer - AI Adoption in Insurance', fr: 'Formateur stratégique et adoption de l\'IA en assurance' },
+      role: { en: 'Strategic Trainer - AI Adoption in Insurance', fr: 'Formateur stratégique - Adoption de l\'IA en assurance' },
       type: { en: 'Training', fr: 'Formation' },
       period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
-        en: 'Designed and deployed tailor-made training programs to transform distribution network resistance to AI into operational performance.',
-        fr: 'Conçu et déployé des programmes de formation sur-mesure pour transformer la résistance des réseaux de distribution à l\'IA en performance opérationnelle.',
+        en: 'Designed and deployed tailor-made AI training programs for insurance distribution networks. 550+ agents made autonomous with AI.',
+        fr: 'Conçu et déployé des programmes de formation IA sur-mesure pour les réseaux de distribution en assurance. +550 agents rendus autonomes sur l\'IA.',
       },
       techs: [
+        { en: 'Hacktion', fr: 'Hacktion' },
         { en: 'AI', fr: 'IA' },
         { en: 'Training', fr: 'Formation' },
         { en: 'Change Management', fr: 'Conduite du changement' },
@@ -186,30 +209,30 @@ export const resumeConfig: ResumeConfig = {
       type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
       period: { en: '2015 - 2024', fr: '2015 - 2024' },
       description: {
-        en: 'Orchestrated the reinvention of an insurance agency by building performance on a dual pivot: strategic B2B orientation and a managerial pivot towards shared governance with a team of 4 experts.',
-        fr: 'Orchestré la réinvention d\'une agence d\'assurance en fondant sa performance sur un double pivot : orientation stratégique vers le B2B et un pivot managérial vers une gouvernance partagée avec une équipe de 4 experts.',
+        en: 'Led an insurance agency for 10 years, building performance on a dual pivot: strategic B2B orientation and shared governance with a team of 4 experts. Revenue doubled to 350k€ (+106%), 4x market outperformance. Launched the 1st insurance agency in the Metaverse (BFM, Les Echos, l\'Argus).',
+        fr: 'Dirigé une agence d\'assurance pendant 10 ans, fondant sa performance sur un double pivot : orientation stratégique B2B et gouvernance partagée avec une équipe de 4 experts. CA doublé à 350k€ (+106%), surperformance de 4x le marché. Lancement de la 1ère agence d\'assurance dans le Métavers (BFM, Les Echos, l\'Argus).',
       },
       techs: [
         { en: 'B2B Strategy', fr: 'Stratégie B2B' },
         { en: 'Management', fr: 'Management' },
-        { en: 'Web3', fr: 'Web3' },
+        { en: 'Insurance', fr: 'Assurance' },
         { en: 'Innovation', fr: 'Innovation' },
       ],
       details: {
         context: {
-          en: 'Full ownership of a local insurance agency, strategic transformation over 9 years.',
-          fr: 'Direction complète d\'une agence d\'assurance locale, transformation stratégique sur 9 ans.',
+          en: '10 years of full ownership of a local insurance agency, strategic transformation and entrepreneurship.',
+          fr: '10 ans de direction complète d\'une agence d\'assurance locale, transformation stratégique et entrepreneuriat.',
         },
         tasks: {
           en: [
-            'Revenue doubled to 350k€ (+106% in 9 years), 4x market outperformance',
+            'Revenue doubled to 350k€ (+106% in 10 years), 4x market outperformance',
             'B2B portfolio created from scratch, reaching 25% of total revenue',
             'Implemented shared governance with a team of 4 experts',
             'Launched the 1st insurance agency in the Metaverse — national media coverage (BFM, Les Echos, l\'Argus)',
             'Built a trust bridge with Tech leaders through a strategic Web3 initiative',
           ],
           fr: [
-            'CA doublé à 350k€ (+106% en 9 ans), surperformance de 4x le marché',
+            'CA doublé à 350k€ (+106% en 10 ans), surperformance de 4x le marché',
             'Portefeuille B2B créé de zéro, atteignant 25% du CA total',
             'Mise en place d\'une gouvernance partagée avec une équipe de 4 experts',
             'Lancement de la 1ère agence d\'assurance dans le Métavers — couverture nationale (BFM, Les Echos, l\'Argus)',
@@ -269,10 +292,10 @@ export const resumeConfig: ResumeConfig = {
       title: { en: 'No-code France - Board Member', fr: 'No-code France - Conseil d\'Administration' },
       description: {
         en: 'Co-founder and active member of the first board of directors of No-code France (2022).',
-        fr: 'Créateur et membre actif du premier conseil d\'administration de No-code France (2022).',
+        fr: 'Co-fondateur de l\'association No-code France et membre actif de la communauté No-code France (2022).',
       },
       techs: [
-        { en: 'No-Code', fr: 'No-Code' },
+        { en: 'No-code', fr: 'No-code' },
         { en: 'Community', fr: 'Communauté' },
       ],
     },
@@ -294,6 +317,11 @@ export const resumeConfig: ResumeConfig = {
   // ===== ÉDUCATION =====
   education: [
     {
+      school: { en: 'Ecoles des Mines - PSL', fr: 'Ecoles des Mines - PSL' },
+      degree: { en: 'Advanced Master in Strategic Management of Information and Technology (MSIT)', fr: 'Mastère Spécialisé Management stratégique de l\'Information et des Technologies (MSIT)' },
+      period: '2026',
+    },
+    {
       school: { en: 'IUP Banking Finance Insurance - IAE Lille', fr: 'IUP Banque Finance Assurance - IAE Lille' },
       degree: { en: 'Banking, Finance & Insurance', fr: 'Banque, Finance & Assurance' },
       period: '2004',
@@ -310,14 +338,25 @@ export const resumeConfig: ResumeConfig = {
     {
       title: { en: 'Tech & Innovation', fr: 'Tech & Innovation' },
       details: [
+        { en: 'Vibe Coding', fr: 'Vibe Coding' },
         { en: 'Open Source projects', fr: 'Projets Open Source' },
         { en: 'No-code community', fr: 'Communauté No-code' },
       ],
     },
     {
-      title: { en: 'AI & Training', fr: 'IA & Formation' },
+      title: { en: 'Role-playing & Heroic Fantasy', fr: 'Jeux de rôle & Héroic Fantasy' },
       details: [
-        { en: 'Designing AI-powered learning experiences', fr: 'Conception d\'expériences d\'apprentissage augmentées par l\'IA' },
+        { en: 'Magic the Gathering', fr: 'Magic the Gathering' },
+        { en: 'Storytelling, imaginary universes', fr: 'Narration, univers imaginaires' },
+        { en: 'Role-playing games', fr: 'Jeux de rôle grandeur nature' },
+      ],
+    },
+    {
+      title: { en: 'Reading', fr: 'Lecture' },
+      details: [
+        { en: 'Robin Hobb - The Farseer Trilogy', fr: 'Robin Hobb - L\'Assassin Royal' },
+        { en: 'JRR Tolkien - The Lord of the Rings', fr: 'JRR Tolkien - Le Seigneur des Anneaux' },
+        { en: 'Anne Mc Caffrey - The Dragonriders of Pern', fr: 'Anne Mc Caffrey - La Balade de Pern' },
       ],
     },
   ],
@@ -330,7 +369,7 @@ export const resumeConfig: ResumeConfig = {
 
   // ===== THÈME =====
   theme: {
-    preset: 'slate',
+    preset: 'indigo',
   },
 
   // ===== LABELS UI =====

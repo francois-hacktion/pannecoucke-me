@@ -1,0 +1,10 @@
+# security.txt — François Pannecoucke CV Site
+# Standard: https://securitytxt.org/ (RFC 9116)
+
+Contact: mailto:francois@pannecoucke.fr
+Preferred-Languages: fr, en
+Canonical: https://cv.pannecoucke.fr/.well-known/security.txt
+
+# Ce site est un CV statique personnel.
+# Il ne collecte aucune donnée personnelle et ne dispose d'aucun backend.
+# Pour tout signalement de vulnérabilité, contacter directement par email.

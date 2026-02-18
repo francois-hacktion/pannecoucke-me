@@ -37,11 +37,12 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Geist', system-ui, -apple-system, sans-serif;
   background-color: var(--resume-bg);
   color: var(--resume-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11', 'tnum';
   transition: background-color 0.3s, color 0.3s;
 }
 

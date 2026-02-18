@@ -103,7 +103,7 @@ export interface ThemeColors {
   sidebarDarkEnd: string
 }
 
-export type PresetName = 'minimal' | 'warm' | 'ocean' | 'forest' | 'slate' | 'lilac'
+export type PresetName = 'minimal' | 'warm' | 'ocean' | 'forest' | 'slate' | 'lilac' | 'indigo'
 
 // ===== LABELS =====
 
