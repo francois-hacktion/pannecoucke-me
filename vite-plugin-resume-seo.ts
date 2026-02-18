@@ -180,7 +180,7 @@ function buildNoscriptHtml(
     for (const exp of experiences) {
       lines.push(`${indent}    <article style="margin-bottom: 1.25rem;">`)
       lines.push(`${indent}      <h3 style="margin: 0 0 0.15rem 0; font-size: 1rem;">${escapeHtml(resolve(exp.role))} — ${escapeHtml(resolve(exp.company))}</h3>`)
-      const meta = [resolve(exp.period)]
+      const meta = exp.period ? [resolve(exp.period)] : []
       if (exp.type) meta.push(resolve(exp.type))
       lines.push(`${indent}      <p style="margin: 0 0 0.25rem 0; color: #777; font-size: 0.9rem;">${escapeHtml(meta.join(' · '))}</p>`)
       lines.push(`${indent}      <p style="margin: 0 0 0.25rem 0;">${escapeHtml(resolve(exp.description))}</p>`)
