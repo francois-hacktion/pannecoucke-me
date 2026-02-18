@@ -371,6 +371,7 @@ export const resumeConfig: ResumeConfig = {
   // ===== THÈME =====
   theme: {
     preset: 'indigo',
+    defaultMode: 'light',
   },
 
   // ===== LABELS UI =====
