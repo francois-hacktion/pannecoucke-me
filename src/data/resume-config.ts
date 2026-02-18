@@ -106,6 +106,7 @@ export const resumeConfig: ResumeConfig = {
       company: { en: 'Hacktion', fr: 'Hacktion' },
       role: { en: 'Founder & Digital Transformation Consultant', fr: 'Fondateur & Consultant en Transformation Digitale' },
       type: { en: 'Consulting', fr: 'Conseil' },
+      period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
         en: 'Consulting firm specializing in digital transformation, AI strategy and product leadership.',
         fr: 'Cabinet de conseil spécialisé en transformation digitale, stratégie IA et leadership produit.',
