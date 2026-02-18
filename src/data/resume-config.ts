@@ -39,6 +39,7 @@ export const resumeConfig: ResumeConfig = {
     { type: 'email', label: 'francois@pannecoucke.fr' },
     { type: 'linkedin', label: 'François Pannecoucke', href: 'https://linkedin.com/in/francois-pannecoucke' },
     { type: 'github', label: 'hacktion', href: 'https://github.com/hacktion' },
+    { type: 'website', label: 'hacktion.fr', href: 'https://hacktion.fr' },
     { type: 'location', label: 'Arras, France (62000)' },
   ],
 

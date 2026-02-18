@@ -2,7 +2,7 @@
 
 CV interactif open source, construit avec React, TypeScript, Tailwind CSS et Framer Motion.
 
-**[▶ Voir le CV en ligne](https://cv.pannecoucke.fr)**
+**[▶ Voir le CV en ligne](https://pannecoucke.me)**
 
 <p align="center">
   <img src="docs/demo.gif" alt="Démo du CV interactif" width="480" />
