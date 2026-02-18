@@ -9,7 +9,7 @@ import { TechBadge } from './TechBadge'
 import { ExperienceDetailsContent } from './ExperienceDetails'
 
 interface ExperienceItemProps {
-  year: string
+  year?: string
   company: string
   type?: string
   role: string
@@ -82,7 +82,7 @@ export function ExperienceItem({
           )}
         >
           <div className="w-20 flex-shrink-0">
-            <span className="text-sm font-bold text-resume-primary">{year}</span>
+            {year && <span className="text-sm font-bold text-resume-primary">{year}</span>}
           </div>
 
           <div className="flex-1 min-w-0 relative">
@@ -154,7 +154,7 @@ export function ExperienceItem({
             <div>
               <h2 className="font-semibold text-lg text-resume-text">{company}</h2>
               <p className="text-sm text-resume-primary">{role}</p>
-              <p className="text-xs text-resume-text-secondary mt-1">{year}</p>
+              {year && <p className="text-xs text-resume-text-secondary mt-1">{year}</p>}
             </div>
           }
         >

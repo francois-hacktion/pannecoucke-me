@@ -38,7 +38,7 @@ export interface Experience {
   company: LocalizedString
   role: LocalizedString
   type?: LocalizedString
-  period: LocalizedString
+  period?: LocalizedString
   description: LocalizedString
   techs: (TechName | string | LocalizedString)[]
   isHighlighted?: boolean

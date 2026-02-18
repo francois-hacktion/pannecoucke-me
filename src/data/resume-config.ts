@@ -106,7 +106,6 @@ export const resumeConfig: ResumeConfig = {
       company: { en: 'Hacktion', fr: 'Hacktion' },
       role: { en: 'Founder & Digital Transformation Consultant', fr: 'Fondateur & Consultant en Transformation Digitale' },
       type: { en: 'Consulting', fr: 'Conseil' },
-      period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
         en: 'Consulting firm specializing in digital transformation, AI strategy and product leadership.',
         fr: 'Cabinet de conseil spécialisé en transformation digitale, stratégie IA et leadership produit.',
@@ -124,7 +123,6 @@ export const resumeConfig: ResumeConfig = {
       company: { en: 'AXA', fr: 'AXA' },
       role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product Leader Data & IA' },
       type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
-      period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
         en: 'Initiated and led end-to-end the strategic Ariane B2B project. No-code prototype delivered in 6 months (vs 18 months standard IT), 800k business signals generated, 670 person-days saved.',
         fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B. Prototype No-code livré en 6 mois (vs 18 mois en cycle standard IT), 800k signaux d\'affaires générés, 670 jours/homme économisés.',
@@ -167,7 +165,6 @@ export const resumeConfig: ResumeConfig = {
       company: { en: 'AF2A', fr: 'AF2A' },
       role: { en: 'Strategic Trainer - AI Adoption in Insurance', fr: 'Formateur stratégique - Adoption de l\'IA en assurance' },
       type: { en: 'Training', fr: 'Formation' },
-      period: { en: 'Since 2024', fr: 'Depuis 2024' },
       description: {
         en: 'Designed and deployed tailor-made AI training programs for insurance distribution networks. 550+ agents made autonomous with AI.',
         fr: 'Conçu et déployé des programmes de formation IA sur-mesure pour les réseaux de distribution en assurance. +550 agents rendus autonomes sur l\'IA.',

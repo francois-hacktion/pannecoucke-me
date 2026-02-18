@@ -46,7 +46,7 @@ export function MainContent() {
           {experiences.map((exp) => (
             <ExperienceItem
               key={exp.id}
-              year={resolve(exp.period)}
+              year={exp.period ? resolve(exp.period) : undefined}
               company={resolve(exp.company)}
               type={exp.type ? resolve(exp.type) : undefined}
               role={resolve(exp.role)}
@@ -57,19 +57,19 @@ export function MainContent() {
               details={
                 exp.details
                   ? {
-                      context: resolve(exp.details.context),
-                      tasks: exp.details.tasks ? resolveArray(exp.details.tasks) : undefined,
-                      training: exp.details.training ? resolveArray(exp.details.training) : undefined,
-                      env: resolve(exp.details.env),
-                    }
+                    context: resolve(exp.details.context),
+                    tasks: exp.details.tasks ? resolveArray(exp.details.tasks) : undefined,
+                    training: exp.details.training ? resolveArray(exp.details.training) : undefined,
+                    env: resolve(exp.details.env),
+                  }
                   : undefined
               }
               subItem={
                 exp.subItem
                   ? {
-                      title: resolve(exp.subItem.title),
-                      description: resolve(exp.subItem.description),
-                    }
+                    title: resolve(exp.subItem.title),
+                    description: resolve(exp.subItem.description),
+                  }
                   : undefined
               }
               labels={experienceLabels}
