@@ -202,6 +202,7 @@ const TECH_REGISTRY = {
   'Agile': { color: '#2563EB' },
   'OKR': { color: '#2563EB' },
   'Digital': { color: '#2563EB' },
+  'Delivery': { color: '#2563EB' },
   // Orange : Stratégie & Produit
   'Product Leadership': { color: '#EA580C' },
   'Leadership Produit': { color: '#EA580C' },

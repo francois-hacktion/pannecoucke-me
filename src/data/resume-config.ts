@@ -7,8 +7,8 @@ export const resumeConfig: ResumeConfig = {
     photo: '/images/profil_bureau.jpg',
     photoBackEmoji: '🚀',
     title: {
-      en: 'Transformation Architect | Product Strategy & Development',
-      fr: 'Architecte de la Transformation | Stratégie produit et développement',
+      en: 'Product Leader | Product Builder',
+      fr: 'Product Leader | Product Builder',
     },
     subtitle: {
       en: 'Turning innovation into measurable business value',
@@ -19,7 +19,7 @@ export const resumeConfig: ResumeConfig = {
 
   // ===== SEO =====
   seo: {
-    title: 'François Pannecoucke — Architecte de la Transformation',
+    title: 'François Pannecoucke — Product Leader | Product Builder',
     description: 'CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés.',
   },
 
@@ -71,7 +71,7 @@ export const resumeConfig: ResumeConfig = {
       type: 'badges',
       items: [
         { name: { en: 'Data/AI', fr: 'Data/IA' } },
-        { name: { en: 'No-code', fr: 'No-code' } },
+        { name: { en: 'Delivery', fr: 'Delivery' } },
         { name: { en: 'Agile', fr: 'Agile' } },
         { name: { en: 'OKR', fr: 'OKR' } },
         { name: { en: 'Open Data', fr: 'Open Data' } },
@@ -114,7 +114,7 @@ export const resumeConfig: ResumeConfig = {
       techs: [
         { en: 'Product Leadership', fr: 'Leadership Produit' },
         { en: 'AI', fr: 'IA' },
-        { en: 'No-code', fr: 'No-code' },
+        { en: 'Delivery', fr: 'Delivery' },
         { en: 'Innovation', fr: 'Innovation' },
       ],
       isHighlighted: true,
