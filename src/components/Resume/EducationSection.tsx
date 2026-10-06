@@ -7,7 +7,7 @@ import { RichText } from '@/components/ui/RichText'
 function Block({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col">
-      <SectionEyebrow as="h2" id={id} className="mb-5">
+      <SectionEyebrow as="h2" id={id} rule="fit" className="mb-5">
         {title}
       </SectionEyebrow>
       <ul aria-labelledby={id} className="m-0 flex list-none flex-col gap-4 p-0">

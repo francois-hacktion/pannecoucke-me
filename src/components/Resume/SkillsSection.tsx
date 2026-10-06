@@ -9,7 +9,7 @@ export function SkillsSection() {
 
   return (
     <section data-anchor="competences" aria-labelledby="competences-title" className="flex flex-col">
-      <SectionEyebrow>{resolve(labels.skills.eyebrow)}</SectionEyebrow>
+      <SectionEyebrow rule="long">{resolve(labels.skills.eyebrow)}</SectionEyebrow>
       <SectionTitle id="competences-title" className="mb-7">
         {resolve(labels.skills.title)}
       </SectionTitle>
