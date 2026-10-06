@@ -1,76 +1,64 @@
-# CV Interactif — François Pannecoucke
+# CV interactif, François Pannecoucke
 
-CV interactif open source, construit avec React, TypeScript, Tailwind CSS et Framer Motion.
+CV interactif open source, construit avec React, TypeScript, Tailwind CSS et Framer Motion, habillé du design system **Hacktion OS 2**.
 
 **[▶ Voir le CV en ligne](https://pannecoucke.me)**
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Démo du CV interactif" width="480" />
+  <img src="docs/apercu.jpg" alt="Aperçu du CV : une fenêtre façon elementary OS posée sur un bureau papier" width="800" />
 </p>
 
 ---
 
-## Inspiration & Origine
+## Inspiration et origine
 
-Ce projet est basé sur le template open source **[interactive-resume-template](https://github.com/clementbouly/interactive-resume-template)** de [Clément Bouly](https://github.com/clementbouly), publié sous licence MIT.
+Ce projet part du template open source **[interactive-resume-template](https://github.com/clementbouly/interactive-resume-template)** de [Clément Bouly](https://github.com/clementbouly), publié sous licence MIT.
 
-J'ai personnalisé ce template pour en faire mon CV interactif, en ajoutant :
-- Un thème **Indigo** premium (light & dark mode)
-- La police **Geist** pour un rendu haut de gamme
-- Des **tags colorés par catégorie sémantique**
-- Le support **multilingue FR/EN** complet des tags
-- Les fichiers **llms.txt**, **robots.txt** et **security.txt** pour les crawlers IA
+Il a depuis été entièrement redessiné avec le langage **Hacktion OS 2**, déjà en production sur [hacktion.fr](https://hacktion.fr) : un bureau papier, une seule fenêtre à headerbar façon elementary OS (navigation en boutons liés, une action or), une colonne éditoriale en Geist, des eyebrows `#` en Geist Mono et des filets à la place des cartes.
 
 ---
 
 ## Fonctionnalités
 
-- **Un seul fichier de config** — Tout se passe dans `src/data/resume-config.ts`
-- **Multilingue** — Support i18n intégré (FR par défaut, EN disponible)
-- **Mode sombre / clair** — Détection automatique + bascule manuelle
-- **Thèmes couleur** — 7 presets dont le thème Indigo premium
-- **Responsive** — Mobile-first, adapté à tous les écrans
-- **Expériences dépliables** — Détails en inline (desktop) ou modal (mobile)
-- **Section projets** — Vitrine de réalisations personnelles
-- **Téléchargement PDF** — Un PDF par langue
-- **SEO & ATS ready** — Contenu visible par les crawlers sans JavaScript (JSON-LD, HTML sémantique)
-- **Fichiers IA** — `llms.txt` pour les agents IA, `robots.txt` optimisé
+- **Un seul fichier de contenu** : `src/data/resume-config.ts`, typé de bout en bout
+- **Bilingue FR/EN** : bascule dans la headerbar, langue mémorisée et partageable (`?lang=en`), typographie française automatique (espaces insécables)
+- **Mode clair/sombre** : bascule manuelle mémorisée, sans flash au chargement
+- **Navigation par sections** : scroll-spy, URL à jour (`#parcours`), liens profonds
+- **Accordéon** : une seule expérience ou mission ouverte à la fois, la mission en cours ouverte par défaut
+- **Responsive** : navigation dans la headerbar sur grand écran, barre sticky défilante sur mobile
+- **Téléchargement du CV en PDF** : un fichier par langue possible
+- **SEO et ATS** : CV complet lisible sans JavaScript (`<noscript>` sémantique), JSON-LD `Person`, `hreflang`, Open Graph
+- **Fichiers pour les IA** : `llms.txt`, `robots.txt` ouvert aux crawlers IA
+- **Accessibilité** : navigation au clavier, focus visible, `aria-expanded` / `aria-current`, respect de `prefers-reduced-motion`
 
 ---
 
 ## Démarrage rapide
 
-### 1. Cloner le repo
-
 ```bash
 git clone https://github.com/francois-hacktion/pannecoucke-me.git
 cd pannecoucke-me
 npm install
-```
-
-### 2. Personnaliser
-
-Éditer `src/data/resume-config.ts` avec vos informations.
-
-Ajouter votre photo dans `public/images/`.
-
-### 3. Prévisualiser en local
-
-```bash
 npm run dev
 ```
 
-Ouvrir [http://localhost:5173](http://localhost:5173) dans votre navigateur.
+Ouvrir [http://localhost:5173](http://localhost:5173).
 
-### 4. Déployer
+Pour personnaliser le contenu, voir le [guide de personnalisation](docs/CUSTOMIZATION.md).
+
+### Mettre à jour le PDF
+
+Déposer le nouveau fichier dans `public/cv/`, puis mettre à jour `pdf.path` dans `src/data/resume-config.ts` si le nom change.
+
+---
+
+## Déploiement
 
 ```bash
 npm run build
 ```
 
-Le dossier `dist/` contient le site statique. Déployable sur Cloudflare Pages, Vercel, Netlify ou GitHub Pages.
-
-**Configuration Cloudflare Pages :**
+Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages** à chaque push sur `main`.
 
 | Champ | Valeur |
 |-------|--------|
@@ -82,11 +70,13 @@ Le dossier `dist/` contient le site statique. Déployable sur Cloudflare Pages, 
 
 ## Stack technique
 
-- [Vite](https://vite.dev/) — Build ultra-rapide
-- [React 19](https://react.dev/) — Framework UI
-- [TypeScript](https://www.typescriptlang.org/) — Typage statique
-- [Tailwind CSS v4](https://tailwindcss.com/) — CSS utilitaire
-- [Framer Motion](https://www.framer.com/motion/) — Animations fluides
+- [Vite](https://vite.dev/) : build
+- [React 19](https://react.dev/) : interface
+- [TypeScript](https://www.typescriptlang.org/) : typage statique
+- [Tailwind CSS v4](https://tailwindcss.com/) : styles, tokens du design system en variables CSS
+- [Framer Motion](https://www.framer.com/motion/) : accordéon et flip de la photo
+- [Geist et Geist Mono](https://vercel.com/font) : typographie
+- Icônes [Phosphor](https://phosphoricons.com) (MIT), intégrées en SVG
 
 ---
 
@@ -95,28 +85,30 @@ Le dossier `dist/` contient le site statique. Déployable sur Cloudflare Pages, 
 ```
 ├── src/
 │   ├── data/
-│   │   ├── resume-config.ts    # ← VOTRE FICHIER DE CONFIG
-│   │   ├── types.ts            # Types TypeScript
-│   │   ├── presets.ts          # Thèmes couleur
-│   │   └── tech-registry.ts   # Couleurs des tags
-│   ├── components/Resume/      # Composants du CV
-│   ├── lib/                    # i18n, thème, hooks
-│   └── App.tsx
+│   │   ├── resume-config.ts        # ← CONTENU DU CV
+│   │   ├── resume-config.example.ts
+│   │   └── types.ts
+│   ├── components/
+│   │   ├── os/                     # Fenêtre, headerbar, boutons liés, barre d'état
+│   │   ├── ui/                     # Boutons, tags, eyebrows, accordéon
+│   │   ├── Resume/                 # Sections du CV
+│   │   └── icons/                  # Icônes Phosphor
+│   ├── lib/                        # i18n, thème, navigation par sections
+│   └── globals.css                 # Tokens Hacktion OS 2 (clair/sombre)
 ├── public/
-│   ├── llms.txt                # Pour les agents IA
-│   ├── robots.txt              # Crawlers autorisés
-│   └── .well-known/
-│       └── security.txt        # RFC 9116
+│   ├── cv/                         # CV PDF
+│   ├── images/                     # Photo, logos Hacktion, image Open Graph
+│   ├── llms.txt
+│   └── robots.txt
+└── vite-plugin-resume-seo.ts       # JSON-LD et <noscript> injectés au build
 ```
 
 ---
 
 ## Licence
 
-Ce projet est distribué sous licence **MIT** — libre d'utilisation, de modification et de redistribution, avec mention de l'auteur original.
-
-Voir le fichier [LICENSE](./LICENSE) pour les détails.
+Projet distribué sous licence **MIT** : libre d'utilisation, de modification et de redistribution, avec mention de l'auteur original. Voir [LICENSE](./LICENSE).
 
 ---
 
-*Projet open source — Contributions bienvenues via [Issues](https://github.com/francois-hacktion/pannecoucke-me/issues) ou Pull Requests.*
+*Contributions bienvenues via [Issues](https://github.com/francois-hacktion/pannecoucke-me/issues) ou Pull Requests.*
