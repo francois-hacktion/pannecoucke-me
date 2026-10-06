@@ -1,71 +1,39 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { LanguageProvider } from '@/lib/i18n'
-import { ThemeProvider, useTheme } from '@/lib/theme'
+import { LanguageProvider, useTranslation } from '@/lib/i18n'
+import { ThemeProvider } from '@/lib/theme'
+import { pageUrl } from '@/lib/resume'
 import { Resume } from '@/components/Resume'
 import { resumeConfig } from '@/data/resume-config'
 
-const Agentation = lazy(() =>
-  import('agentation').then((m) => ({ default: m.Agentation }))
-)
+// Outil d'annotation en développement uniquement (absent du build de production)
+const Agentation = import.meta.env.DEV
+  ? lazy(() => import('agentation').then((m) => ({ default: m.Agentation })))
+  : null
 
 /**
- * Sets document title and meta description at runtime.
- * JSON-LD structured data and noscript fallback are injected at build time
- * by the vite-plugin-resume-seo plugin.
+ * Le <head> est pré-rendu par langue au build (lib/seo.ts).
+ * Lors d'une bascule de langue sans rechargement, on met à jour titre, description et canonical.
  */
 function SeoHead() {
+  const { resolve, language } = useTranslation()
   useEffect(() => {
-    const { title, description } = resumeConfig.seo
-    document.title = title
-    document.querySelector('meta[name="description"]')?.setAttribute('content', description)
-  }, [])
+    document.title = resolve(resumeConfig.seo.title)
+    document.querySelector('meta[name="description"]')?.setAttribute('content', resolve(resumeConfig.seo.description))
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', pageUrl(language))
+    // resolve dépend de la langue : on ne relance l'effet qu'au changement de langue
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language])
   return null
 }
 
-function ThemeVarsInjector({ children }: { children: React.ReactNode }) {
-  const { colors } = useTheme()
-
-  return (
-    <>
-      <style>{`
-        :root {
-          --resume-bg: ${colors.bg};
-          --resume-bg-card: ${colors.bgCard};
-          --resume-text: ${colors.text};
-          --resume-text-secondary: ${colors.textSecondary};
-          --resume-primary: ${colors.primary};
-          --resume-primary-light: ${colors.primaryLight};
-          --resume-sidebar-from: ${colors.sidebarLight};
-          --resume-sidebar-to: ${colors.sidebarLightEnd};
-        }
-        .dark {
-          --resume-bg: ${colors.bgDark};
-          --resume-bg-card: ${colors.bgCardDark};
-          --resume-text: ${colors.textDark};
-          --resume-text-secondary: ${colors.textSecondaryDark};
-          --resume-primary: ${colors.primaryDark};
-          --resume-primary-light: ${colors.primaryLightDark};
-          --resume-sidebar-from: ${colors.sidebarDark};
-          --resume-sidebar-to: ${colors.sidebarDarkEnd};
-        }
-      `}</style>
-      {children}
-    </>
-  )
-}
-
-
-
-export default function App() {
+export default function App({ initialLanguage }: { initialLanguage: string }) {
   return (
     <ThemeProvider>
-      <LanguageProvider>
+      <LanguageProvider initialLanguage={initialLanguage}>
         <SeoHead />
-        <ThemeVarsInjector>
-          <Resume />
-        </ThemeVarsInjector>
+        <Resume />
       </LanguageProvider>
-      {import.meta.env.DEV && (
+      {Agentation && (
         <Suspense>
           <Agentation />
         </Suspense>

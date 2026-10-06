@@ -1,122 +1,54 @@
-# CV Interactif — François Pannecoucke
+# pannecoucke.me
 
-CV interactif open source, construit avec React, TypeScript, Tailwind CSS et Framer Motion.
-
-**[▶ Voir le CV en ligne](https://pannecoucke.me)**
+Mon CV en ligne : **[pannecoucke.me](https://pannecoucke.me)**
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Démo du CV interactif" width="480" />
+  <img src="docs/apercu.jpg" alt="Aperçu du CV : une fenêtre façon elementary OS posée sur un bureau papier" width="800" />
 </p>
 
----
+## Pourquoi cette refonte
 
-## Inspiration & Origine
+Ce site est né d'un template open source que j'avais personnalisé. Il faisait le job, mais il ne me ressemblait pas.
 
-Ce projet est basé sur le template open source **[interactive-resume-template](https://github.com/clementbouly/interactive-resume-template)** de [Clément Bouly](https://github.com/clementbouly), publié sous licence MIT.
+Ma nouvelle mission chez Abeille Assurances m'a donné le bon prétexte. Plutôt que d'ajouter une ligne de plus, j'ai tout repris à ma charte : Hacktion OS 2, la même que sur [hacktion.fr](https://hacktion.fr). Un bureau papier, une seule fenêtre, du bleu nuit et de l'or.
 
-J'ai personnalisé ce template pour en faire mon CV interactif, en ajoutant :
-- Un thème **Indigo** premium (light & dark mode)
-- La police **Geist** pour un rendu haut de gamme
-- Des **tags colorés par catégorie sémantique**
-- Le support **multilingue FR/EN** complet des tags
-- Les fichiers **llms.txt**, **robots.txt** et **security.txt** pour les crawlers IA
+Tout a été fait en vibe coding avec Claude Code, de la maquette à la mise en ligne. Je ne suis pas né dans le code, je suis né dans le business. Ce repo montre qu'on peut livrer un site rapide, accessible et propre sans écrire le code soi-même, à condition de savoir ce qu'on veut.
 
----
+## Ce qu'il fait
 
-## Fonctionnalités
+- Français et anglais, chacun sa page (`/` et `/en/`)
+- Mode clair et mode sombre
+- Le CV en PDF, téléchargé seulement quand on clique
+- Lisible par Google, les ATS et les IA, même sans JavaScript (avec un `llms.txt`)
+- Lighthouse : 100 partout en desktop, 99/100/100/100 en mobile
 
-- **Un seul fichier de config** — Tout se passe dans `src/data/resume-config.ts`
-- **Multilingue** — Support i18n intégré (FR par défaut, EN disponible)
-- **Mode sombre / clair** — Détection automatique + bascule manuelle
-- **Thèmes couleur** — 7 presets dont le thème Indigo premium
-- **Responsive** — Mobile-first, adapté à tous les écrans
-- **Expériences dépliables** — Détails en inline (desktop) ou modal (mobile)
-- **Section projets** — Vitrine de réalisations personnelles
-- **Téléchargement PDF** — Un PDF par langue
-- **SEO & ATS ready** — Contenu visible par les crawlers sans JavaScript (JSON-LD, HTML sémantique)
-- **Fichiers IA** — `llms.txt` pour les agents IA, `robots.txt` optimisé
+## Mettre à jour le contenu
 
----
+Tout se passe dans `src/data/resume-config.ts` : textes FR/EN, missions, compétences, liens. Le mode d'emploi, avec l'ajout d'une mission pas à pas, est dans [docs/CONTENU.md](docs/CONTENU.md).
 
-## Démarrage rapide
+Pour un nouveau CV PDF, je remplace le fichier dans `public/cv/`.
 
-### 1. Cloner le repo
+## Lancer le site en local
 
 ```bash
-git clone https://github.com/francois-hacktion/pannecoucke-me.git
-cd pannecoucke-me
 npm install
-```
-
-### 2. Personnaliser
-
-Éditer `src/data/resume-config.ts` avec vos informations.
-
-Ajouter votre photo dans `public/images/`.
-
-### 3. Prévisualiser en local
-
-```bash
 npm run dev
 ```
 
-Ouvrir [http://localhost:5173](http://localhost:5173) dans votre navigateur.
+Le site tourne sur [http://localhost:5173](http://localhost:5173).
 
-### 4. Déployer
+## Mise en ligne
 
-```bash
-npm run build
-```
+Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm run build`, dossier `dist`, Node 20). Le build génère une page HTML complète par langue, puis React prend le relais dans le navigateur.
 
-Le dossier `dist/` contient le site statique. Déployable sur Cloudflare Pages, Vercel, Netlify ou GitHub Pages.
+## Sous le capot
 
-**Configuration Cloudflare Pages :**
+Vite, React 19, TypeScript et Tailwind CSS v4. Polices Geist et Geist Mono (licence OFL), icônes Phosphor (licence MIT). Pas de cookie, aucun script tiers dans le code : la seule mesure d'audience est Cloudflare Web Analytics, sans cookie, ajoutée par l'hébergement.
 
-| Champ | Valeur |
-|-------|--------|
-| Build command | `npm run build` |
-| Build output directory | `dist` |
-| Variable `NODE_VERSION` | `20` |
-
----
-
-## Stack technique
-
-- [Vite](https://vite.dev/) — Build ultra-rapide
-- [React 19](https://react.dev/) — Framework UI
-- [TypeScript](https://www.typescriptlang.org/) — Typage statique
-- [Tailwind CSS v4](https://tailwindcss.com/) — CSS utilitaire
-- [Framer Motion](https://www.framer.com/motion/) — Animations fluides
-
----
-
-## Structure du projet
-
-```
-├── src/
-│   ├── data/
-│   │   ├── resume-config.ts    # ← VOTRE FICHIER DE CONFIG
-│   │   ├── types.ts            # Types TypeScript
-│   │   ├── presets.ts          # Thèmes couleur
-│   │   └── tech-registry.ts   # Couleurs des tags
-│   ├── components/Resume/      # Composants du CV
-│   ├── lib/                    # i18n, thème, hooks
-│   └── App.tsx
-├── public/
-│   ├── llms.txt                # Pour les agents IA
-│   ├── robots.txt              # Crawlers autorisés
-│   └── .well-known/
-│       └── security.txt        # RFC 9116
-```
-
----
+Les choix techniques sont détaillés dans [CLAUDE.md](CLAUDE.md).
 
 ## Licence
 
-Ce projet est distribué sous licence **MIT** — libre d'utilisation, de modification et de redistribution, avec mention de l'auteur original.
+MIT, voir [LICENSE](./LICENSE). Le site est parti du template [interactive-resume-template](https://github.com/clementbouly/interactive-resume-template) de Clément Bouly : merci à lui.
 
-Voir le fichier [LICENSE](./LICENSE) pour les détails.
-
----
-
-*Projet open source — Contributions bienvenues via [Issues](https://github.com/francois-hacktion/pannecoucke-me/issues) ou Pull Requests.*
+Une coquille, une idée ? Les [issues](https://github.com/francois-hacktion/pannecoucke-me/issues) sont ouvertes.

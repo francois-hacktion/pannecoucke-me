@@ -20,34 +20,30 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Resume rendering error:', error, errorInfo)
+    console.error('Erreur de rendu du CV :', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-8">
-          <div className="max-w-md text-center space-y-4">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Something went wrong
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              There might be an issue with your resume configuration. Check your{' '}
-              <code className="px-1.5 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-sm font-mono">
-                resume-config.ts
-              </code>{' '}
-              file for any errors.
+        <div className="flex min-h-dvh items-center justify-center bg-desk p-8 font-sans">
+          <div className="max-w-md space-y-4 text-center">
+            <h1 className="text-2xl font-bold text-ink">Oups, le CV n'a pas pu s'afficher</h1>
+            <p className="text-body">
+              Rechargez la page. Si le problème persiste, vérifiez le fichier{' '}
+              <code className="rounded bg-sunken px-1.5 py-0.5 font-mono text-sm">resume-config.ts</code>.
             </p>
             {this.state.error && (
-              <pre className="mt-4 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-xs text-left overflow-auto">
+              <pre className="mt-4 overflow-auto rounded-lg border border-card-border bg-sunken p-4 text-left font-mono text-xs text-body">
                 {this.state.error.message}
               </pre>
             )}
             <button
+              type="button"
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 rounded-lg bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium hover:opacity-90 transition-opacity"
+              className="mt-4 cursor-pointer rounded-[4px] border-2 border-black bg-gold px-5 py-2.5 text-sm font-bold text-[#0d1f2d]"
             >
-              Reload page
+              Recharger la page
             </button>
           </div>
         </div>

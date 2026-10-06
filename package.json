@@ -1,36 +1,35 @@
 {
-  "name": "interactive-resume-template",
-  "version": "1.0.0",
-  "description": "An open-source interactive resume template. Clone it, fill in your info, deploy it.",
-  "homepage": "https://clementbouly.github.io/interactive-resume-template/",
+  "name": "pannecoucke-me",
+  "version": "2.0.0",
+  "private": true,
+  "description": "CV en ligne de François Pannecoucke : product leader/builder, transformation digitale. Design system Hacktion OS 2, pré-rendu statique, FR/EN.",
+  "homepage": "https://pannecoucke.me",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clementbouly/interactive-resume-template.git"
+    "url": "https://github.com/francois-hacktion/pannecoucke-me.git"
   },
+  "author": "François Pannecoucke <francois@pannecoucke.fr>",
   "keywords": [
-    "resume",
     "cv",
-    "template",
+    "resume",
+    "portfolio",
     "react",
     "typescript",
-    "portfolio",
-    "interactive",
     "tailwindcss",
     "vite",
-    "open-source"
+    "ssg",
+    "hacktion"
   ],
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "agentation": "^2.2.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.34.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.1"
@@ -42,6 +41,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "agentation": "^2.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

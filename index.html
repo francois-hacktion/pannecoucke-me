@@ -3,57 +3,57 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Avant le premier rendu : langue demandée (?lang=) ou mémorisée, puis thème mémorisé -->
+  <script>
+    (function () {
+      try {
+        var KEY = 'resume-language', path = location.pathname;
+        var asked = new URLSearchParams(location.search).get('lang');
+        if (asked !== 'fr' && asked !== 'en') asked = null;
+        if (asked) localStorage.setItem(KEY, asked);
+        // Un chemin de langue (/en/) est explicite : seule la page par défaut suit le choix mémorisé
+        var wanted = asked || (path === '/' ? localStorage.getItem(KEY) : null);
+        var target = wanted === 'en' ? '/en/' : wanted === 'fr' ? '/' : null;
+        if (target && target !== path) return location.replace(target + location.hash);
+        if (asked) history.replaceState(null, '', path + location.hash);
+        if (localStorage.getItem('resume-theme') === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Polices hébergées sur le site (licence OFL, public/fonts) -->
+  <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="canonical" href="https://pannecoucke.me/" />
 
-  <!-- Police Geist (Vercel) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Titre, description, canonical, hreflang, Open Graph et JSON-LD par langue (scripts/prerender.mjs) -->
+  <!--app-head-->
 
-  <!-- SEO Meta -->
-  <title>François Pannecoucke — Product Leader | Product Builder</title>
-  <meta name="description"
-    content="CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés." />
   <meta name="author" content="François Pannecoucke" />
-  <meta name="theme-color" content="#171717" />
-
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, iMessage, Slack…) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pannecoucke.me/" />
-  <meta property="og:title" content="François Pannecoucke — Product Leader | Product Builder" />
-  <meta property="og:description"
-    content="Leader entrepreneur & consultant en transformation digitale. Expert stratégie produit, Data/IA et développement." />
+  <meta name="theme-color" content="#f5f3ee" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="François Pannecoucke" />
   <meta property="og:image" content="https://pannecoucke.me/images/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
-  <meta property="og:image:alt" content="François Pannecoucke — Product Leader | Product Builder" />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:locale:alternate" content="en_US" />
-  <meta property="og:site_name" content="François Pannecoucke — CV Interactif" />
-
-  <!-- Twitter Card -->
+  <meta property="og:image:alt" content="François Pannecoucke, product leader/builder" />
+  <meta property="profile:first_name" content="François" />
+  <meta property="profile:last_name" content="Pannecoucke" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="François Pannecoucke — Product Leader | Product Builder" />
-  <meta name="twitter:description"
-    content="Leader entrepreneur & consultant en transformation digitale. Expert stratégie produit, Data/IA et développement." />
   <meta name="twitter:image" content="https://pannecoucke.me/images/og-image.jpg" />
-  <meta name="twitter:image:alt" content="François Pannecoucke — Product Leader | Product Builder" />
+  <meta name="twitter:image:alt" content="François Pannecoucke, product leader/builder" />
+
+  <!-- Sans JavaScript, les détails repliés du parcours restent lisibles -->
+  <noscript><style>[data-collapse]{grid-template-rows:1fr!important;opacity:1!important}</style></noscript>
 </head>
 
 <body>
-  <div id="root"></div>
-  <noscript>
-    <div
-      style="max-width: 600px; margin: 4rem auto; padding: 2rem; font-family: system-ui, sans-serif; text-align: center;">
-      <h1>CV Interactif - François Pannecoucke</h1>
-      <p>Ce CV nécessite JavaScript pour afficher la version interactive.</p>
-      <p><a href="/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf" style="color: #1e6091;">Télécharger le CV en PDF</a></p>
-    </div>
-  </noscript>
+  <div id="root"><!--app-html--></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
