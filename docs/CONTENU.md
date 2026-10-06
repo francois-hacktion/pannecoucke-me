@@ -74,7 +74,7 @@ Une mission (`missions[]`) reprend `client`, `title`, `period`, `description`, `
 
 ### Teintes des tags
 
-`tag(fr, en, tone)` crée un tag bilingue. Les teintes viennent du design system Hacktion :
+`tag(fr, en, tone)` crée un tag bilingue (badges et tags du parcours). Les teintes viennent du design system Hacktion :
 
 | Teinte | Usage |
 |---|---|
@@ -89,11 +89,15 @@ Une mission (`missions[]`) reprend `client`, `title`, `period`, `description`, `
 
 ### `skills`
 
-Blocs de compétences : un titre, une teinte (carré de couleur et tags) et une liste de libellés.
+Quatre blocs, comme sur le CV PDF : un identifiant façon variable (`strategie_produit`, affiché `$ strategie_produit` en mono) et trois lignes courtes. Une ligne peut regrouper deux notions (`No-code, vibe coding`) : elles sont séparées dans le JSON-LD.
 
-### `engagements`, `education`, `hobbies`, `spokenLanguages`
+### `engagements`
 
-Lignes simples. Les engagements se classent du plus récent au plus ancien. Les lignes de Formation et d'En dehors du travail tiennent sur une ligne de titre et une ligne de détail, pour rester alignées.
+Du plus récent au plus ancien. `title` accepte le gras (`**Réussir** (syndicat des agents AXA)`), `detail` tient sur une ligne.
+
+### `education`, `hobbies`, `spokenLanguages`
+
+Lignes simples, sans filets, en grille 2×2 avec les engagements. Les loisirs s'affichent `Titre · détail` : écrire le détail en minuscules, sans point final.
 
 ### `languages`
 

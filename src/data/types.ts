@@ -71,8 +71,8 @@ export interface Experience {
 // ===== COMPÉTENCES =====
 
 export interface SkillCategory {
+  /** Identifiant affiché en mono, façon variable : strategie_produit */
   title: LocalizedString
-  tone: Tone
   items: LocalizedString[]
 }
 
@@ -86,8 +86,9 @@ export interface SpokenLanguage {
 export interface Engagement {
   id: string
   period: LocalizedString
-  /** Texte riche */
-  text: LocalizedString
+  /** Texte riche : **Nom** (précision) */
+  title: LocalizedString
+  detail: LocalizedString
 }
 
 // ===== FORMATION =====

@@ -259,53 +259,38 @@ export const resumeConfig: ResumeConfig = {
     },
   ],
 
-  // ===== COMPÉTENCES =====
+  // ===== COMPÉTENCES (alignées sur le CV PDF) =====
   skills: [
     {
-      title: { fr: 'Stratégie & vision', en: 'Strategy & vision' },
-      tone: 'blue',
+      title: { fr: 'strategie_produit', en: 'product_strategy' },
       items: [
-        { fr: 'Stratégie', en: 'Strategy' },
         { fr: 'Roadmap produit', en: 'Product roadmap' },
         { fr: 'Business model', en: 'Business model' },
-        { fr: 'Veille', en: 'Market watch' },
-        { fr: 'Innovation', en: 'Innovation' },
-        { fr: 'DIAGNum', en: 'DIAGNum' },
+        { fr: 'Innovation & veille', en: 'Innovation & market watch' },
       ],
     },
     {
-      title: { fr: 'Management', en: 'Management' },
-      tone: 'violet',
+      title: { fr: 'transformation', en: 'transformation' },
       items: [
-        { fr: 'Gouvernance partagée', en: 'Shared governance' },
-        { fr: 'Management d\'experts', en: 'Managing experts' },
         { fr: 'Conduite du changement', en: 'Change management' },
-        { fr: 'Diagnostic Weisbord', en: 'Weisbord diagnosis' },
+        { fr: 'Diagnostic organisationnel', en: 'Organisational diagnosis' },
+        { fr: 'Gouvernance partagée', en: 'Shared governance' },
       ],
     },
     {
-      title: { fr: 'Exécution & tech', en: 'Execution & tech' },
-      tone: 'emerald',
+      title: { fr: 'data_ia_delivery', en: 'data_ai_delivery' },
       items: [
-        { fr: 'Data/IA', en: 'Data/AI' },
-        { fr: 'Product leadership', en: 'Product leadership' },
-        { fr: 'No-code', en: 'No-code' },
-        { fr: 'Delivery', en: 'Delivery' },
-        { fr: 'Agile', en: 'Agile' },
-        { fr: 'OKR', en: 'OKR' },
-        { fr: 'Open Data', en: 'Open Data' },
-        { fr: 'Vibe Coding', en: 'Vibe Coding' },
+        { fr: 'Data & IA', en: 'Data & AI' },
+        { fr: 'No-code, vibe coding', en: 'No-code, vibe coding' },
+        { fr: 'Agile, OKR', en: 'Agile, OKR' },
       ],
     },
     {
-      title: { fr: 'Domaine & marché', en: 'Domain & market' },
-      tone: 'amber',
+      title: { fr: 'secteur', en: 'industry' },
       items: [
-        { fr: 'Assurance', en: 'Insurance' },
-        { fr: 'Banque', en: 'Banking' },
-        { fr: 'B2B', en: 'B2B' },
-        { fr: 'B2C', en: 'B2C' },
-        { fr: 'Développement commercial', en: 'Business development' },
+        { fr: 'Assurance & banque', en: 'Insurance & banking' },
+        { fr: 'B2B et B2C', en: 'B2B and B2C' },
+        { fr: 'Dév. commercial', en: 'Business development' },
       ],
     },
   ],
@@ -315,26 +300,20 @@ export const resumeConfig: ResumeConfig = {
     {
       id: 'reussir',
       period: { fr: '2023 - 2024', en: '2023 - 2024' },
-      text: {
-        fr: '**Réussir** (syndicat des agents AXA) : commissions digitales et data.',
-        en: '**Réussir** (AXA agents\' union): digital and data committees.',
-      },
+      title: { fr: '**Réussir** (syndicat des agents AXA)', en: '**Réussir** (AXA agents\' union)' },
+      detail: { fr: 'Commissions digitales et data', en: 'Digital and data committees' },
     },
     {
       id: 'no-code-france',
       period: { fr: '2022', en: '2022' },
-      text: {
-        fr: '**No-code France** : cofondateur de l\'association, membre du premier conseil d\'administration.',
-        en: '**No-code France**: co-founder of the association, member of its first board.',
-      },
+      title: { fr: '**No-code France**', en: '**No-code France**' },
+      detail: { fr: 'Cofondateur, premier conseil d\'administration', en: 'Co-founder, first board of directors' },
     },
     {
       id: 'collectif-no-code',
       period: { fr: 'depuis 2020', en: 'since 2020' },
-      text: {
-        fr: '**Collectif No-code France** : membre actif.',
-        en: '**No-code France collective**: active member.',
-      },
+      title: { fr: '**Collectif No-code France**', en: '**No-code France collective**' },
+      detail: { fr: 'Membre actif', en: 'Active member' },
     },
   ],
 
@@ -364,22 +343,22 @@ export const resumeConfig: ResumeConfig = {
     {
       title: { fr: 'Tech & innovation', en: 'Tech & innovation' },
       description: {
-        fr: 'Vibe coding, open source, communauté No-code.',
-        en: 'Vibe coding, open source, No-code community.',
+        fr: 'vibe coding, open source, No-code',
+        en: 'vibe coding, open source, No-code',
       },
     },
     {
       title: { fr: 'Jeux de rôle', en: 'Role-playing games' },
       description: {
-        fr: 'Magic the Gathering, grandeur nature.',
-        en: 'Magic the Gathering, live-action role-play.',
+        fr: 'Magic the Gathering, grandeur nature',
+        en: 'Magic the Gathering, live-action role-play',
       },
     },
     {
       title: { fr: 'Lecture', en: 'Reading' },
       description: {
-        fr: 'Heroic fantasy : Robin Hobb, Tolkien, McCaffrey.',
-        en: 'Heroic fantasy: Robin Hobb, Tolkien, McCaffrey.',
+        fr: 'heroic fantasy : Robin Hobb, Tolkien, McCaffrey',
+        en: 'heroic fantasy: Robin Hobb, Tolkien, McCaffrey',
       },
     },
   ],

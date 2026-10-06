@@ -35,7 +35,8 @@ export function buildJsonLd(language: string) {
   const ongoing = current?.missions?.find((mission) => mission.isOngoing)
   const knowsAbout = [
     ...new Set([
-      ...skills.flatMap((category) => category.items.map(t)),
+      // "No-code, vibe coding" → deux compétences distinctes
+      ...skills.flatMap((category) => category.items.flatMap((item) => t(item).split(', '))),
       ...experiences.flatMap((exp) => [
         ...(exp.tags ?? []).map((tag) => t(tag.label)),
         ...(exp.missions ?? []).flatMap((mission) => mission.tags.map((tag) => t(tag.label))),

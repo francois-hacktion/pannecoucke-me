@@ -2,75 +2,93 @@ import type { ReactNode } from 'react'
 import { useTranslation } from '@/lib/i18n'
 import { resumeConfig } from '@/data/resume-config'
 import { SectionEyebrow } from '@/components/ui/Section'
+import { RichText } from '@/components/ui/RichText'
 
-function Column({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+function Block({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col">
-      <SectionEyebrow as="h2" id={id}>
+    <div className="flex min-w-0 flex-col">
+      <SectionEyebrow as="h2" id={id} rule="fit" className="mb-5">
         {title}
       </SectionEyebrow>
-      <ul aria-labelledby={id} className="m-0 list-none p-0">
+      <ul aria-labelledby={id} className="m-0 flex list-none flex-col gap-4 p-0">
         {children}
       </ul>
     </div>
   )
 }
 
-/** Ligne titre + une ligne de détail : Formation et En dehors du travail s'alignent ligne à ligne. */
-function Row({ title, aside, detail }: { title: string; aside?: string; detail: string }) {
+/** Ligne datée sans filet : période en mono à gauche (au-dessus sur mobile), titre et détail à droite. */
+function DatedRow({ period, title, detail }: { period: string; title: ReactNode; detail: string }) {
   return (
-    <li className="flex flex-col gap-1 border-t border-rule py-4 last:border-b">
-      <div className="flex items-baseline justify-between gap-3">
-        <strong className="text-base font-bold text-ink">{title}</strong>
-        {aside && <span className="font-mono text-[13px] text-muted">{aside}</span>}
+    <li className="grid gap-x-4 gap-y-0.5 sm:grid-cols-[96px_minmax(0,1fr)]">
+      <span className="font-mono text-[13px] text-muted sm:pt-0.5">{period}</span>
+      <div className="flex min-w-0 flex-col gap-0.5">
+        <span className="text-base text-ink">{title}</span>
+        <span className="text-[15px] text-body">{detail}</span>
       </div>
-      <span className="text-[15px] text-body">{detail}</span>
     </li>
   )
 }
 
-/** Formation, En dehors du travail et Langues (sous la nav "Formation"). */
+/**
+ * Formation, Engagements, En dehors du travail et Langues en grille 2×2 (une colonne sur mobile),
+ * sans filets entre les lignes, comme sur le CV PDF. Ancre de navigation : "formation".
+ */
 export function EducationSection() {
   const { resolve } = useTranslation()
-  const { education, hobbies, spokenLanguages, labels } = resumeConfig
+  const { education, engagements, hobbies, spokenLanguages, labels } = resumeConfig
 
   return (
     <section
       data-anchor="formation"
       aria-label={resolve(labels.nav.formation)}
-      className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] gap-x-12 gap-y-14"
+      className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] gap-x-12 gap-y-12"
     >
-      <Column id="formation-title" title={resolve(labels.education.eyebrow)}>
+      <Block id="formation-title" title={resolve(labels.education.eyebrow)}>
         {education.map((item) => (
-          <Row
+          <DatedRow
             key={item.period}
-            title={resolve(item.degree)}
-            aside={item.period}
+            period={item.period}
+            title={<strong className="font-bold">{resolve(item.degree)}</strong>}
             detail={[item.school, item.details && resolve(item.details)].filter(Boolean).join(' · ')}
           />
         ))}
-      </Column>
+      </Block>
+
+      {engagements && engagements.length > 0 && (
+        <Block id="engagements-title" title={resolve(labels.engagements.eyebrow)}>
+          {engagements.map((engagement) => (
+            <DatedRow
+              key={engagement.id}
+              period={resolve(engagement.period)}
+              title={<RichText text={resolve(engagement.title)} />}
+              detail={resolve(engagement.detail)}
+            />
+          ))}
+        </Block>
+      )}
 
       {hobbies && hobbies.length > 0 && (
-        <Column id="loisirs-title" title={resolve(labels.hobbies.eyebrow)}>
+        <Block id="loisirs-title" title={resolve(labels.hobbies.eyebrow)}>
           {hobbies.map((hobby) => (
-            <Row key={hobby.title.fr} title={resolve(hobby.title)} detail={resolve(hobby.description)} />
+            <li key={hobby.title.fr} className="text-[15px] leading-[1.5] text-body">
+              <strong className="text-base font-bold text-ink">{resolve(hobby.title)}</strong>
+              {' · '}
+              {resolve(hobby.description)}
+            </li>
           ))}
-        </Column>
+        </Block>
       )}
 
       {spokenLanguages && spokenLanguages.length > 0 && (
-        <Column id="langues-title" title={resolve(labels.languages.eyebrow)}>
+        <Block id="langues-title" title={resolve(labels.languages.eyebrow)}>
           {spokenLanguages.map((lang) => (
-            <li
-              key={lang.name.fr}
-              className="flex justify-between gap-3 border-t border-rule py-3.5 text-base last:border-b"
-            >
+            <li key={lang.name.fr} className="flex justify-between gap-3 text-base">
               <strong className="font-bold text-ink">{resolve(lang.name)}</strong>
               <span className="text-muted">{resolve(lang.level)}</span>
             </li>
           ))}
-        </Column>
+        </Block>
       )}
     </section>
   )

@@ -163,7 +163,7 @@ export function ExperienceSection() {
 
   return (
     <section data-anchor="parcours" aria-labelledby="parcours-title" className="flex flex-col">
-      <SectionEyebrow>{resolve(labels.experience.eyebrow)}</SectionEyebrow>
+      <SectionEyebrow rule="long">{resolve(labels.experience.eyebrow)}</SectionEyebrow>
       <SectionTitle id="parcours-title" className="mb-2.5">
         {resolve(labels.experience.title)}
       </SectionTitle>
