@@ -42,10 +42,10 @@ Direction de sa propre agence pendant 10 ans. Chiffre d'affaires doublé à 350k
 
 ## Compétences
 
-- Stratégie & vision : stratégie, roadmap produit, business model, veille, innovation, DIAGNum
-- Management : gouvernance partagée, management d'experts, conduite du changement, diagnostic Weisbord
-- Exécution & tech : Data/IA, product leadership, No-code, delivery, agile, OKR, open data, vibe coding
-- Domaine & marché : assurance, banque, B2B, B2C, développement commercial
+- Stratégie produit : roadmap produit, business model, innovation et veille
+- Transformation : conduite du changement, diagnostic organisationnel (modèle de Weisbord, démarche DIAGNum), gouvernance partagée
+- Data, IA et delivery : Data & IA, No-code, vibe coding, agile, OKR
+- Secteur : assurance et banque, B2B et B2C, développement commercial
 
 ## Engagements
 
