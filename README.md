@@ -43,7 +43,7 @@ Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm ru
 
 ## Sous le capot
 
-Vite, React 19, TypeScript et Tailwind CSS v4. Polices Geist et Geist Mono (licence OFL), icônes Phosphor (licence MIT). Pas de cookie, pas de script tiers.
+Vite, React 19, TypeScript et Tailwind CSS v4. Polices Geist et Geist Mono (licence OFL), icônes Phosphor (licence MIT). Pas de cookie, aucun script tiers dans le code : la seule mesure d'audience est Cloudflare Web Analytics, sans cookie, ajoutée par l'hébergement.
 
 Les choix techniques sont détaillés dans [CLAUDE.md](CLAUDE.md).
 
