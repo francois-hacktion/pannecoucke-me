@@ -1,119 +1,54 @@
-# CV interactif, François Pannecoucke
+# pannecoucke.me
 
-CV interactif open source, construit avec React, TypeScript et Tailwind CSS, pré-rendu en HTML statique et habillé du design system **Hacktion OS 2**.
-
-**[▶ Voir le CV en ligne](https://pannecoucke.me)**
+Mon CV en ligne : **[pannecoucke.me](https://pannecoucke.me)**
 
 <p align="center">
   <img src="docs/apercu.jpg" alt="Aperçu du CV : une fenêtre façon elementary OS posée sur un bureau papier" width="800" />
 </p>
 
----
+## Pourquoi cette refonte
 
-## Inspiration et origine
+Ce site est né d'un template open source que j'avais personnalisé. Il faisait le job, mais il ne me ressemblait pas.
 
-Ce projet part du template open source **[interactive-resume-template](https://github.com/clementbouly/interactive-resume-template)** de [Clément Bouly](https://github.com/clementbouly), publié sous licence MIT.
+Ma nouvelle mission chez Abeille Assurances m'a donné le bon prétexte. Plutôt que d'ajouter une ligne de plus, j'ai tout repris à ma charte : Hacktion OS 2, la même que sur [hacktion.fr](https://hacktion.fr). Un bureau papier, une seule fenêtre, du bleu nuit et de l'or.
 
-Il a depuis été entièrement redessiné avec le langage **Hacktion OS 2**, déjà en production sur [hacktion.fr](https://hacktion.fr) : un bureau papier, une seule fenêtre à headerbar façon elementary OS (navigation en boutons liés, une action or), une colonne éditoriale en Geist, des eyebrows `#` en Geist Mono et des filets à la place des cartes.
+Tout a été fait en vibe coding avec Claude Code, de la maquette à la mise en ligne. Je ne suis pas né dans le code, je suis né dans le business. Ce repo montre qu'on peut livrer un site rapide, accessible et propre sans écrire le code soi-même, à condition de savoir ce qu'on veut.
 
----
+## Ce qu'il fait
 
-## Fonctionnalités
+- Français et anglais, chacun sa page (`/` et `/en/`)
+- Mode clair et mode sombre
+- Le CV en PDF, téléchargé seulement quand on clique
+- Lisible par Google, les ATS et les IA, même sans JavaScript (avec un `llms.txt`)
+- Lighthouse : 100 partout en desktop, 99/100/100/100 en mobile
 
-- **Un seul fichier de contenu** : `src/data/resume-config.ts`, typé de bout en bout
-- **Bilingue FR/EN** : une page par langue (`/` et `/en/`), bascule sans rechargement dans la headerbar, choix mémorisé, typographie française automatique (espaces insécables)
-- **Mode clair/sombre** : bascule manuelle mémorisée, sans flash au chargement
-- **Navigation par sections** : scroll-spy, URL à jour (`#parcours`), liens profonds
-- **Accordéon** : une seule expérience ou mission ouverte à la fois, la mission en cours ouverte par défaut
-- **Responsive** : navigation dans la headerbar sur grand écran, barre sticky défilante sur mobile
-- **Téléchargement du CV en PDF** : un fichier par langue possible
-- **Pré-rendu statique** : chaque page est générée en HTML complet au build, React s'y attache ensuite (contenu lisible sans JavaScript par les robots et les ATS)
-- **Performance** : Lighthouse 100/100/100/100 en desktop, 99/100/100/100 en mobile ; polices hébergées sur le site, CSS inlinée, aucun script tiers
-- **SEO** : JSON-LD `ProfilePage` + `Person`, `hreflang`, canonical par langue, `sitemap.xml`, Open Graph
-- **Fichiers pour les IA** : `llms.txt`, `robots.txt` ouvert aux crawlers IA
-- **Accessibilité** : navigation au clavier, focus visible, `aria-expanded` / `aria-current`, respect de `prefers-reduced-motion`
+## Mettre à jour le contenu
 
----
+Tout se passe dans `src/data/resume-config.ts` : textes FR/EN, missions, compétences, liens. Le mode d'emploi, avec l'ajout d'une mission pas à pas, est dans [docs/CONTENU.md](docs/CONTENU.md).
 
-## Démarrage rapide
+Pour un nouveau CV PDF, je remplace le fichier dans `public/cv/`.
+
+## Lancer le site en local
 
 ```bash
-git clone https://github.com/francois-hacktion/pannecoucke-me.git
-cd pannecoucke-me
 npm install
 npm run dev
 ```
 
-Ouvrir [http://localhost:5173](http://localhost:5173).
+Le site tourne sur [http://localhost:5173](http://localhost:5173).
 
-Pour personnaliser le contenu, voir le [guide de personnalisation](docs/CUSTOMIZATION.md).
+## Mise en ligne
 
-### Mettre à jour le PDF
+Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm run build`, dossier `dist`, Node 20). Le build génère une page HTML complète par langue, puis React prend le relais dans le navigateur.
 
-Déposer le nouveau fichier dans `public/cv/`, puis mettre à jour `pdf.path` dans `src/data/resume-config.ts` si le nom change. Le PDF n'est téléchargé qu'au clic : il ne pèse rien sur le chargement de la page. Penser à renseigner ses métadonnées (titre, auteur) et à alléger les images embarquées.
+## Sous le capot
 
----
+Vite, React 19, TypeScript et Tailwind CSS v4. Polices Geist et Geist Mono (licence OFL), icônes Phosphor (licence MIT). Pas de cookie, pas de script tiers.
 
-## Déploiement
-
-```bash
-npm run build
-```
-
-Le build enchaîne le bundle client, le bundle serveur (`src/entry-server.tsx`) et le pré-rendu (`scripts/prerender.mjs`). Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages** à chaque push sur `main`. Les en-têtes (cache, sécurité) sont dans `public/_headers`.
-
-| Champ | Valeur |
-|-------|--------|
-| Build command | `npm run build` |
-| Build output directory | `dist` |
-| Variable `NODE_VERSION` | `20` |
-
----
-
-## Stack technique
-
-- [Vite](https://vite.dev/) : build
-- [React 19](https://react.dev/) : interface
-- [TypeScript](https://www.typescriptlang.org/) : typage statique
-- [Tailwind CSS v4](https://tailwindcss.com/) : styles, tokens du design system en variables CSS, animations en CSS pur
-- [Geist et Geist Mono](https://vercel.com/font) : typographie, hébergée dans `public/fonts` (licence OFL)
-- Icônes [Phosphor](https://phosphoricons.com) (MIT), intégrées en SVG
-
----
-
-## Structure du projet
-
-```
-├── src/
-│   ├── data/
-│   │   ├── resume-config.ts        # ← CONTENU DU CV
-│   │   ├── resume-config.example.ts
-│   │   └── types.ts
-│   ├── components/
-│   │   ├── os/                     # Fenêtre, headerbar, boutons liés, barre d'état
-│   │   ├── ui/                     # Boutons, tags, eyebrows, accordéon
-│   │   ├── Resume/                 # Sections du CV
-│   │   └── icons/                  # Icônes Phosphor
-│   ├── lib/                        # i18n, thème, navigation par sections, SEO
-│   ├── entry-server.tsx            # Rendu serveur utilisé par le pré-rendu
-│   └── globals.css                 # Tokens Hacktion OS 2 (clair/sombre), polices
-├── public/
-│   ├── cv/                         # CV PDF
-│   ├── fonts/                      # Geist et Geist Mono (woff2, licence OFL)
-│   ├── images/                     # Photo, logos Hacktion, image Open Graph
-│   ├── _headers                    # En-têtes Cloudflare (cache, sécurité)
-│   ├── llms.txt
-│   ├── robots.txt
-│   └── sitemap.xml
-└── scripts/prerender.mjs           # Une page HTML complète par langue au build
-```
-
----
+Les choix techniques sont détaillés dans [CLAUDE.md](CLAUDE.md).
 
 ## Licence
 
-Projet distribué sous licence **MIT** : libre d'utilisation, de modification et de redistribution, avec mention de l'auteur original. Voir [LICENSE](./LICENSE).
+MIT, voir [LICENSE](./LICENSE). Le site est parti du template [interactive-resume-template](https://github.com/clementbouly/interactive-resume-template) de Clément Bouly : merci à lui.
 
----
-
-*Contributions bienvenues via [Issues](https://github.com/francois-hacktion/pannecoucke-me/issues) ou Pull Requests.*
+Une coquille, une idée ? Les [issues](https://github.com/francois-hacktion/pannecoucke-me/issues) sont ouvertes.

@@ -1,8 +1,30 @@
-# Guide de personnalisation
+# Mettre à jour le contenu
 
 Tout le contenu du CV vit dans un seul fichier : `src/data/resume-config.ts`.
-Il est typé (`src/data/types.ts`), l'éditeur propose donc l'autocomplétion et signale les erreurs.
-Un exemple complet et commenté est disponible dans `src/data/resume-config.example.ts`.
+Il est typé (`src/data/types.ts`) : l'éditeur propose l'autocomplétion et signale les erreurs.
+
+## Ajouter une mission, pas à pas
+
+1. Dans `experiences`, repérer l'entrée `hacktion` et ajouter la mission en tête de `missions` :
+
+```typescript
+{
+  id: 'nouveau-client',
+  client: 'Nouveau client',
+  title: { fr: 'Rôle', en: 'Role' },          // optionnel
+  isOngoing: true,                             // affiche "en cours", ouverte par défaut
+  description: { fr: 'Une phrase.', en: 'One sentence.' },
+  tasks: {
+    fr: ['Un résultat avec **un chiffre clé**.'],
+    en: ['An outcome with **a key figure**.'],
+  },
+  tags: [tag('Innovation', 'Innovation', 'blue')],
+},
+```
+
+2. Sur la mission précédente, retirer `isOngoing` et ajouter sa période : `period: { fr: '10/2025 - 03/2026', en: '10/2025 - 03/2026' }`.
+3. Mettre à jour `personal.status` (barre d'état), la description SEO (`seo.description`) et `public/llms.txt`.
+4. Vérifier avec `npm run build`, puis `npm run dev` pour relire en FR (`/`) et en EN (`/en/`).
 
 ## Conventions
 
@@ -89,6 +111,18 @@ Un chemin commun ou un chemin par langue. Le fichier se place dans `public/cv/`.
 
 Tous les libellés de l'interface (navigation, titres de section, boutons, textes d'accessibilité), en FR et EN.
 
-## Design
+## Où est quoi
 
-Les tokens (couleurs clair/sombre, teintes, headerbar) sont des variables CSS dans `src/globals.css`. Les composants du design system sont dans `src/components/os/` (fenêtre, headerbar) et `src/components/ui/` (boutons, tags, eyebrows).
+```
+├── src/
+│   ├── data/resume-config.ts     # Le contenu du CV
+│   ├── data/types.ts             # Le schéma du contenu
+│   ├── components/os/            # Fenêtre, headerbar, boutons liés, barre d'état
+│   ├── components/ui/            # Boutons, tags, eyebrows, accordéon
+│   ├── components/Resume/        # Les sections du CV
+│   ├── lib/                      # Langues, thème, navigation, SEO
+│   ├── entry-server.tsx          # Rendu utilisé par le pré-rendu
+│   └── globals.css               # Tokens Hacktion OS 2 (clair/sombre) et polices
+├── public/                       # CV PDF, polices, images, llms.txt, robots.txt, sitemap.xml, _headers
+└── scripts/prerender.mjs         # Une page HTML complète par langue au build
+```
