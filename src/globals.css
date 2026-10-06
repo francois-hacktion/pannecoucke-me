@@ -233,26 +233,27 @@
   }
 }
 
-/* Glyphes décoratifs (# des eyebrows, $ des missions, → des listes) en pseudo-éléments :
+/* Glyphes décoratifs (# des eyebrows, $ des missions et compétences, → des listes) en pseudo-éléments :
    ignorés par les lecteurs d'écran (texte alternatif vide) et hors du calcul de contraste,
-   comme tout élément purement décoratif. La première déclaration sert de repli. */
+   comme tout élément purement décoratif. On alimente --tw-content : les variantes before: de
+   Tailwind réécrivent content avec cette variable, une valeur de content directe serait écrasée. */
 @utility glyph-hash {
   &::before {
-    content: '#';
-    content: '#' / '';
+    --tw-content: '#' / '';
+    content: var(--tw-content);
   }
 }
 
 @utility glyph-dollar {
   &::before {
-    content: '$';
-    content: '$' / '';
+    --tw-content: '$' / '';
+    content: var(--tw-content);
   }
 }
 
 @utility glyph-arrow {
   &::before {
-    content: '→';
-    content: '→' / '';
+    --tw-content: '→' / '';
+    content: var(--tw-content);
   }
 }

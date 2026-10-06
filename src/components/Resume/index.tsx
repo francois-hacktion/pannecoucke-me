@@ -15,7 +15,6 @@ import { StatusBar } from '@/components/os/StatusBar'
 import { ProfileSection } from './ProfileSection'
 import { ExperienceSection } from './ExperienceSection'
 import { SkillsSection } from './SkillsSection'
-import { EngagementsSection } from './EngagementsSection'
 import { EducationSection } from './EducationSection'
 import { ContactSection } from './ContactSection'
 
@@ -129,7 +128,6 @@ export function Resume() {
           <ProfileSection />
           <ExperienceSection />
           <SkillsSection />
-          <EngagementsSection />
           <EducationSection />
           <ContactSection />
         </div>
