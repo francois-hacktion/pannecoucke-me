@@ -3,56 +3,62 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="canonical" href="https://pannecoucke.me/" />
+  <link rel="alternate" hreflang="fr" href="https://pannecoucke.me/" />
+  <link rel="alternate" hreflang="en" href="https://pannecoucke.me/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://pannecoucke.me/" />
 
-  <!-- Police Geist (Vercel) -->
+  <!-- Thème appliqué avant le premier rendu (évite un flash clair si le mode sombre est mémorisé) -->
+  <script>
+    try { if (localStorage.getItem('resume-theme') === 'dark') document.documentElement.classList.add('dark') } catch (e) {}
+  </script>
+
+  <!-- Polices Geist et Geist Mono (Vercel) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="/images/profil.jpg" fetchpriority="high" />
 
-  <!-- SEO Meta -->
-  <title>François Pannecoucke — Product Leader | Product Builder</title>
-  <meta name="description"
-    content="CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés." />
+  <!-- SEO (titre et description remplacés au build depuis resume-config) -->
+  <title>François Pannecoucke · Product leader/builder | Transformation digitale</title>
+  <meta name="description" content="" />
   <meta name="author" content="François Pannecoucke" />
-  <meta name="theme-color" content="#171717" />
+  <meta name="theme-color" content="#f5f3ee" />
 
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, iMessage, Slack…) -->
-  <meta property="og:type" content="website" />
+  <!-- Open Graph (LinkedIn, WhatsApp, iMessage, Slack…) -->
+  <meta property="og:type" content="profile" />
   <meta property="og:url" content="https://pannecoucke.me/" />
-  <meta property="og:title" content="François Pannecoucke — Product Leader | Product Builder" />
+  <meta property="og:title" content="François Pannecoucke · Product leader/builder | Transformation digitale" />
   <meta property="og:description"
-    content="Leader entrepreneur & consultant en transformation digitale. Expert stratégie produit, Data/IA et développement." />
+    content="J'aide les équipes à livrer plus vite ce qui compte. 20 ans entre la banque, l'assurance et le produit. Fondateur de Hacktion, en mission chez Abeille Assurances." />
   <meta property="og:image" content="https://pannecoucke.me/images/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
-  <meta property="og:image:alt" content="François Pannecoucke — Product Leader | Product Builder" />
+  <meta property="og:image:alt" content="François Pannecoucke, product leader/builder" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:locale:alternate" content="en_US" />
-  <meta property="og:site_name" content="François Pannecoucke — CV Interactif" />
+  <meta property="og:site_name" content="François Pannecoucke" />
+  <meta property="profile:first_name" content="François" />
+  <meta property="profile:last_name" content="Pannecoucke" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="François Pannecoucke — Product Leader | Product Builder" />
+  <meta name="twitter:title" content="François Pannecoucke · Product leader/builder | Transformation digitale" />
   <meta name="twitter:description"
-    content="Leader entrepreneur & consultant en transformation digitale. Expert stratégie produit, Data/IA et développement." />
+    content="J'aide les équipes à livrer plus vite ce qui compte. 20 ans entre la banque, l'assurance et le produit. Fondateur de Hacktion, en mission chez Abeille Assurances." />
   <meta name="twitter:image" content="https://pannecoucke.me/images/og-image.jpg" />
-  <meta name="twitter:image:alt" content="François Pannecoucke — Product Leader | Product Builder" />
+  <meta name="twitter:image:alt" content="François Pannecoucke, product leader/builder" />
 </head>
 
 <body>
   <div id="root"></div>
+  <!-- Remplacé au build par le CV complet en HTML sémantique (vite-plugin-resume-seo) -->
   <noscript>
-    <div
-      style="max-width: 600px; margin: 4rem auto; padding: 2rem; font-family: system-ui, sans-serif; text-align: center;">
-      <h1>CV Interactif - François Pannecoucke</h1>
-      <p>Ce CV nécessite JavaScript pour afficher la version interactive.</p>
-      <p><a href="/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf" style="color: #1e6091;">Télécharger le CV en PDF</a></p>
-    </div>
+    <p><a href="/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf">Télécharger le CV en PDF</a></p>
   </noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>

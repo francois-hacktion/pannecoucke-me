@@ -1,16 +1,16 @@
 import type { Plugin } from 'vite'
-import type { ResumeConfig } from './src/data/types'
+import type { ResumeConfig, LocalizedString, LocalizedStringArray } from './src/data/types'
 
 /**
- * Vite plugin that injects SEO data directly into the HTML at build time.
+ * Plugin Vite qui injecte le contenu du CV dans le HTML au build.
  *
- * Since this is a CSR SPA, bots that don't execute JavaScript see an empty page.
- * This plugin reads `resume-config` at build time and injects:
- * - JSON-LD structured data (schema.org Person)
- * - Proper <title> and <meta description>
- * - A rich <noscript> fallback with the full CV content in semantic HTML
+ * Le site est une SPA rendue côté client : sans JavaScript, la page serait vide.
+ * Ce plugin lit `resume-config` au build et injecte :
+ * - les données structurées JSON-LD (schema.org Person) ;
+ * - le <title> et la <meta description> ;
+ * - un <noscript> complet en HTML sémantique.
  *
- * This ensures crawlers and ATS systems can read the resume data without JS.
+ * Les robots et les ATS lisent ainsi tout le CV sans exécuter de JavaScript.
  */
 export function resumeSeoPlugin(): Plugin {
   let config: ResumeConfig | null = null
@@ -22,242 +22,232 @@ export function resumeSeoPlugin(): Plugin {
       base = resolvedConfig.base
     },
     async buildStart() {
-      // Dynamically import the resume config (works because Vite resolves TS)
+      // Import dynamique de la config (Vite résout le TypeScript)
       try {
         const mod = await import('./src/data/resume-config')
         config = mod.resumeConfig
       } catch (e) {
-        console.warn('[resume-seo] Could not load resume-config, skipping SEO injection:', e)
+        console.warn('[resume-seo] Impossible de charger resume-config, injection SEO ignorée :', e)
       }
     },
     transformIndexHtml(html) {
       if (!config) return html
 
-      const defaultLang = config.languages.default
-      const resolve = (ls: Record<string, string>) =>
-        ls[defaultLang] ?? Object.values(ls)[0] ?? ''
+      const lang = config.languages.default
+      const t = (ls: LocalizedString) => ls[lang] ?? Object.values(ls)[0] ?? ''
+      const tArray = (lsa: LocalizedStringArray) => lsa[lang] ?? Object.values(lsa)[0] ?? []
+      const ctx: Ctx = { config, t, tArray, base }
 
-      // 1. Build JSON-LD
-      const jsonLd = buildJsonLd(config, resolve)
-
-      // 2. Build noscript HTML with full CV content
-      const noscriptContent = buildNoscriptHtml(config, resolve, base)
-
-      // 3. Replace title
-      html = html.replace(
-        /<title>[^<]*<\/title>/,
-        `<title>${escapeHtml(config.seo.title)}</title>`,
-      )
-
-      // 4. Replace meta description
+      html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(t(config.seo.title))}</title>`)
       html = html.replace(
         /<meta name="description" content="[^"]*"\s*\/?>/,
-        `<meta name="description" content="${escapeHtml(config.seo.description)}" />`,
+        `<meta name="description" content="${escapeHtml(t(config.seo.description))}" />`,
       )
-
-      // 5. Inject JSON-LD before </head>
       html = html.replace(
         '</head>',
-        `  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n  </head>`,
+        `  <script type="application/ld+json">${JSON.stringify(buildJsonLd(ctx))}</script>\n  </head>`,
       )
-
-      // 6. Replace the existing <noscript> with the enriched version
-      html = html.replace(
-        /<noscript>[\s\S]*?<\/noscript>/,
-        `<noscript>\n${noscriptContent}\n    </noscript>`,
-      )
+      html = html.replace(/<noscript>[\s\S]*?<\/noscript>/, `<noscript>\n${buildNoscriptHtml(ctx)}\n    </noscript>`)
 
       return html
     },
   }
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+interface Ctx {
+  config: ResumeConfig
+  t: (ls: LocalizedString) => string
+  tArray: (lsa: LocalizedStringArray) => string[]
+  base: string
 }
 
-function buildJsonLd(
-  config: ResumeConfig,
-  resolve: (ls: Record<string, string>) => string,
-) {
-  const { personal, contact } = config
-  const sameAs: string[] = []
-  let email: string | undefined
-  let url: string | undefined
+function escapeHtml(str: string): string {
+  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
 
-  for (const c of contact) {
-    if (c.type === 'github' && c.href) sameAs.push(c.href)
-    if (c.type === 'linkedin' && c.href) sameAs.push(c.href)
-    if (c.type === 'website' && c.href) url = c.href
-    if (c.type === 'email') email = c.label
-  }
+/** Retire le balisage **gras** des textes riches. */
+function plain(str: string): string {
+  return str.replace(/\*\*(.+?)\*\*/g, '$1')
+}
 
-  const techs = [...new Set(config.experiences.flatMap((exp) => exp.techs))]
+/** Échappe puis convertit **gras** en <strong>. */
+function rich(str: string): string {
+  return escapeHtml(str).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+}
+
+function assetHref(path: string, base: string) {
+  return path.startsWith('/') ? `${base.replace(/\/$/, '')}${path}` : path
+}
+
+function buildJsonLd({ config, t }: Ctx) {
+  const { personal, contact, site, skills, education, experiences, spokenLanguages } = config
+  const sameAs = contact
+    .filter((c) => ['linkedin', 'github', 'website'].includes(c.type) && c.href)
+    .map((c) => c.href as string)
+  const email = contact.find((c) => c.type === 'email')?.label
+  const current = experiences.find((exp) => exp.missions?.length) ?? experiences[0]
+  const ongoing = current?.missions?.find((m) => m.isOngoing)
+  const website = contact.find((c) => c.type === 'website')?.href
+
+  const knowsAbout = [
+    ...new Set([
+      ...skills.flatMap((cat) => cat.items.map(t)),
+      ...experiences.flatMap((exp) => [
+        ...(exp.tags ?? []).map((tag) => t(tag.label)),
+        ...(exp.missions ?? []).flatMap((m) => m.tags.map((tag) => t(tag.label))),
+      ]),
+    ]),
+  ]
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: personal.name,
-    jobTitle: resolve(personal.title),
-    ...(url && { url }),
-    ...(email && { email }),
-    ...(personal.location && {
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: personal.location,
+    jobTitle: t(personal.title),
+    description: t(personal.intro),
+    url: `${site.url}/`,
+    ...(personal.photo && { image: `${site.url}${personal.photo}` }),
+    ...(email && { email: `mailto:${email}` }),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: personal.city,
+      addressCountry: 'FR',
+    },
+    ...(current && {
+      worksFor: {
+        '@type': 'Organization',
+        name: current.company,
+        ...(website && { url: website }),
       },
     }),
+    ...(ongoing && {
+      hasOccupation: {
+        '@type': 'Occupation',
+        name: t(personal.title),
+        description: `${ongoing.client} : ${plain(t(ongoing.description))}`,
+      },
+    }),
+    alumniOf: education.map((edu) => ({ '@type': 'EducationalOrganization', name: edu.school })),
+    ...(spokenLanguages && { knowsLanguage: spokenLanguages.map((l) => t(l.name)) }),
     ...(sameAs.length > 0 && { sameAs }),
-    ...(techs.length > 0 && { knowsAbout: techs }),
+    knowsAbout,
   }
 }
 
-function buildNoscriptHtml(
-  config: ResumeConfig,
-  resolve: (ls: Record<string, string>) => string,
-  base: string,
-): string {
-  const { personal, contact, skills, experiences, education, projects, hobbies, pdf } = config
-  const lines: string[] = []
+function buildNoscriptHtml({ config, t, tArray, base }: Ctx): string {
+  const { personal, contact, skills, experiences, engagements, education, hobbies, spokenLanguages, pdf, labels } =
+    config
+  const out: string[] = []
+  const i = '      '
+  const h2 = (text: string) =>
+    `${i}    <h2 style="font-size: 1.1rem; border-bottom: 1px solid #e2e9ee; padding-bottom: 0.25rem;">${escapeHtml(text)}</h2>`
 
-  const indent = '      '
-  lines.push(`${indent}<div style="max-width: 800px; margin: 2rem auto; padding: 2rem; font-family: system-ui, -apple-system, sans-serif; color: #1c1c1c; line-height: 1.6;">`)
+  out.push(`${i}<div style="max-width: 800px; margin: 2rem auto; padding: 2rem; font-family: system-ui, -apple-system, sans-serif; color: #0d1f2d; line-height: 1.6;">`)
 
-  // Header
-  lines.push(`${indent}  <header style="margin-bottom: 2rem; border-bottom: 2px solid #e5e5e5; padding-bottom: 1rem;">`)
-  lines.push(`${indent}    <h1 style="margin: 0 0 0.25rem 0; font-size: 1.75rem;">${escapeHtml(personal.name)}</h1>`)
-  lines.push(`${indent}    <p style="margin: 0 0 0.25rem 0; font-size: 1.1rem; color: #555;">${escapeHtml(resolve(personal.title))}</p>`)
-  if (personal.subtitle) {
-    lines.push(`${indent}    <p style="margin: 0 0 0.25rem 0; color: #777;">${escapeHtml(resolve(personal.subtitle))}</p>`)
+  // En-tête
+  out.push(`${i}  <header style="margin-bottom: 2rem;">`)
+  out.push(`${i}    <h1 style="margin: 0;">${escapeHtml(personal.name)}</h1>`)
+  out.push(`${i}    <p style="margin: 0; color: #5a7a94;">${escapeHtml(t(personal.title))} · ${escapeHtml(personal.location)}</p>`)
+  out.push(`${i}    <p>${escapeHtml(t(personal.intro))}</p>`)
+  if (personal.tagline) out.push(`${i}    <p>${escapeHtml(t(personal.tagline))}</p>`)
+  if (personal.mantra) out.push(`${i}    <blockquote>${escapeHtml(t(personal.mantra))}</blockquote>`)
+  out.push(`${i}  </header>`)
+
+  // Parcours
+  out.push(`${i}  <section>`)
+  out.push(h2(t(labels.experience.title)))
+  for (const exp of experiences) {
+    out.push(`${i}    <article>`)
+    out.push(`${i}      <h3>${escapeHtml(exp.title ? t(exp.title) : exp.company)} · ${escapeHtml(t(exp.role))}</h3>`)
+    out.push(`${i}      <p><em>${escapeHtml(t(exp.period))}</em> · ${escapeHtml(t(exp.description))}</p>`)
+    if (exp.tasks) {
+      out.push(`${i}      <ul>`)
+      for (const task of tArray(exp.tasks)) out.push(`${i}        <li>${rich(task)}</li>`)
+      out.push(`${i}      </ul>`)
+    }
+    for (const mission of exp.missions ?? []) {
+      const title = [mission.client, mission.title && t(mission.title)].filter(Boolean).join(' · ')
+      const period = mission.isOngoing ? t(labels.experience.ongoing) : mission.period ? t(mission.period) : ''
+      out.push(`${i}      <h4>${escapeHtml(title)}${period ? ` (${escapeHtml(period)})` : ''}</h4>`)
+      out.push(`${i}      <p>${escapeHtml(t(mission.description))}</p>`)
+      out.push(`${i}      <ul>`)
+      for (const task of tArray(mission.tasks)) out.push(`${i}        <li>${rich(task)}</li>`)
+      out.push(`${i}      </ul>`)
+    }
+    out.push(`${i}    </article>`)
   }
-  if (personal.location) {
-    lines.push(`${indent}    <p style="margin: 0; color: #777;">${escapeHtml(personal.location)}</p>`)
+  out.push(`${i}  </section>`)
+
+  // Compétences
+  out.push(`${i}  <section>`)
+  out.push(h2(t(labels.skills.title)))
+  for (const cat of skills) {
+    out.push(`${i}    <p><strong>${escapeHtml(t(cat.title))}</strong> : ${escapeHtml(cat.items.map(t).join(', '))}</p>`)
   }
-  lines.push(`${indent}  </header>`)
+  out.push(`${i}  </section>`)
+
+  // Engagements
+  if (engagements?.length) {
+    out.push(`${i}  <section>`)
+    out.push(h2(t(labels.engagements.eyebrow)))
+    out.push(`${i}    <ul>`)
+    for (const eng of engagements) out.push(`${i}      <li>${escapeHtml(t(eng.period))} · ${rich(t(eng.text))}</li>`)
+    out.push(`${i}    </ul>`)
+    out.push(`${i}  </section>`)
+  }
+
+  // Formation
+  out.push(`${i}  <section>`)
+  out.push(h2(t(labels.education.eyebrow)))
+  out.push(`${i}    <ul>`)
+  for (const edu of education) {
+    const details = [edu.school, edu.details && t(edu.details), edu.period].filter(Boolean).join(' · ')
+    out.push(`${i}      <li><strong>${escapeHtml(t(edu.degree))}</strong> · ${escapeHtml(details)}</li>`)
+  }
+  out.push(`${i}    </ul>`)
+  out.push(`${i}  </section>`)
+
+  // Langues et centres d'intérêt
+  if (spokenLanguages?.length) {
+    out.push(`${i}  <section>`)
+    out.push(h2(t(labels.languages.eyebrow)))
+    out.push(`${i}    <p>${escapeHtml(spokenLanguages.map((l) => `${t(l.name)} (${t(l.level)})`).join(', '))}</p>`)
+    out.push(`${i}  </section>`)
+  }
+  if (hobbies?.length) {
+    out.push(`${i}  <section>`)
+    out.push(h2(t(labels.hobbies.eyebrow)))
+    out.push(`${i}    <ul>`)
+    for (const hobby of hobbies) {
+      out.push(`${i}      <li><strong>${escapeHtml(t(hobby.title))}</strong> : ${escapeHtml(t(hobby.description))}</li>`)
+    }
+    out.push(`${i}    </ul>`)
+    out.push(`${i}  </section>`)
+  }
 
   // Contact
-  if (contact.length > 0) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.contact))}</h2>`)
-    lines.push(`${indent}    <ul style="list-style: none; padding: 0; margin: 0;">`)
-    for (const c of contact) {
-      if (c.href) {
-        lines.push(`${indent}      <li style="margin-bottom: 0.25rem;"><a href="${escapeHtml(c.href)}" style="color: #1e6091;">${escapeHtml(c.label)}</a></li>`)
-      } else {
-        lines.push(`${indent}      <li style="margin-bottom: 0.25rem;">${escapeHtml(c.label)}</li>`)
-      }
-    }
-    lines.push(`${indent}    </ul>`)
-    lines.push(`${indent}  </section>`)
+  out.push(`${i}  <section>`)
+  out.push(h2(t(labels.nav.contact)))
+  out.push(`${i}    <ul>`)
+  for (const c of contact) {
+    const href = c.href ?? (c.type === 'email' ? `mailto:${c.label}` : undefined)
+    out.push(
+      href
+        ? `${i}      <li><a href="${escapeHtml(href)}">${escapeHtml(c.label)}</a></li>`
+        : `${i}      <li>${escapeHtml(c.label)}</li>`,
+    )
   }
+  out.push(`${i}    </ul>`)
+  out.push(`${i}  </section>`)
 
-  // Skills
-  if (skills.length > 0) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.skills))}</h2>`)
-    for (const cat of skills) {
-      lines.push(`${indent}    <p style="margin: 0.5rem 0 0.25rem 0; font-weight: 600;">${escapeHtml(resolve(cat.title))}</p>`)
-      const skillNames = cat.items.map((item) => {
-        const name = typeof item.name === 'string' ? item.name : resolve(item.name)
-        if (cat.type === 'languages' && item.level) {
-          return `${name} (${resolve(item.level)})`
-        }
-        return name
-      })
-      lines.push(`${indent}    <p style="margin: 0; color: #555;">${escapeHtml(skillNames.join(' · '))}</p>`)
-    }
-    lines.push(`${indent}  </section>`)
-  }
-
-  // Experiences
-  if (experiences.length > 0) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.experience))}</h2>`)
-    for (const exp of experiences) {
-      lines.push(`${indent}    <article style="margin-bottom: 1.25rem;">`)
-      lines.push(`${indent}      <h3 style="margin: 0 0 0.15rem 0; font-size: 1rem;">${escapeHtml(resolve(exp.role))} — ${escapeHtml(resolve(exp.company))}</h3>`)
-      const meta = exp.period ? [resolve(exp.period)] : []
-      if (exp.type) meta.push(resolve(exp.type))
-      lines.push(`${indent}      <p style="margin: 0 0 0.25rem 0; color: #777; font-size: 0.9rem;">${escapeHtml(meta.join(' · '))}</p>`)
-      lines.push(`${indent}      <p style="margin: 0 0 0.25rem 0;">${escapeHtml(resolve(exp.description))}</p>`)
-      if (exp.techs.length > 0) {
-        lines.push(`${indent}      <p style="margin: 0; color: #555; font-size: 0.9rem;">${escapeHtml(exp.techs.join(', '))}</p>`)
-      }
-      if (exp.details?.tasks) {
-        const tasks = exp.details.tasks[config.languages.default] ?? Object.values(exp.details.tasks)[0]
-        if (tasks && tasks.length > 0) {
-          lines.push(`${indent}      <ul style="margin: 0.5rem 0 0 1rem; padding: 0;">`)
-          for (const task of tasks) {
-            lines.push(`${indent}        <li style="margin-bottom: 0.15rem; font-size: 0.9rem;">${escapeHtml(task)}</li>`)
-          }
-          lines.push(`${indent}      </ul>`)
-        }
-      }
-      lines.push(`${indent}    </article>`)
-    }
-    lines.push(`${indent}  </section>`)
-  }
-
-  // Education
-  if (education.length > 0) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.education))}</h2>`)
-    for (const edu of education) {
-      lines.push(`${indent}    <div style="margin-bottom: 0.75rem;">`)
-      lines.push(`${indent}      <p style="margin: 0; font-weight: 600;">${escapeHtml(resolve(edu.degree))}</p>`)
-      if (edu.specialty) {
-        lines.push(`${indent}      <p style="margin: 0; color: #555;">${escapeHtml(resolve(edu.specialty))}</p>`)
-      }
-      const eduMeta = [resolve(edu.school)]
-      if (edu.period) eduMeta.push(edu.period)
-      lines.push(`${indent}      <p style="margin: 0; color: #777; font-size: 0.9rem;">${escapeHtml(eduMeta.join(' · '))}</p>`)
-      lines.push(`${indent}    </div>`)
-    }
-    lines.push(`${indent}  </section>`)
-  }
-
-  // Projects
-  if (projects && projects.length > 0 && config.labels.sections.projects) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.projects))}</h2>`)
-    for (const proj of projects) {
-      lines.push(`${indent}    <div style="margin-bottom: 0.75rem;">`)
-      const titleHtml = proj.url
-        ? `<a href="${escapeHtml(proj.url)}" style="color: #1e6091;">${escapeHtml(resolve(proj.title))}</a>`
-        : escapeHtml(resolve(proj.title))
-      lines.push(`${indent}      <p style="margin: 0; font-weight: 600;">${titleHtml}</p>`)
-      lines.push(`${indent}      <p style="margin: 0; color: #555;">${escapeHtml(resolve(proj.description))}</p>`)
-      if (proj.techs.length > 0) {
-        lines.push(`${indent}      <p style="margin: 0; color: #777; font-size: 0.9rem;">${escapeHtml(proj.techs.join(', '))}</p>`)
-      }
-      lines.push(`${indent}    </div>`)
-    }
-    lines.push(`${indent}  </section>`)
-  }
-
-  // Hobbies
-  if (hobbies && hobbies.length > 0 && config.labels.sections.hobbies) {
-    lines.push(`${indent}  <section style="margin-bottom: 1.5rem;">`)
-    lines.push(`${indent}    <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #333; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">${escapeHtml(resolve(config.labels.sections.hobbies))}</h2>`)
-    const hobbyNames = hobbies.map((h) => resolve(h.title))
-    lines.push(`${indent}    <p style="margin: 0; color: #555;">${escapeHtml(hobbyNames.join(' · '))}</p>`)
-    lines.push(`${indent}  </section>`)
-  }
-
-  // PDF download link
+  // PDF
   if (pdf) {
-    const pdfPath = typeof pdf.path === 'string' ? pdf.path : (pdf.path[config.languages.default] ?? Object.values(pdf.path)[0] ?? null)
-    if (pdfPath) {
-      const pdfHref = pdfPath.startsWith('/') ? `${base.replace(/\/$/, '')}${pdfPath}` : pdfPath
-      lines.push(`${indent}  <p style="margin-top: 2rem; text-align: center;"><a href="${escapeHtml(pdfHref)}" style="color: #1e6091; font-weight: 500;">📄 Download PDF</a></p>`)
+    const path = typeof pdf.path === 'string' ? pdf.path : t(pdf.path)
+    if (path) {
+      out.push(`${i}  <p><a href="${escapeHtml(assetHref(path, base))}">${escapeHtml(t(labels.actions.downloadCv))} (PDF)</a></p>`)
     }
   }
 
-  lines.push(`${indent}</div>`)
-
-  return lines.join('\n')
+  out.push(`${i}</div>`)
+  return out.join('\n')
 }

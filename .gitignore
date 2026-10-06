@@ -25,3 +25,9 @@ dist-ssr
 
 # Fichier source PDF
 cv_source.pdf
+
+# Archives de handoff design
+*.zip
+
+# Config locale de l'aperçu Claude Code
+.claude/

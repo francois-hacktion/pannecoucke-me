@@ -1,26 +1,68 @@
-import type { ResumeConfig } from './types'
+import type { ResumeConfig, Tag, Tone } from './types'
+
+/**
+ * Source unique du contenu du CV.
+ *
+ * Conventions de copy :
+ * - pas de tiret cadratin, périodes écrites "2015 - 2024" ;
+ * - en français, écrire les espaces avant : ; ? ! « » normalement :
+ *   elles sont rendues insécables automatiquement (cf. lib/i18n) ;
+ * - **gras** accepté dans les textes riches (tâches, engagements).
+ */
+
+/** Raccourci pour déclarer un tag bilingue. */
+const tag = (fr: string, en: string, tone: Tone): Tag => ({ label: { fr, en }, tone })
 
 export const resumeConfig: ResumeConfig = {
+  // ===== SITE =====
+  site: {
+    url: 'https://pannecoucke.me',
+    domain: 'pannecoucke.me',
+  },
+
   // ===== INFORMATIONS PERSONNELLES =====
   personal: {
     name: 'François Pannecoucke',
-    photo: '/images/profil_bureau.jpg',
+    photo: '/images/profil.jpg',
     photoBackEmoji: '🚀',
     title: {
-      en: 'Product Leader | Product Builder',
-      fr: 'Product Leader | Product Builder',
+      fr: 'Product leader/builder | Transformation digitale',
+      en: 'Product leader/builder | Digital transformation',
     },
-    subtitle: {
-      en: 'Turning innovation into measurable business value',
-      fr: 'Transformer les innovations en valeur business mesurable',
+    headline: {
+      fr: 'Product leader/builder · Transformation digitale',
+      en: 'Product leader/builder · Digital transformation',
     },
+    intro: {
+      fr: 'J\'aide les équipes à livrer plus vite ce qui compte. 20 ans entre la banque, l\'assurance et le produit.',
+      en: 'I help teams ship what matters, faster. 20 years across banking, insurance and product.',
+    },
+    tagline: {
+      fr: 'Je ne suis pas né dans le code. Je suis né dans le business.',
+      en: 'I wasn\'t born in code. I was born in business.',
+    },
+    mantra: {
+      fr: '« La technologie ne révèle son plein potentiel que si l\'humain en est le héros. »',
+      en: '"Technology only reaches its full potential when people are the heroes."',
+    },
+    city: 'Arras',
     location: 'Arras, France',
+    status: {
+      fr: 'Mission en cours · Abeille',
+      en: 'Current mission · Abeille',
+    },
   },
 
   // ===== SEO =====
   seo: {
-    title: 'François Pannecoucke — Product Leader | Product Builder',
-    description: 'CV Interactif de François Pannecoucke. Leader entrepreneur, expert en transformation digitale, stratégie produit et développement. Track-record : croissance 4x supérieure au marché, 670 jours/homme économisés.',
+    title: {
+      fr: 'François Pannecoucke · Product leader/builder | Transformation digitale',
+      en: 'François Pannecoucke · Product leader/builder | Digital transformation',
+    },
+    description: {
+      fr: 'CV de François Pannecoucke, product leader/builder et consultant en transformation digitale et IA à Arras (Hacktion). 20 ans entre la banque, l\'assurance et le produit. En mission chez Abeille Assurances.',
+      en: 'Resume of François Pannecoucke, product leader/builder and digital transformation & AI consultant based in Arras, France (Hacktion). 20 years across banking, insurance and product. Currently on assignment at Abeille Assurances.',
+    },
   },
 
   // ===== LANGUES DU SITE =====
@@ -28,371 +70,379 @@ export const resumeConfig: ResumeConfig = {
     default: 'fr',
     available: ['fr', 'en'],
     labels: {
-      en: 'EN',
       fr: 'FR',
+      en: 'EN',
     },
   },
 
   // ===== CONTACT =====
   contact: [
-    { type: 'phone', label: '+33 6 07 69 98 34' },
     { type: 'email', label: 'francois@pannecoucke.fr' },
+    { type: 'phone', label: '+33 6 07 69 98 34', href: 'tel:+33607699834' },
     { type: 'linkedin', label: 'François Pannecoucke', href: 'https://linkedin.com/in/francois-pannecoucke' },
     { type: 'github', label: 'hacktion', href: 'https://github.com/hacktion' },
     { type: 'website', label: 'hacktion.fr', href: 'https://hacktion.fr' },
-    { type: 'location', label: 'Arras, France (62000)' },
+    { type: 'location', label: 'Arras, France' },
+  ],
+
+  // ===== PARCOURS =====
+  experiences: [
+    {
+      id: 'hacktion',
+      company: 'Hacktion',
+      role: {
+        fr: 'Fondateur, consultant en transformation digitale et IA',
+        en: 'Founder, digital transformation & AI consultant',
+      },
+      period: { fr: 'depuis 2024', en: 'since 2024' },
+      badges: [
+        tag('Conseil', 'Consulting', 'gold'),
+        tag('Innovation', 'Innovation', 'blue'),
+        tag('Formation', 'Training', 'cyan'),
+      ],
+      description: {
+        fr: 'Fondateur. Mon cabinet de conseil en transformation digitale et IA, à Arras. Trois clients principaux :',
+        en: 'Founder. My digital transformation and AI consulting firm, based in Arras. Three main clients:',
+      },
+      missions: [
+        {
+          id: 'abeille',
+          client: 'Abeille Assurances',
+          isOngoing: true,
+          description: {
+            fr: 'J\'accompagne l\'équipe E Visibilité - Innovation sur une question simple : comment faire mieux, plus vite et plus efficacement ?',
+            en: 'I support the E Visibilité - Innovation team on a simple question: how can we work better, faster and more efficiently?',
+          },
+          tasks: {
+            fr: [
+              'Diagnostic de l\'organisation avec le modèle de **Weisbord** : un cadre éprouvé, appliqué à leur réalité.',
+              'Les bonnes pratiques de la démarche **DIAGNum**, adaptées à leur contexte.',
+              'Des pistes concrètes pour gagner en vitesse et en efficacité.',
+            ],
+            en: [
+              'Organisational diagnosis using the **Weisbord** model: a proven framework, applied to their reality.',
+              'Best practices from the **DIAGNum** approach, adapted to their context.',
+              'Concrete levers to gain speed and efficiency.',
+            ],
+          },
+          tags: [
+            tag('Innovation', 'Innovation', 'blue'),
+            tag('Weisbord', 'Weisbord', 'violet'),
+            tag('DIAGNum', 'DIAGNum', 'blue'),
+            tag('Diagnostic organisationnel', 'Organisational diagnosis', 'violet'),
+          ],
+        },
+        {
+          id: 'axa',
+          client: 'AXA',
+          title: { fr: 'Product leader Data & IA', en: 'Data & AI product leader' },
+          period: { fr: '10/2024 - 12/2025', en: '10/2024 - 12/2025' },
+          description: {
+            fr: 'J\'ai lancé et piloté le projet Ariane B2B de A à Z. Prototype No-code livré en 6 mois au lieu de 18.',
+            en: 'I launched and led the Ariane B2B project end to end. No-code prototype delivered in 6 months instead of 18.',
+          },
+          tasks: {
+            fr: [
+              '**800k signaux d\'affaires** générés grâce à la donnée.',
+              '**670 jours/homme** économisés.',
+              'Roadmap adoptée par le board.',
+            ],
+            en: [
+              '**800k business signals** generated from data.',
+              '**670 person-days** saved.',
+              'Roadmap adopted by the board.',
+            ],
+          },
+          tags: [
+            tag('Data & IA', 'Data & AI', 'emerald'),
+            tag('No-code', 'No-code', 'emerald'),
+            tag('Roadmap produit', 'Product roadmap', 'blue'),
+            tag('Stratégie B2B', 'B2B strategy', 'blue'),
+          ],
+        },
+        {
+          id: 'af2a',
+          client: 'AF2A',
+          title: { fr: 'Formateur IA', en: 'AI trainer' },
+          period: { fr: 'depuis 2024', en: 'since 2024' },
+          description: {
+            fr: 'Je forme les réseaux de distribution en assurance à utiliser l\'IA au quotidien.',
+            en: 'I train insurance distribution networks to use AI in their daily work.',
+          },
+          tasks: {
+            fr: [
+              'Programmes sur-mesure, pensés pour le terrain.',
+              '**+550 agents et collaborateurs** autonomes sur l\'IA.',
+              'Les réticences sont devenues des usages concrets.',
+            ],
+            en: [
+              'Tailor-made programmes, designed for the field.',
+              '**550+ agents and staff** now autonomous with AI.',
+              'Reluctance turned into concrete, everyday use.',
+            ],
+          },
+          tags: [
+            tag('IA', 'AI', 'emerald'),
+            tag('Conduite du changement', 'Change management', 'violet'),
+            tag('Ingénierie de formation', 'Training design', 'cyan'),
+          ],
+        },
+      ],
+    },
+    {
+      id: 'agent',
+      company: 'AXA',
+      title: { fr: 'Agent général AXA', en: 'AXA general agent' },
+      role: {
+        fr: 'Agent général d\'assurances, dirigeant d\'agence',
+        en: 'General insurance agent, agency owner',
+      },
+      period: { fr: '2015 - 2024', en: '2015 - 2024' },
+      badges: [tag('Entrepreneuriat', 'Entrepreneurship', 'rose')],
+      description: {
+        fr: 'J\'ai dirigé ma propre agence pendant 10 ans. Chiffre d\'affaires doublé, 4 fois la croissance du marché.',
+        en: 'I ran my own agency for 10 years. Revenue doubled, 4 times the market\'s growth.',
+      },
+      tasks: {
+        fr: [
+          'CA doublé à **350k€ (+106 %)**.',
+          'Portefeuille B2B créé de zéro : 25 % du CA.',
+          'Gouvernance partagée avec une équipe de 4 experts.',
+          '**1ère agence d\'assurance dans le Métavers** : BFM, Les Echos, l\'Argus en ont parlé.',
+        ],
+        en: [
+          'Revenue doubled to **€350k (+106%)**.',
+          'B2B portfolio built from scratch: 25% of revenue.',
+          'Shared governance with a team of 4 experts.',
+          '**1st insurance agency in the Metaverse**: covered by BFM, Les Echos and l\'Argus.',
+        ],
+      },
+      tags: [
+        tag('Management', 'Management', 'violet'),
+        tag('Projet', 'Project', 'emerald'),
+        tag('Stratégie B2B', 'B2B strategy', 'blue'),
+        tag('Gouvernance partagée', 'Shared governance', 'violet'),
+        tag('Web3 / Métavers', 'Web3 / Metaverse', 'blue'),
+      ],
+    },
+    {
+      id: 'cic',
+      company: 'CIC & Caisse d\'Épargne',
+      role: {
+        fr: 'Conseiller clientèle professionnelle, puis directeur d\'agence',
+        en: 'Business account manager, then branch manager',
+      },
+      period: { fr: '2004 - 2015', en: '2004 - 2015' },
+      badges: [tag('Banque', 'Banking', 'amber')],
+      description: {
+        fr: '10 ans de banque, du conseil aux professionnels à la direction d\'agence. Directeur d\'agence, je pilotais un P&L.',
+        en: '10 years in banking, from advising business clients to running a branch. As branch manager, I owned a P&L.',
+      },
+      tasks: {
+        fr: [
+          'Développement d\'un portefeuille de clients professionnels.',
+          'Direction d\'agence : pilotage du P&L et d\'une équipe de 4.',
+          'Développement commercial B2B et B2C.',
+        ],
+        en: [
+          'Built a portfolio of business clients.',
+          'Branch management: P&L and a team of 4.',
+          'B2B and B2C business development.',
+        ],
+      },
+      tags: [
+        tag('Management', 'Management', 'violet'),
+        tag('Développement commercial', 'Business development', 'rose'),
+        tag('P&L', 'P&L', 'blue'),
+      ],
+    },
   ],
 
   // ===== COMPÉTENCES =====
   skills: [
     {
-      title: { en: 'Strategy & Vision', fr: 'Stratégie & Vision' },
-      type: 'badges',
+      title: { fr: 'Stratégie & vision', en: 'Strategy & vision' },
+      tone: 'blue',
       items: [
-        { name: { en: 'Strategic planning', fr: 'Stratégie' } },
-        { name: { en: 'Product roadmap', fr: 'Roadmap' } },
-        { name: { en: 'Competitive intelligence', fr: 'Veille' } },
-        { name: { en: 'Business model innovation', fr: 'Business Model' } },
-        { name: { en: 'Innovation', fr: 'Innovation' } },
+        { fr: 'Stratégie', en: 'Strategy' },
+        { fr: 'Roadmap produit', en: 'Product roadmap' },
+        { fr: 'Business model', en: 'Business model' },
+        { fr: 'Veille', en: 'Market watch' },
+        { fr: 'Innovation', en: 'Innovation' },
+        { fr: 'DIAGNum', en: 'DIAGNum' },
       ],
     },
     {
-      title: { en: 'Management', fr: 'Management' },
-      type: 'badges',
+      title: { fr: 'Management', en: 'Management' },
+      tone: 'violet',
       items: [
-        { name: { en: 'Shared governance', fr: 'Gouvernance partagée' } },
-        { name: { en: 'Management', fr: 'Management' } },
-        { name: { en: 'Change management', fr: 'Conduite du changement' } },
-        { name: { en: 'Training', fr: 'Formation' } },
+        { fr: 'Gouvernance partagée', en: 'Shared governance' },
+        { fr: 'Management d\'experts', en: 'Managing experts' },
+        { fr: 'Conduite du changement', en: 'Change management' },
+        { fr: 'Diagnostic Weisbord', en: 'Weisbord diagnosis' },
       ],
     },
     {
-      title: { en: 'Execution & Tech', fr: 'Exécution & Tech' },
-      type: 'badges',
+      title: { fr: 'Exécution & tech', en: 'Execution & tech' },
+      tone: 'emerald',
       items: [
-        { name: { en: 'Data/AI', fr: 'Data/IA' } },
-        { name: { en: 'Delivery', fr: 'Delivery' } },
-        { name: { en: 'Agile', fr: 'Agile' } },
-        { name: { en: 'OKR', fr: 'OKR' } },
-        { name: { en: 'Open Data', fr: 'Open Data' } },
-        { name: { en: 'Vibe Coding', fr: 'Vibe Coding' } },
+        { fr: 'Data/IA', en: 'Data/AI' },
+        { fr: 'Product leadership', en: 'Product leadership' },
+        { fr: 'No-code', en: 'No-code' },
+        { fr: 'Delivery', en: 'Delivery' },
+        { fr: 'Agile', en: 'Agile' },
+        { fr: 'OKR', en: 'OKR' },
+        { fr: 'Open Data', en: 'Open Data' },
+        { fr: 'Vibe Coding', en: 'Vibe Coding' },
       ],
     },
     {
-      title: { en: 'Domain & Market', fr: 'Domaine & Marché' },
-      type: 'badges',
+      title: { fr: 'Domaine & marché', en: 'Domain & market' },
+      tone: 'amber',
       items: [
-        { name: { en: 'Insurance', fr: 'Assurance' } },
-        { name: { en: 'Banking', fr: 'Banque' } },
-        { name: { en: 'B2B', fr: 'B2B' } },
-        { name: { en: 'B2C', fr: 'B2C' } },
-        { name: { en: 'Business development', fr: 'Développement commercial' } },
-      ],
-    },
-    {
-      title: { en: 'Languages', fr: 'Langues' },
-      type: 'languages',
-      items: [
-        { name: { en: 'French', fr: 'Français' }, level: { en: 'Native', fr: 'Natif' } },
-        { name: { en: 'English', fr: 'Anglais' }, level: { en: 'Professional', fr: 'Professionnel' } },
+        { fr: 'Assurance', en: 'Insurance' },
+        { fr: 'Banque', en: 'Banking' },
+        { fr: 'B2B', en: 'B2B' },
+        { fr: 'B2C', en: 'B2C' },
+        { fr: 'Développement commercial', en: 'Business development' },
       ],
     },
   ],
 
-  // ===== EXPÉRIENCES PROFESSIONNELLES =====
-  experiences: [
+  // ===== ENGAGEMENTS (du plus récent au plus ancien) =====
+  engagements: [
     {
-      id: 'hacktion',
-      company: { en: 'Hacktion', fr: 'Hacktion' },
-      role: { en: 'Founder & Digital Transformation Consultant', fr: 'Fondateur & Consultant en Transformation Digitale' },
-      type: { en: 'Consulting', fr: 'Conseil' },
-      period: { en: 'Since 2024', fr: 'Depuis 2024' },
-      description: {
-        en: 'Consulting firm specializing in digital transformation, AI strategy and product leadership.',
-        fr: 'Cabinet de conseil spécialisé en transformation digitale, stratégie IA et leadership produit.',
-      },
-      techs: [
-        { en: 'Product Leadership', fr: 'Leadership Produit' },
-        { en: 'AI', fr: 'IA' },
-        { en: 'Delivery', fr: 'Delivery' },
-        { en: 'Innovation', fr: 'Innovation' },
-      ],
-      isHighlighted: true,
-    },
-    {
-      id: 'axa-consultant',
-      company: { en: 'AXA', fr: 'AXA' },
-      role: { en: 'Strategic Consultant - Data & AI Product Leader', fr: 'Consultant stratégique - Product Leader Data & IA' },
-      type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
-      description: {
-        en: 'Initiated and led end-to-end the strategic Ariane B2B project. No-code prototype delivered in 6 months (vs 18 months standard IT), 800k business signals generated, 670 person-days saved.',
-        fr: 'Initié et piloté de bout en bout le projet stratégique Ariane B2B. Prototype No-code livré en 6 mois (vs 18 mois en cycle standard IT), 800k signaux d\'affaires générés, 670 jours/homme économisés.',
-      },
-      techs: [
-        { en: 'Hacktion', fr: 'Hacktion' },
-        { en: 'Data-Driven', fr: 'Data-Driven' },
-        { en: 'Prototyping', fr: 'Prototype' },
-        { en: 'Product Leadership', fr: 'Leadership Produit' },
-      ],
-      details: {
-        context: {
-          en: 'Entrepreneurship & Product Leadership within AXA ecosystem.',
-          fr: 'Entrepreneuriat & Leadership Produit au sein de l\'écosystème AXA.',
-        },
-        tasks: {
-          en: [
-            'Initiated and led end-to-end the strategic Ariane B2B project',
-            'Designed and delivered a functional prototype in 6 months (No-code)',
-            'Secured board adoption of the strategic roadmap',
-            'Generated 800k business signals via a Data-Driven approach',
-            'Achieved 670 person-days saved in operational efficiency',
-          ],
-          fr: [
-            'Initiation et pilotage de bout en bout du projet stratégique Ariane B2B',
-            'Conception et livraison d\'un prototype fonctionnel en 6 mois (No-code)',
-            'Sécurisation de l\'adoption de la roadmap par le board',
-            '800k signaux d\'affaires générés via une approche Data-Driven',
-            'Gain de 670 jours/homme en efficacité opérationnelle',
-          ],
-        },
-        env: {
-          en: 'No-Code / Data & AI / B2B Strategy / Product Management',
-          fr: 'No-Code / Data & IA / Stratégie B2B / Product Management',
-        },
+      id: 'reussir',
+      period: { fr: '2023 - 2024', en: '2023 - 2024' },
+      text: {
+        fr: '**Réussir** (syndicat des agents AXA) : commissions digitales et data.',
+        en: '**Réussir** (AXA agents\' union): digital and data committees.',
       },
     },
-    {
-      id: 'af2a-formateur',
-      company: { en: 'AF2A', fr: 'AF2A' },
-      role: { en: 'Strategic Trainer - AI Adoption in Insurance', fr: 'Formateur stratégique - Adoption de l\'IA en assurance' },
-      type: { en: 'Training', fr: 'Formation' },
-      description: {
-        en: 'Designed and deployed tailor-made AI training programs for insurance distribution networks. 550+ agents made autonomous with AI.',
-        fr: 'Conçu et déployé des programmes de formation IA sur-mesure pour les réseaux de distribution en assurance. +550 agents rendus autonomes sur l\'IA.',
-      },
-      techs: [
-        { en: 'Hacktion', fr: 'Hacktion' },
-        { en: 'AI', fr: 'IA' },
-        { en: 'Training', fr: 'Formation' },
-        { en: 'Change Management', fr: 'Conduite du changement' },
-      ],
-      details: {
-        context: {
-          en: 'Strategic training for insurance distribution networks on AI adoption.',
-          fr: 'Formation stratégique des réseaux de distribution en assurance sur l\'adoption de l\'IA.',
-        },
-        tasks: {
-          en: [
-            'Designed and deployed tailor-made AI training programs',
-            'Transformed resistance to AI into operational performance',
-            '550+ agents and employees made autonomous with AI',
-            'Made AI a tangible competitive advantage for 2025',
-          ],
-          fr: [
-            'Conception et déploiement de programmes de formation IA sur-mesure',
-            'Transformation de la résistance à l\'IA en performance opérationnelle',
-            '+550 agents et collaborateurs rendus autonomes sur l\'IA',
-            'L\'IA devenue un avantage concurrentiel tangible pour 2025',
-          ],
-        },
-        env: {
-          en: 'AI / Insurance Distribution / Change Management / Training Design',
-          fr: 'IA / Distribution Assurance / Conduite du Changement / Ingénierie de Formation',
-        },
-      },
-    },
-    {
-      id: 'axa-agent',
-      company: { en: 'AXA', fr: 'AXA' },
-      role: { en: 'General Insurance Agent - Entrepreneur Director', fr: 'Agent Général d\'Assurances - Dirigeant Entrepreneur' },
-      type: { en: 'Entrepreneurship', fr: 'Entrepreneuriat' },
-      period: { en: '2015 - 2024', fr: '2015 - 2024' },
-      description: {
-        en: 'Led an insurance agency for 10 years, building performance on a dual pivot: strategic B2B orientation and shared governance with a team of 4 experts. Revenue doubled to 350k€ (+106%), 4x market outperformance. Launched the 1st insurance agency in the Metaverse (BFM, Les Echos, l\'Argus).',
-        fr: 'Dirigé une agence d\'assurance pendant 10 ans, fondant sa performance sur un double pivot : orientation stratégique B2B et gouvernance partagée avec une équipe de 4 experts. CA doublé à 350k€ (+106%), surperformance de 4x le marché. Lancement de la 1ère agence d\'assurance dans le Métavers (BFM, Les Echos, l\'Argus).',
-      },
-      techs: [
-        { en: 'B2B Strategy', fr: 'Stratégie B2B' },
-        { en: 'Management', fr: 'Management' },
-        { en: 'Insurance', fr: 'Assurance' },
-        { en: 'Innovation', fr: 'Innovation' },
-      ],
-      details: {
-        context: {
-          en: '10 years of full ownership of a local insurance agency, strategic transformation and entrepreneurship.',
-          fr: '10 ans de direction complète d\'une agence d\'assurance locale, transformation stratégique et entrepreneuriat.',
-        },
-        tasks: {
-          en: [
-            'Revenue doubled to 350k€ (+106% in 10 years), 4x market outperformance',
-            'B2B portfolio created from scratch, reaching 25% of total revenue',
-            'Implemented shared governance with a team of 4 experts',
-            'Launched the 1st insurance agency in the Metaverse — national media coverage (BFM, Les Echos, l\'Argus)',
-            'Built a trust bridge with Tech leaders through a strategic Web3 initiative',
-          ],
-          fr: [
-            'CA doublé à 350k€ (+106% en 10 ans), surperformance de 4x le marché',
-            'Portefeuille B2B créé de zéro, atteignant 25% du CA total',
-            'Mise en place d\'une gouvernance partagée avec une équipe de 4 experts',
-            'Lancement de la 1ère agence d\'assurance dans le Métavers — couverture nationale (BFM, Les Echos, l\'Argus)',
-            'Construction d\'un pont de confiance avec les leaders de la Tech via une initiative stratégique Web3',
-          ],
-        },
-        env: {
-          en: 'Insurance / B2B / B2C / Shared Governance / Web3 / Metaverse',
-          fr: 'Assurance / B2B / B2C / Gouvernance partagée / Web3 / Métavers',
-        },
-      },
-    },
-    {
-      id: 'cic-ce',
-      company: { en: 'CIC & Caisse d\'Épargne', fr: 'CIC & Caisse d\'Épargne' },
-      role: { en: 'Commercial Director & Management', fr: 'Direction Commerciale & Management' },
-      type: { en: 'Full-time', fr: 'CDI' },
-      period: { en: '2004 - 2015', fr: '2004 - 2015' },
-      description: {
-        en: 'Foundational managerial and commercial career path, from portfolio management to profit center direction.',
-        fr: 'Parcours managérial et commercial fondateur, de la gestion de portefeuille à la direction d\'un centre de profit.',
-      },
-      techs: [
-        { en: 'Banking', fr: 'Banque' },
-        { en: 'Management', fr: 'Management' },
-        { en: 'Sales', fr: 'Développement commercial' },
-      ],
-      details: {
-        context: {
-          en: 'Banking sector — progressive career from portfolio management to branch direction.',
-          fr: 'Secteur bancaire — parcours progressif de la gestion de portefeuille à la direction d\'agence.',
-        },
-        tasks: {
-          en: [
-            'Portfolio management and client relationship development',
-            'Team management and profit center direction',
-            'Commercial development B2B and B2C',
-          ],
-          fr: [
-            'Gestion de portefeuille et développement relation client',
-            'Management d\'équipe et direction de centre de profit',
-            'Développement commercial B2B et B2C',
-          ],
-        },
-        env: {
-          en: 'Banking / CRM / Team Management / Sales Direction',
-          fr: 'Banque / CRM / Management d\'Équipe / Direction Commerciale',
-        },
-      },
-    },
-  ],
-
-  // ===== PROJETS (Expériences Personnelles) =====
-  projects: [
     {
       id: 'no-code-france',
-      title: { en: 'No-code France - Board Member', fr: 'No-code France - Conseil d\'Administration' },
-      description: {
-        en: 'Co-founder and active member of the first board of directors of No-code France (2022).',
-        fr: 'Co-fondateur de l\'association No-code France et membre actif de la communauté No-code France (2022).',
+      period: { fr: '2022', en: '2022' },
+      text: {
+        fr: '**No-code France** : cofondateur de l\'association, membre du premier conseil d\'administration.',
+        en: '**No-code France**: co-founder of the association, member of its first board.',
       },
-      techs: [
-        { en: 'No-code', fr: 'No-code' },
-        { en: 'Community', fr: 'Communauté' },
-      ],
     },
     {
-      id: 'reussir-commissions',
-      title: { en: 'Réussir - AXA Agents Union', fr: 'Réussir - Syndicat des agents AXA' },
-      description: {
-        en: 'Active member of digital and data commissions at Réussir, AXA agents union (2023-2024).',
-        fr: 'Membre actif des commissions digitales et data de Réussir, syndicat des agents AXA (2023-2024).',
+      id: 'collectif-no-code',
+      period: { fr: 'depuis 2020', en: 'since 2020' },
+      text: {
+        fr: '**Collectif No-code France** : membre actif.',
+        en: '**No-code France collective**: active member.',
       },
-      techs: [
-        { en: 'Digital', fr: 'Digital' },
-        { en: 'Data', fr: 'Data' },
-        { en: 'Insurance', fr: 'Assurance' },
-      ],
     },
   ],
 
-  // ===== ÉDUCATION =====
+  // ===== FORMATION =====
   education: [
     {
-      school: { en: 'Ecoles des Mines - PSL', fr: 'Ecoles des Mines - PSL' },
-      degree: { en: 'Advanced Master in Strategic Management of Information and Technology (MSIT)', fr: 'Mastère Spécialisé Management stratégique de l\'Information et des Technologies (MSIT)' },
+      degree: { fr: 'Executive Mastère Spécialisé MSIT', en: 'Executive Advanced Master MSIT' },
+      school: 'Mines Paris - PSL',
+      details: { fr: 'Bac +6 · en cours', en: 'Postgraduate · in progress' },
       period: '2026',
     },
     {
-      school: { en: 'IUP Banking Finance Insurance - IAE Lille', fr: 'IUP Banque Finance Assurance - IAE Lille' },
-      degree: { en: 'Banking, Finance & Insurance', fr: 'Banque, Finance & Assurance' },
+      degree: { fr: 'IUP Banque Finance Assurance', en: 'IUP Banking, Finance & Insurance' },
+      school: 'IAE Lille',
+      details: { fr: 'Bac +4', en: 'Master\'s level 1' },
       period: '2004',
     },
     {
-      school: { en: 'Sacré Cœur Tourcoing', fr: 'Sacré Cœur Tourcoing' },
-      degree: { en: 'Scientific Baccalaureate', fr: 'Baccalauréat scientifique' },
+      degree: { fr: 'Bac scientifique', en: 'Scientific baccalaureate' },
+      school: 'Sacré-Cœur Tourcoing',
       period: '2000',
     },
   ],
 
-  // ===== LOISIRS =====
+  // ===== EN DEHORS DU TRAVAIL =====
   hobbies: [
     {
-      title: { en: 'Tech & Innovation', fr: 'Tech & Innovation' },
-      details: [
-        { en: 'Vibe Coding', fr: 'Vibe Coding' },
-        { en: 'Open Source projects', fr: 'Projets Open Source' },
-        { en: 'No-code community', fr: 'Communauté No-code' },
-      ],
+      title: { fr: 'Tech & innovation', en: 'Tech & innovation' },
+      description: {
+        fr: 'Vibe coding, open source, communauté No-code.',
+        en: 'Vibe coding, open source, No-code community.',
+      },
     },
     {
-      title: { en: 'Role-playing & Heroic Fantasy', fr: 'Jeux de rôle & Héroic Fantasy' },
-      details: [
-        { en: 'Magic the Gathering', fr: 'Magic the Gathering' },
-        { en: 'Storytelling, imaginary universes', fr: 'Narration, univers imaginaires' },
-        { en: 'Role-playing games', fr: 'Jeux de rôle grandeur nature' },
-      ],
+      title: { fr: 'Jeux de rôle', en: 'Role-playing games' },
+      description: {
+        fr: 'Magic the Gathering, grandeur nature.',
+        en: 'Magic the Gathering, live-action role-play.',
+      },
     },
     {
-      title: { en: 'Reading', fr: 'Lecture' },
-      details: [
-        { en: 'Robin Hobb - The Farseer Trilogy', fr: 'Robin Hobb - L\'Assassin Royal' },
-        { en: 'JRR Tolkien - The Lord of the Rings', fr: 'JRR Tolkien - Le Seigneur des Anneaux' },
-        { en: 'Anne Mc Caffrey - The Dragonriders of Pern', fr: 'Anne Mc Caffrey - La Balade de Pern' },
-      ],
+      title: { fr: 'Lecture', en: 'Reading' },
+      description: {
+        fr: 'Heroic fantasy : Robin Hobb, Tolkien, McCaffrey.',
+        en: 'Heroic fantasy: Robin Hobb, Tolkien, McCaffrey.',
+      },
     },
   ],
 
+  // ===== LANGUES PARLÉES =====
+  spokenLanguages: [
+    { name: { fr: 'Français', en: 'French' }, level: { fr: 'natif', en: 'native' } },
+    { name: { fr: 'Anglais', en: 'English' }, level: { fr: 'professionnel', en: 'professional' } },
+  ],
+
   // ===== PDF =====
+  // Remplacer le fichier dans public/cv/ (ou changer le chemin) pour publier un nouveau CV.
   pdf: {
-    label: { en: 'Download PDF', fr: 'Télécharger le PDF' },
-    path: { en: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf', fr: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf' },
+    path: {
+      fr: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf',
+      en: '/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf',
+    },
   },
 
   // ===== THÈME =====
   theme: {
-    preset: 'indigo',
     defaultMode: 'light',
   },
 
   // ===== LABELS UI =====
   labels: {
-    sections: {
-      contact: { en: 'CONTACT', fr: 'CONTACT' },
-      skills: { en: 'KEY SKILLS', fr: 'COMPÉTENCES CLÉS' },
-      experience: { en: 'PROFESSIONAL EXPERIENCE', fr: 'EXPÉRIENCES PROFESSIONNELLES' },
-      education: { en: 'EDUCATION', fr: 'FORMATION' },
-      projects: { en: 'PERSONAL INITIATIVES', fr: 'EXPÉRIENCES PERSONNELLES' },
-      hobbies: { en: 'INTERESTS', fr: 'CENTRES D\'INTÉRÊT' },
+    nav: {
+      profil: { fr: 'Profil', en: 'Profile' },
+      parcours: { fr: 'Parcours', en: 'Experience' },
+      competences: { fr: 'Compétences', en: 'Skills' },
+      formation: { fr: 'Formation', en: 'Education' },
+      contact: { fr: 'Contact', en: 'Contact' },
     },
+    navAriaLabel: { fr: 'Sections du CV', en: 'Resume sections' },
+    mantra: { fr: 'Mon mantra', en: 'My mantra' },
     experience: {
-      mainTasks: { en: 'Key achievements:', fr: 'Réalisations clés :' },
-      moreTasks: { en: 'more...', fr: 'plus...' },
-      training: { en: 'Training:', fr: 'Formations :' },
-      techEnv: { en: 'Environment:', fr: 'Environnement :' },
-      technologies: { en: 'Technologies', fr: 'Technologies' },
+      eyebrow: { fr: 'Parcours', en: 'Experience' },
+      title: { fr: 'Ce que j\'ai fait', en: 'What I\'ve done' },
+      hint: { fr: 'Cliquez sur une ligne pour le détail.', en: 'Click a row for details.' },
+      mission: { fr: 'mission', en: 'mission' },
+      ongoing: { fr: 'en cours', en: 'ongoing' },
+    },
+    skills: {
+      eyebrow: { fr: 'Compétences', en: 'Skills' },
+      title: { fr: 'Ce que je sais faire', en: 'What I can do' },
+    },
+    engagements: { eyebrow: { fr: 'Engagements', en: 'Commitments' } },
+    education: { eyebrow: { fr: 'Formation', en: 'Education' } },
+    hobbies: { eyebrow: { fr: 'En dehors du travail', en: 'Outside work' } },
+    languages: { eyebrow: { fr: 'Langues', en: 'Languages' } },
+    contact: {
+      prompt: '$ contact --francois',
+      title: { fr: 'On en parle ?', en: 'Shall we talk?' },
     },
     actions: {
-      clickHint: { en: 'Click on experiences to see more details', fr: 'Cliquez sur les expériences pour voir plus de détails' },
-      switchTheme: { en: 'Toggle dark mode', fr: 'Changer le thème' },
-      downloadPdf: { en: 'Download PDF', fr: 'Télécharger le PDF' },
+      contactMe: { fr: 'Me contacter', en: 'Get in touch' },
+      downloadCv: { fr: 'Télécharger le CV', en: 'Download my CV' },
+      downloadCvShort: { fr: 'CV PDF', en: 'CV PDF' },
+      sendEmail: { fr: 'Écrire un e-mail', en: 'Send an email' },
+      linkedin: { fr: 'LinkedIn', en: 'LinkedIn' },
+      switchToDark: { fr: 'Passer en mode sombre', en: 'Switch to dark mode' },
+      switchToLight: { fr: 'Passer en mode clair', en: 'Switch to light mode' },
+      language: { fr: 'Langue', en: 'Language' },
+      flipPhoto: { fr: 'Retourner la photo', en: 'Flip the photo' },
     },
   },
 }

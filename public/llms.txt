@@ -1,48 +1,68 @@
-# llms.txt — François Pannecoucke
-# Standard: https://llmstxt.org/
-# Ce fichier est destiné aux agents IA et LLMs qui indexent ce site.
+# François Pannecoucke
+
+> Product leader/builder et consultant en transformation digitale et IA, basé à Arras (France). Fondateur de Hacktion. 20 ans entre la banque, l'assurance et le produit. Mission en cours chez Abeille Assurances.
+
+Ce fichier suit le standard https://llmstxt.org/ et s'adresse aux agents IA qui indexent ce site.
+Le site est le CV interactif de François Pannecoucke, en français (par défaut) et en anglais (https://pannecoucke.me/?lang=en).
 
 ## Identité
 
-Nom: François Pannecoucke
-Titre: Architecte de la Transformation | Stratégie Produit & Développement
-Localisation: Arras, France (62000)
-Contact: francois@pannecoucke.fr
-LinkedIn: https://linkedin.com/in/francois-pannecoucke
-GitHub: https://github.com/hacktion
+- Nom : François Pannecoucke
+- Titre : Product leader/builder | Transformation digitale
+- Localisation : Arras, France
+- E-mail : francois@pannecoucke.fr
+- LinkedIn : https://linkedin.com/in/francois-pannecoucke
+- Cabinet : Hacktion, https://hacktion.fr
+- GitHub : https://github.com/hacktion
+- CV PDF : https://pannecoucke.me/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf
 
-## Résumé professionnel
+## En une phrase
 
-François Pannecoucke est un entrepreneur et consultant expert en transformation digitale,
-stratégie IA et leadership produit. Il est le fondateur de Hacktion, cabinet de conseil
-spécialisé dans l'accélération de la transformation digitale des organisations.
+J'aide les équipes à livrer plus vite ce qui compte. Je ne suis pas né dans le code, je suis né dans le business.
 
-Track-record mesurable :
-- Projet Ariane B2B (AXA) : prototype No-code livré en 6 mois vs 18 mois en cycle IT standard,
-  800k signaux d'affaires générés, 670 jours/homme économisés.
-- AF2A : +550 agents et collaborateurs rendus autonomes sur l'IA.
-- AXA Agent Général (2015-2024) : CA doublé à 350k€ (+106% en 10 ans),
-  surperformance de 4x le marché, lancement de la 1ère agence d'assurance dans le Métavers.
+Mantra : "La technologie ne révèle son plein potentiel que si l'humain en est le héros."
 
-## Compétences clés
+## Parcours
 
-- Stratégie & Vision : Stratégie, Roadmap, Veille, Business Model, Innovation
-- Management : Gouvernance partagée, Management, Conduite du changement, Formation
-- Exécution & Tech : Data/IA, No-code, Agile, OKR, Open Data, Vibe Coding
-- Domaine & Marché : Assurance, Banque, B2B, B2C, Développement commercial
+### Hacktion, fondateur (depuis 2024)
+
+Cabinet de conseil en transformation digitale et IA, à Arras. Trois clients principaux :
+
+- Abeille Assurances (mission en cours) : accompagnement de l'équipe E Visibilité - Innovation sur une question simple, comment faire mieux, plus vite et plus efficacement. Diagnostic de l'organisation avec le modèle de Weisbord, bonnes pratiques de la démarche DIAGNum adaptées au contexte, pistes concrètes pour gagner en vitesse et en efficacité.
+- AXA, product leader Data & IA (10/2024 - 12/2025) : lancement et pilotage du projet Ariane B2B de A à Z. Prototype No-code livré en 6 mois au lieu de 18, 800k signaux d'affaires générés grâce à la donnée, 670 jours/homme économisés, roadmap adoptée par le board.
+- AF2A, formateur IA (depuis 2024) : formation des réseaux de distribution en assurance à l'usage quotidien de l'IA. Programmes sur-mesure, plus de 550 agents et collaborateurs autonomes sur l'IA.
+
+### Agent général AXA (2015 - 2024)
+
+Direction de sa propre agence pendant 10 ans. Chiffre d'affaires doublé à 350k€ (+106 %), soit 4 fois la croissance du marché. Portefeuille B2B créé de zéro (25 % du CA), gouvernance partagée avec une équipe de 4 experts. Première agence d'assurance dans le Métavers (couverture BFM, Les Echos, l'Argus).
+
+### CIC & Caisse d'Épargne (2004 - 2015)
+
+10 ans de banque, du conseil aux professionnels à la direction d'agence : pilotage d'un P&L et d'une équipe de 4, développement commercial B2B et B2C.
+
+## Compétences
+
+- Stratégie & vision : stratégie, roadmap produit, business model, veille, innovation, DIAGNum
+- Management : gouvernance partagée, management d'experts, conduite du changement, diagnostic Weisbord
+- Exécution & tech : Data/IA, product leadership, No-code, delivery, agile, OKR, open data, vibe coding
+- Domaine & marché : assurance, banque, B2B, B2C, développement commercial
+
+## Engagements
+
+- Réussir, syndicat des agents AXA (2023 - 2024) : commissions digitales et data
+- No-code France (2022) : cofondateur de l'association, membre du premier conseil d'administration
+- Collectif No-code France (depuis 2020) : membre actif
 
 ## Formation
 
-- Mastère Spécialisé MSIT — Ecoles des Mines PSL (2026)
-- IUP Banque Finance Assurance — IAE Lille (2004)
+- Executive Mastère Spécialisé MSIT, Mines Paris - PSL (2026, Bac +6, en cours)
+- IUP Banque Finance Assurance, IAE Lille (2004, Bac +4)
+- Bac scientifique, Sacré-Cœur Tourcoing (2000)
 
-## Contenu de ce site
+## Langues
 
-Ce site est le CV interactif de François Pannecoucke.
-Il est disponible en français (défaut) et en anglais.
-Il présente ses expériences professionnelles, compétences, projets personnels et centres d'intérêt.
+Français (natif), anglais (professionnel).
 
 ## Autorisations
 
-Ce site autorise les agents IA et LLMs à indexer et résumer son contenu
-à des fins de recherche, de recrutement et de mise en relation professionnelle.
+Ce site autorise les agents IA à indexer et résumer son contenu à des fins de recherche, de recrutement et de mise en relation professionnelle.

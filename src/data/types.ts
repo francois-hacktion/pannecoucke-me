@@ -1,8 +1,22 @@
-// ===== LOCALIZATION =====
+// ===== LOCALISATION =====
 
 export type LocalizedString = Record<string, string>
 
 export type LocalizedStringArray = Record<string, string[]>
+
+// ===== TAGS =====
+
+/**
+ * Teintes du design system Hacktion (cf. globals.css, variables --tone-*).
+ * Règle : Stratégie = blue, Management = violet, Exécution & Tech = emerald,
+ * Domaine = amber, Formation = cyan, Entrepreneuriat/Business = rose, Hacktion/Conseil = gold.
+ */
+export type Tone = 'blue' | 'violet' | 'emerald' | 'amber' | 'cyan' | 'rose' | 'navy' | 'gold'
+
+export interface Tag {
+  label: LocalizedString
+  tone: Tone
+}
 
 // ===== CONTACT =====
 
@@ -14,136 +28,151 @@ export interface ContactItem {
   href?: string
 }
 
-// ===== SKILLS =====
+// ===== NAVIGATION =====
 
-export interface SkillCategory {
-  title: LocalizedString
-  type: 'badges' | 'text' | 'languages'
-  items: SkillItem[]
+/** Sections présentes dans la navigation de la headerbar (dans l'ordre). */
+export type SectionId = 'profil' | 'parcours' | 'competences' | 'formation' | 'contact'
+
+// ===== PARCOURS =====
+
+/**
+ * Les textes marqués "riche" acceptent **gras** (syntaxe Markdown minimale).
+ */
+export interface Mission {
+  id: string
+  client: string
+  title?: LocalizedString
+  period?: LocalizedString
+  isOngoing?: boolean
+  description: LocalizedString
+  /** Texte riche */
+  tasks: LocalizedStringArray
+  tags: Tag[]
 }
-
-export interface SkillItem {
-  name: string | LocalizedString
-  color?: string
-  level?: LocalizedString
-  details?: string
-}
-
-// ===== EXPERIENCES =====
-
-import type { TechName } from './tech-registry'
 
 export interface Experience {
   id: string
-  company: LocalizedString
+  /** Organisation (JSON-LD, ATS) */
+  company: string
+  /** Titre affiché sur la ligne. Par défaut : company */
+  title?: LocalizedString
+  /** Intitulé de poste (ATS, noscript) */
   role: LocalizedString
-  type?: LocalizedString
-  period?: LocalizedString
+  period: LocalizedString
+  badges: Tag[]
   description: LocalizedString
-  techs: (TechName | string | LocalizedString)[]
-  isHighlighted?: boolean
-  subItem?: {
-    title: LocalizedString
-    description: LocalizedString
-  }
-  details?: {
-    context: LocalizedString
-    tasks?: LocalizedStringArray
-    training?: LocalizedStringArray
-    env: LocalizedString
-  }
+  /** Texte riche */
+  tasks?: LocalizedStringArray
+  tags?: Tag[]
+  /** Missions imbriquées : la ligne n'est alors pas dépliable, chaque mission l'est. */
+  missions?: Mission[]
 }
 
-// ===== PROJECTS =====
+// ===== COMPÉTENCES =====
 
-export interface Project {
-  id: string
+export interface SkillCategory {
   title: LocalizedString
-  description: LocalizedString
-  techs: (TechName | string | LocalizedString)[]
-  url?: string
-  github?: string
+  tone: Tone
+  items: LocalizedString[]
 }
 
-// ===== EDUCATION =====
+export interface SpokenLanguage {
+  name: LocalizedString
+  level: LocalizedString
+}
+
+// ===== ENGAGEMENTS =====
+
+export interface Engagement {
+  id: string
+  period: LocalizedString
+  /** Texte riche */
+  text: LocalizedString
+}
+
+// ===== FORMATION =====
 
 export interface Education {
-  school: LocalizedString
   degree: LocalizedString
-  specialty?: LocalizedString
-  period?: string
-  logo?: string
+  school: string
+  /** Complément affiché après l'école (niveau, statut) */
+  details?: LocalizedString
+  period: string
 }
 
-// ===== HOBBIES =====
+// ===== EN DEHORS DU TRAVAIL =====
 
 export interface Hobby {
   title: LocalizedString
-  details?: LocalizedString[]
+  description: LocalizedString
 }
 
-// ===== THEME =====
-
-export interface ThemeColors {
-  bg: string
-  bgCard: string
-  text: string
-  textSecondary: string
-  bgDark: string
-  bgCardDark: string
-  textDark: string
-  textSecondaryDark: string
-  primary: string
-  primaryLight: string
-  primaryDark: string
-  primaryLightDark: string
-  sidebarLight: string
-  sidebarLightEnd: string
-  sidebarDark: string
-  sidebarDarkEnd: string
-}
-
-export type PresetName = 'minimal' | 'warm' | 'ocean' | 'forest' | 'slate' | 'lilac' | 'indigo'
-
-// ===== LABELS =====
+// ===== LABELS UI =====
 
 export interface ResumeLabels {
-  sections: {
-    contact: LocalizedString
-    skills: LocalizedString
-    experience: LocalizedString
-    education: LocalizedString
-    projects?: LocalizedString
-    hobbies?: LocalizedString
-  }
+  nav: Record<SectionId, LocalizedString>
+  navAriaLabel: LocalizedString
+  mantra: LocalizedString
   experience: {
-    mainTasks: LocalizedString
-    moreTasks: LocalizedString
-    training?: LocalizedString
-    techEnv: LocalizedString
-    technologies: LocalizedString
+    eyebrow: LocalizedString
+    title: LocalizedString
+    hint: LocalizedString
+    mission: LocalizedString
+    ongoing: LocalizedString
+  }
+  skills: {
+    eyebrow: LocalizedString
+    title: LocalizedString
+  }
+  engagements: { eyebrow: LocalizedString }
+  education: { eyebrow: LocalizedString }
+  hobbies: { eyebrow: LocalizedString }
+  languages: { eyebrow: LocalizedString }
+  contact: {
+    prompt: string
+    title: LocalizedString
   }
   actions: {
-    clickHint: LocalizedString
-    switchTheme: LocalizedString
-    downloadPdf?: LocalizedString
+    contactMe: LocalizedString
+    downloadCv: LocalizedString
+    downloadCvShort: LocalizedString
+    sendEmail: LocalizedString
+    linkedin: LocalizedString
+    switchToDark: LocalizedString
+    switchToLight: LocalizedString
+    language: LocalizedString
+    flipPhoto: LocalizedString
   }
 }
 
-// ===== MAIN CONFIG =====
+// ===== CONFIG PRINCIPALE =====
 
 export interface ResumeConfig {
+  site: {
+    /** URL canonique, sans slash final */
+    url: string
+    /** Domaine affiché dans la headerbar */
+    domain: string
+  }
   personal: {
     name: string
     photo?: string
     photoBackEmoji?: string
+    /** Intitulé (SEO, JSON-LD) */
     title: LocalizedString
-    subtitle?: LocalizedString
-    location?: string
+    /** Eyebrow du hero */
+    headline: LocalizedString
+    intro: LocalizedString
+    tagline?: LocalizedString
+    mantra?: LocalizedString
+    city: string
+    location: string
+    /** Statut affiché dans la barre d'état */
+    status?: LocalizedString
   }
   seo: {
-    title: string
-    description: string
+    title: LocalizedString
+    description: LocalizedString
   }
   languages: {
     default: string
@@ -151,19 +180,17 @@ export interface ResumeConfig {
     labels: Record<string, string>
   }
   contact: ContactItem[]
-  skills: SkillCategory[]
   experiences: Experience[]
+  skills: SkillCategory[]
+  engagements?: Engagement[]
   education: Education[]
-  projects?: Project[]
   hobbies?: Hobby[]
+  spokenLanguages?: SpokenLanguage[]
   pdf?: {
-    label?: LocalizedString
-    /** Single path for all languages, or one path per language (hides button if no PDF for current language) */
+    /** Un chemin pour toutes les langues, ou un chemin par langue (bouton masqué si absent) */
     path: string | LocalizedString
   }
   theme?: {
-    preset?: PresetName
-    colors?: Partial<ThemeColors>
     defaultMode?: 'light' | 'dark' | 'system'
   }
   labels: ResumeLabels
