@@ -16,6 +16,7 @@ CV interactif de François Pannecoucke. Vite + React 19 + TypeScript + Tailwind 
 - **Points de rupture** : `os` 760px (barre d'état), `nav` 880px (nav dans la headerbar, sinon barre sticky), `wide` 1080px (URL et libellé "CV PDF"). La nav passe en barre sticky sous 880px et non 760px comme dans le handoff : mesuré, la headerbar déborde sinon (nav 421px + FR/EN + boutons).
 - **Centrage de la nav** : grille `minmax(0,1fr) auto minmax(0,1fr)` et padding horizontal symétrique (14px), pour un centrage exact sur la fenêtre.
 - **Mobile (< 640px)** : la période passe au-dessus du contenu dans les lignes du parcours et des engagements ; photo réduite à 150×180.
+- **Bouton primaire** : texte navy `#0d1f2d` sur or (et non blanc comme dans le handoff) : contraste 8:1 au lieu de 2,1:1, aligné sur le bouton or de la headerbar. À reporter dans le design system Hacktion.
 - **Icônes** : Phosphor "regular" recopiées en SVG inline (`src/components/icons`), pour éviter une dépendance.
 - **Typographie française** : `resolve()` (lib/i18n) rend insécables les espaces avant `: ; ? ! »` et après `«` en français. Écrire des espaces normales dans la config.
 - **Texte riche** : `**gras**` uniquement (`RichText`), retiré ou converti en `<strong>` par le plugin SEO.

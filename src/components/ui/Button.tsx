@@ -19,7 +19,8 @@ const HARD_SHADOW =
   'shadow-[4px_4px_0_0_var(--color-navy)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_var(--color-navy)] active:translate-x-1 active:translate-y-1 active:shadow-none'
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: cn('rounded-[4px] border-2 border-black bg-gold text-white', HARD_SHADOW),
+  // Texte navy et non blanc (écart au handoff) : contraste 8:1 au lieu de 2,1:1, comme le bouton or de la headerbar
+  primary: cn('rounded-[4px] border-2 border-black bg-gold text-[#0d1f2d]', HARD_SHADOW),
   secondary: cn('rounded-[4px] border-2 border-navy bg-white text-navy', HARD_SHADOW),
   blue: 'rounded-lg bg-[#2563eb] text-white shadow-[0_10px_15px_-3px_rgba(0,0,0,.1)] hover:-translate-y-0.5 hover:bg-[#1d4ed8] hover:shadow-[0_10px_15px_-3px_rgba(59,130,246,.3)]',
   slate: 'rounded-lg bg-[#0f172a] font-semibold text-white shadow-[0_4px_6px_-1px_rgba(0,0,0,.1),0_2px_4px_-2px_rgba(0,0,0,.1)] hover:bg-[#1e293b]',
