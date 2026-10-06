@@ -27,10 +27,7 @@ export function TaskList({ tasks, className }: { tasks: string[]; className?: st
   return (
     <ul className={cn('m-0 flex list-none flex-col gap-2 p-0 text-[15px] leading-[1.55] text-body', className)}>
       {tasks.map((task) => (
-        <li key={task} className="flex gap-2.5">
-          <span aria-hidden="true" className="font-bold text-gold">
-            →
-          </span>
+        <li key={task} className="glyph-arrow flex gap-2.5 before:font-bold before:text-gold">
           <span>
             <RichText text={task} />
           </span>

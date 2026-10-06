@@ -1,9 +1,9 @@
-# robots.txt — François Pannecoucke CV Site
+# robots.txt : CV de François Pannecoucke
 
 User-agent: *
 Allow: /
 
-# Crawlers IA — autorisés explicitement
+# Crawlers IA : autorisés explicitement
 User-agent: GPTBot
 Allow: /
 
@@ -19,3 +19,5 @@ Allow: /
 # Fichiers de référence
 # LLMs: /llms.txt
 # Security: /.well-known/security.txt
+
+Sitemap: https://pannecoucke.me/sitemap.xml

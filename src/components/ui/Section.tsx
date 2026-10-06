@@ -12,10 +12,13 @@ interface SectionEyebrowProps {
 /** Eyebrow "# Section" en Geist Mono or. */
 export function SectionEyebrow({ as: Tag = 'p', id, className, children }: SectionEyebrowProps) {
   return (
-    <Tag id={id} className={cn('m-0 mb-3.5 font-mono text-[13px] font-medium text-eyebrow', className)}>
-      <span aria-hidden="true" className="mr-2 font-bold text-gold">
-        #
-      </span>
+    <Tag
+      id={id}
+      className={cn(
+        'glyph-hash m-0 mb-3.5 font-mono text-[13px] font-medium text-eyebrow before:mr-2 before:font-bold before:text-gold',
+        className,
+      )}
+    >
       {children}
     </Tag>
   )

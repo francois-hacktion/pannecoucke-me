@@ -1,6 +1,6 @@
 # CV interactif, François Pannecoucke
 
-CV interactif open source, construit avec React, TypeScript, Tailwind CSS et Framer Motion, habillé du design system **Hacktion OS 2**.
+CV interactif open source, construit avec React, TypeScript et Tailwind CSS, pré-rendu en HTML statique et habillé du design system **Hacktion OS 2**.
 
 **[▶ Voir le CV en ligne](https://pannecoucke.me)**
 
@@ -21,13 +21,15 @@ Il a depuis été entièrement redessiné avec le langage **Hacktion OS 2**, dé
 ## Fonctionnalités
 
 - **Un seul fichier de contenu** : `src/data/resume-config.ts`, typé de bout en bout
-- **Bilingue FR/EN** : bascule dans la headerbar, langue mémorisée et partageable (`?lang=en`), typographie française automatique (espaces insécables)
+- **Bilingue FR/EN** : une page par langue (`/` et `/en/`), bascule sans rechargement dans la headerbar, choix mémorisé, typographie française automatique (espaces insécables)
 - **Mode clair/sombre** : bascule manuelle mémorisée, sans flash au chargement
 - **Navigation par sections** : scroll-spy, URL à jour (`#parcours`), liens profonds
 - **Accordéon** : une seule expérience ou mission ouverte à la fois, la mission en cours ouverte par défaut
 - **Responsive** : navigation dans la headerbar sur grand écran, barre sticky défilante sur mobile
 - **Téléchargement du CV en PDF** : un fichier par langue possible
-- **SEO et ATS** : CV complet lisible sans JavaScript (`<noscript>` sémantique), JSON-LD `Person`, `hreflang`, Open Graph
+- **Pré-rendu statique** : chaque page est générée en HTML complet au build, React s'y attache ensuite (contenu lisible sans JavaScript par les robots et les ATS)
+- **Performance** : Lighthouse 100/100/100/100 en desktop, 99/100/100/100 en mobile ; polices hébergées sur le site, CSS inlinée, aucun script tiers
+- **SEO** : JSON-LD `ProfilePage` + `Person`, `hreflang`, canonical par langue, `sitemap.xml`, Open Graph
 - **Fichiers pour les IA** : `llms.txt`, `robots.txt` ouvert aux crawlers IA
 - **Accessibilité** : navigation au clavier, focus visible, `aria-expanded` / `aria-current`, respect de `prefers-reduced-motion`
 
@@ -48,7 +50,7 @@ Pour personnaliser le contenu, voir le [guide de personnalisation](docs/CUSTOMIZ
 
 ### Mettre à jour le PDF
 
-Déposer le nouveau fichier dans `public/cv/`, puis mettre à jour `pdf.path` dans `src/data/resume-config.ts` si le nom change.
+Déposer le nouveau fichier dans `public/cv/`, puis mettre à jour `pdf.path` dans `src/data/resume-config.ts` si le nom change. Le PDF n'est téléchargé qu'au clic : il ne pèse rien sur le chargement de la page. Penser à renseigner ses métadonnées (titre, auteur) et à alléger les images embarquées.
 
 ---
 
@@ -58,7 +60,7 @@ Déposer le nouveau fichier dans `public/cv/`, puis mettre à jour `pdf.path` da
 npm run build
 ```
 
-Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages** à chaque push sur `main`.
+Le build enchaîne le bundle client, le bundle serveur (`src/entry-server.tsx`) et le pré-rendu (`scripts/prerender.mjs`). Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages** à chaque push sur `main`. Les en-têtes (cache, sécurité) sont dans `public/_headers`.
 
 | Champ | Valeur |
 |-------|--------|
@@ -73,9 +75,8 @@ Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages**
 - [Vite](https://vite.dev/) : build
 - [React 19](https://react.dev/) : interface
 - [TypeScript](https://www.typescriptlang.org/) : typage statique
-- [Tailwind CSS v4](https://tailwindcss.com/) : styles, tokens du design system en variables CSS
-- [Framer Motion](https://www.framer.com/motion/) : accordéon et flip de la photo
-- [Geist et Geist Mono](https://vercel.com/font) : typographie
+- [Tailwind CSS v4](https://tailwindcss.com/) : styles, tokens du design system en variables CSS, animations en CSS pur
+- [Geist et Geist Mono](https://vercel.com/font) : typographie, hébergée dans `public/fonts` (licence OFL)
 - Icônes [Phosphor](https://phosphoricons.com) (MIT), intégrées en SVG
 
 ---
@@ -93,14 +94,18 @@ Le dossier `dist/` contient le site statique, déployé sur **Cloudflare Pages**
 │   │   ├── ui/                     # Boutons, tags, eyebrows, accordéon
 │   │   ├── Resume/                 # Sections du CV
 │   │   └── icons/                  # Icônes Phosphor
-│   ├── lib/                        # i18n, thème, navigation par sections
-│   └── globals.css                 # Tokens Hacktion OS 2 (clair/sombre)
+│   ├── lib/                        # i18n, thème, navigation par sections, SEO
+│   ├── entry-server.tsx            # Rendu serveur utilisé par le pré-rendu
+│   └── globals.css                 # Tokens Hacktion OS 2 (clair/sombre), polices
 ├── public/
 │   ├── cv/                         # CV PDF
+│   ├── fonts/                      # Geist et Geist Mono (woff2, licence OFL)
 │   ├── images/                     # Photo, logos Hacktion, image Open Graph
+│   ├── _headers                    # En-têtes Cloudflare (cache, sécurité)
 │   ├── llms.txt
-│   └── robots.txt
-└── vite-plugin-resume-seo.ts       # JSON-LD et <noscript> injectés au build
+│   ├── robots.txt
+│   └── sitemap.xml
+└── scripts/prerender.mjs           # Une page HTML complète par langue au build
 ```
 
 ---

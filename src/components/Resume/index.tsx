@@ -4,7 +4,7 @@ import { useTheme } from '@/lib/theme'
 import { useSectionNav } from '@/lib/hooks/useSectionNav'
 import { resumeConfig } from '@/data/resume-config'
 import type { SectionId } from '@/data/types'
-import { SECTION_IDS, getPdfPath } from '@/lib/resume'
+import { SECTION_IDS, getPdfPath, pagePath } from '@/lib/resume'
 import { assetUrl } from '@/lib/utils'
 import { DownloadSimpleIcon, MoonIcon, SunIcon } from '@/components/icons'
 import { HeaderBar } from '@/components/os/HeaderBar'
@@ -62,9 +62,10 @@ export function Resume() {
             alt="Hacktion"
             width={58}
             height={40}
+            loading="lazy"
             className="-my-1 hidden h-10 w-auto flex-none dark:block"
           />
-          <span className="hidden truncate font-mono text-[12.5px] text-muted wide:block">
+          <span className="hidden truncate font-mono text-[12.5px] text-muted-strong wide:block">
             {site.domain}
             {active !== 'profil' && `/${active}`}
           </span>
@@ -77,8 +78,16 @@ export function Resume() {
             <LinkedButtons
               ariaLabel={resolve(labels.actions.language)}
               value={language}
-              onSelect={(lang) => setLanguage(lang)}
-              items={languages.available.map((lang) => ({ id: lang, label: languages.labels[lang], lang }))}
+              onSelect={(lang, event) => {
+                event.preventDefault()
+                setLanguage(lang)
+              }}
+              items={languages.available.map((lang) => ({
+                id: lang,
+                label: languages.labels[lang],
+                href: pagePath(lang),
+                lang,
+              }))}
             />
           )}
           <HeaderButton

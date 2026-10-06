@@ -156,7 +156,10 @@ export interface ResumeConfig {
   }
   personal: {
     name: string
+    /** Photo du hero, portrait 440×528 */
     photo?: string
+    /** Variante 300×360 pour mobile (optionnelle, servie via srcset) */
+    photoSmall?: string
     photoBackEmoji?: string
     /** Intitulé (SEO, JSON-LD) */
     title: LocalizedString

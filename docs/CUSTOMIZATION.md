@@ -22,7 +22,7 @@ URL canonique (JSON-LD) et domaine affiché dans la headerbar, suivi de la secti
 | Champ | Rôle |
 |---|---|
 | `name` | Le premier mot s'affiche sur la ligne 1 du H1, le reste sur la ligne 2 |
-| `photo`, `photoBackEmoji` | Photo du hero (portrait 440×528 conseillé) et emoji au dos, visible au clic (flip 3D) |
+| `photo`, `photoSmall`, `photoBackEmoji` | Photo du hero (portrait 440×528), variante mobile optionnelle (300×360) et emoji au dos, visible au clic (flip 3D) |
 | `title` | Intitulé pour le SEO et le JSON-LD |
 | `headline` | Eyebrow du hero |
 | `intro`, `tagline` | Les deux paragraphes du hero |
@@ -72,6 +72,10 @@ Blocs de compétences : un titre, une teinte (carré de couleur et tags) et une 
 ### `engagements`, `education`, `hobbies`, `spokenLanguages`
 
 Lignes simples. Les engagements se classent du plus récent au plus ancien. Les lignes de Formation et d'En dehors du travail tiennent sur une ligne de titre et une ligne de détail, pour rester alignées.
+
+### `languages`
+
+Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique de l'ajouter aussi au script inline de `index.html` (redirection `?lang=`).
 
 ### `pdf`
 

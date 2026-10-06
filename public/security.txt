@@ -1,4 +1,4 @@
-# security.txt — François Pannecoucke CV Site
+# security.txt : CV de François Pannecoucke
 # Standard: https://securitytxt.org/ (RFC 9116)
 
 Contact: mailto:francois@pannecoucke.fr

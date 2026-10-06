@@ -68,19 +68,16 @@ function MissionCard({ mission, open, onToggle }: { mission: Mission } & ToggleP
       >
         <span className="flex min-w-0 flex-col gap-1.5">
           <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <span className="font-mono text-sm font-semibold text-ink">
-              <span aria-hidden="true" className="text-gold">
-                ${' '}
-              </span>
+            <span className="glyph-dollar font-mono text-sm font-semibold text-ink before:mr-[1ch] before:text-gold">
               {heading}
             </span>
             {mission.isOngoing ? (
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-strong">
                 <span aria-hidden="true" className="size-[7px] rounded-full bg-status" />
                 {resolve(labels.experience.ongoing)}
               </span>
             ) : (
-              mission.period && <span className="font-mono text-xs text-muted">{resolve(mission.period)}</span>
+              mission.period && <span className="font-mono text-xs text-muted-strong">{resolve(mission.period)}</span>
             )}
           </span>
           <span className="text-[15.5px] leading-[1.55] text-pretty text-body">{resolve(mission.description)}</span>

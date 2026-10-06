@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { useTranslation } from '@/lib/i18n'
 import { resumeConfig } from '@/data/resume-config'
 import { assetUrl } from '@/lib/utils'
@@ -8,31 +7,42 @@ import { Button } from '@/components/ui/Button'
 import { SectionEyebrow } from '@/components/ui/Section'
 import { DownloadSimpleIcon, EnvelopeSimpleIcon } from '@/components/icons'
 
-/** Photo 220×264 (150×180 sur mobile) qui fait un tour complet en 3D au clic, avec l'emoji au dos. */
-function ProfilePhoto({ src, name, emoji, label }: { src: string; name: string; emoji: string; label: string }) {
+/**
+ * Photo 220×264 (150×180 sur mobile) qui fait un tour complet en 3D au clic, aller puis retour,
+ * avec l'emoji au dos. Animation CSS (transition sur transform), coupée si l'utilisateur
+ * demande moins d'animations.
+ */
+interface ProfilePhotoProps {
+  photo: string
+  photoSmall?: string
+  name: string
+  emoji: string
+  label: string
+}
+
+function ProfilePhoto({ photo, photoSmall, name, emoji, label }: ProfilePhotoProps) {
   const [isSpinning, setIsSpinning] = useState(false)
   const [hasError, setHasError] = useState(false)
 
   return (
     <div className="h-[180px] flex-[0_0_150px] [perspective:900px] sm:h-[264px] sm:flex-[0_0_220px]">
-      <motion.button
+      <button
         type="button"
         aria-label={label}
         onClick={() => !isSpinning && setIsSpinning(true)}
-        onAnimationComplete={() => setIsSpinning(false)}
-        animate={{ rotateY: isSpinning ? 360 : 0 }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
-        className="relative block size-full cursor-pointer rounded-lg [transform-style:preserve-3d]"
+        onTransitionEnd={() => setIsSpinning(false)}
+        style={{ transform: `rotateY(${isSpinning ? 360 : 0}deg)` }}
+        className="relative block size-full cursor-pointer rounded-lg transition-transform duration-800 ease-in-out [transform-style:preserve-3d] motion-reduce:transition-none"
       >
         <span className="absolute inset-0 overflow-hidden rounded-lg border border-card-border bg-sunken [backface-visibility:hidden]">
           {!hasError && (
             <img
-              src={src}
+              src={assetUrl(photo)}
+              srcSet={photoSmall ? `${assetUrl(photoSmall)} 300w, ${assetUrl(photo)} 440w` : undefined}
+              sizes={photoSmall ? '(min-width: 640px) 220px, 150px' : undefined}
               alt={name}
               width={220}
               height={264}
-              decoding="async"
-              fetchPriority="high"
               onError={() => setHasError(true)}
               className="block size-full object-cover"
             />
@@ -44,7 +54,7 @@ function ProfilePhoto({ src, name, emoji, label }: { src: string; name: string; 
         >
           {emoji}
         </span>
-      </motion.button>
+      </button>
     </div>
   )
 }
@@ -93,7 +103,8 @@ export function ProfileSection() {
         </div>
         {personal.photo && (
           <ProfilePhoto
-            src={assetUrl(personal.photo)}
+            photo={personal.photo}
+            photoSmall={personal.photoSmall}
             name={personal.name}
             emoji={personal.photoBackEmoji ?? '🚀'}
             label={resolve(labels.actions.flipPhoto)}

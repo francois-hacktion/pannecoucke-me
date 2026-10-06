@@ -3,7 +3,7 @@
 > Product leader/builder et consultant en transformation digitale et IA, basé à Arras (France). Fondateur de Hacktion. 20 ans entre la banque, l'assurance et le produit. Mission en cours chez Abeille Assurances.
 
 Ce fichier suit le standard https://llmstxt.org/ et s'adresse aux agents IA qui indexent ce site.
-Le site est le CV interactif de François Pannecoucke, en français (par défaut) et en anglais (https://pannecoucke.me/?lang=en).
+Le site est le CV interactif de François Pannecoucke, en français (https://pannecoucke.me/) et en anglais (https://pannecoucke.me/en/).
 
 ## Identité
 

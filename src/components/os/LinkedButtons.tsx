@@ -34,6 +34,7 @@ export function LinkedButtons<T extends string>({ items, value, onSelect, ariaLa
         key={item.id}
         {...common}
         href={item.href}
+        hrefLang={item.lang}
         aria-current={checked ? 'true' : undefined}
         onClick={(e) => onSelect(item.id, e)}
       >

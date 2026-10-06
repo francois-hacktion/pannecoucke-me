@@ -9,12 +9,13 @@ export function StatusBar() {
   const email = getContact('email')
 
   return (
-    <footer className="hidden h-[30px] flex-none items-center justify-between gap-4 overflow-hidden whitespace-nowrap border-t border-rule bg-sunken px-4 font-mono text-[11.5px] text-muted os:flex">
-      <span>
+    <footer className="hidden h-[30px] flex-none items-center justify-between gap-4 overflow-hidden whitespace-nowrap border-t border-rule bg-sunken px-4 font-mono text-[11.5px] text-muted-strong os:flex">
+      {/* L'année du build (HTML pré-rendu) peut différer de celle du visiteur au Nouvel An */}
+      <span suppressHydrationWarning>
         © {new Date().getFullYear()} {name} · {city}
       </span>
       {email && (
-        <a href={email.href} className="text-muted no-underline hover:text-ink">
+        <a href={email.href} className="text-muted-strong no-underline hover:text-ink">
           {email.label}
         </a>
       )}

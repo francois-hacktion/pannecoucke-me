@@ -20,3 +20,20 @@ export function getPdfPath(language: string): string | null {
   if (!pdf) return null
   return typeof pdf.path === 'string' ? pdf.path : pdf.path[language] ?? null
 }
+
+/** Chemin de la page d'une langue : "/" pour la langue par défaut, "/en/" sinon. */
+export function pagePath(language: string): string {
+  return language === resumeConfig.languages.default ? '/' : `/${language}/`
+}
+
+/** URL absolue de la page d'une langue. */
+export function pageUrl(language: string): string {
+  return `${resumeConfig.site.url}${pagePath(language)}`
+}
+
+/** Langue déduite du chemin de l'URL ("/en/…" → "en"). */
+export function languageFromPath(pathname: string): string {
+  const segment = pathname.split('/')[1] ?? ''
+  const { available, default: defaultLanguage } = resumeConfig.languages
+  return available.includes(segment) ? segment : defaultLanguage
+}

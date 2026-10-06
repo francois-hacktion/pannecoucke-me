@@ -1,11 +1,12 @@
 # CLAUDE.md, pannecoucke.me
 
-CV interactif de François Pannecoucke. Vite + React 19 + TypeScript + Tailwind v4 + Framer Motion, déployé sur Cloudflare Pages depuis `main`.
+CV interactif de François Pannecoucke. Vite + React 19 + TypeScript + Tailwind v4, pré-rendu en HTML statique, déployé sur Cloudflare Pages depuis `main`.
 
 ## Commandes
 
 - `npm run dev` : serveur de dev (port 5173)
-- `npm run build` : `tsc -b` puis build Vite (doit passer sans erreur avant toute PR)
+- `npm run build` : `tsc -b`, build client, build serveur (`src/entry-server.tsx`) puis pré-rendu (`scripts/prerender.mjs`). Doit passer sans erreur avant toute PR.
+- `npx vite preview` puis `npx lighthouse@12 http://localhost:4173/` : contrôle Lighthouse (cible : 100 desktop, ≥ 99 mobile)
 - `npm run lint` : ESLint
 
 ## Décisions d'architecture
@@ -20,8 +21,14 @@ CV interactif de François Pannecoucke. Vite + React 19 + TypeScript + Tailwind 
 - **Icônes** : Phosphor "regular" recopiées en SVG inline (`src/components/icons`), pour éviter une dépendance.
 - **Typographie française** : `resolve()` (lib/i18n) rend insécables les espaces avant `: ; ? ! »` et après `«` en français. Écrire des espaces normales dans la config.
 - **Texte riche** : `**gras**` uniquement (`RichText`), retiré ou converti en `<strong>` par le plugin SEO.
-- **SEO** : `vite-plugin-resume-seo.ts` injecte au build le titre, la description, le JSON-LD et un `<noscript>` complet. Garder `resume-config.ts` et `types.ts` sans import d'alias `@/` (ils sont chargés par le plugin).
-- **Langue** : `?lang=en` n'apparaît que pour l'anglais ; le français (langue par défaut) garde une URL propre.
+- **Pré-rendu (SSG)** : `scripts/prerender.mjs` génère `dist/index.html` (FR) et `dist/en/index.html` (EN) avec le HTML complet, le `<head>` de `src/lib/seo.ts` (titre, description, canonical, hreflang, Open Graph, JSON-LD) et la CSS inlinée. Le client hydrate (`hydrateRoot`) après la première frame. Tout composant doit donc rendre le même HTML côté serveur et client : pas d'accès à `window`/`localStorage` pendant le rendu.
+- **Thème** : source de vérité = classe `.dark` sur `<html>`, posée avant le premier rendu par le script inline de `index.html` ; lue via `useSyncExternalStore` (`lib/theme/store.ts`).
+- **Langue** : une URL par langue (`/`, `/en/`). La bascule FR/EN change de langue sans rechargement et réécrit l'URL. Le script inline de `index.html` redirige `?lang=xx` (anciens liens) et, sur `/` uniquement, la langue mémorisée. Pas de détection de la langue du navigateur (elle ferait rediriger Lighthouse et Googlebot).
+- **Animations** : CSS pur (accordéon en `grid-template-rows`, flip de la photo en `transition`), Framer Motion retiré (-40 Ko gzip). Le contenu replié reste dans le HTML (`inert`), lisible par les robots.
+- **Polices** : Geist et Geist Mono en woff2 dans `public/fonts` (sous-ensembles latin et latin-ext), préchargées ; polices de secours Arial / Courier New recalées sur les métriques de Geist (CLS 0).
+- **Glyphes décoratifs** (`#`, `$`, `→`) : pseudo-éléments `glyph-*` avec texte alternatif vide, ignorés par les lecteurs d'écran et le calcul de contraste.
+- **Contraste** : `text-muted-strong` (#4d6b84) pour le petit texte sur fond beige (barre d'état, cartes mission, URL), le `text-muted` du handoff y tombait à 4,2:1.
+- **Images** : photo en 440 px et 300 px (`srcset`), sans métadonnées EXIF ; le PDF n'est chargé qu'au clic.
 
 ## Règles de copy
 

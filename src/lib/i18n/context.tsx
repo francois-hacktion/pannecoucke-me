@@ -1,27 +1,16 @@
 import { useState, useEffect, type ReactNode } from 'react'
 import { resumeConfig } from '@/data/resume-config'
 import type { LocalizedString, LocalizedStringArray } from '@/data/types'
+import { pagePath } from '@/lib/resume'
 import { LanguageContext } from './LanguageContext'
 
+/**
+ * Langue : une page pré-rendue par langue ("/" en français, "/en/" en anglais).
+ * La langue initiale vient du chemin, identique côté serveur et client.
+ * Le choix explicite (bouton FR/EN, ?lang=) est mémorisé : le script de index.html
+ * redirige ensuite "/" vers la langue mémorisée avant le premier rendu.
+ */
 const STORAGE_KEY = 'resume-language'
-
-function isAvailable(lang: string | null): lang is string {
-  return !!lang && resumeConfig.languages.available.includes(lang)
-}
-
-function getUrlLanguage(): string | null {
-  const lang = new URLSearchParams(window.location.search).get('lang')
-  return isAvailable(lang) ? lang : null
-}
-
-function getStoredLanguage(): string | null {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    return isAvailable(stored) ? stored : null
-  } catch {
-    return null
-  }
-}
 
 function storeLanguage(lang: string) {
   try {
@@ -31,52 +20,27 @@ function storeLanguage(lang: string) {
   }
 }
 
-function detectBrowserLanguage(): string {
-  const browserLang = navigator.language.split('-')[0]
-  return isAvailable(browserLang) ? browserLang : resumeConfig.languages.default
-}
-
-function updateUrlLanguage(lang: string) {
-  const url = new URL(window.location.href)
-  if (lang === resumeConfig.languages.default) {
-    url.searchParams.delete('lang')
-  } else {
-    url.searchParams.set('lang', lang)
-  }
-  window.history.replaceState(window.history.state, '', url.toString())
-}
-
 /**
  * Typographie française : espace insécable avant : ; ? ! » et après «.
  * Évite qu'un signe double se retrouve seul en début de ligne.
  */
 function frenchTypography(text: string): string {
-  return text.replace(/ ([:;?!»])/g, '\u00A0$1').replace(/« /g, '«\u00A0')
+  return text.replace(/ ([:;?!»])/g, ' $1').replace(/« /g, '« ')
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export function LanguageProvider({ initialLanguage, children }: { initialLanguage: string; children: ReactNode }) {
   const { default: defaultLang } = resumeConfig.languages
+  const [language, setLanguageState] = useState(initialLanguage)
 
-  // Priorité : 1. paramètre ?lang  2. choix mémorisé  3. langue du navigateur
-  const [language, setLanguageState] = useState(() => {
-    const urlLang = getUrlLanguage()
-    // Une langue demandée par l'URL vaut choix explicite : l'URL est ensuite nettoyée
-    // pour la langue par défaut, le choix doit donc survivre à un rechargement
-    if (urlLang) {
-      storeLanguage(urlLang)
-      return urlLang
-    }
-    return getStoredLanguage() ?? detectBrowserLanguage()
-  })
-
+  // Bascule sans rechargement : l'URL prend le chemin de la langue, la section (#hash) est conservée
   const setLanguage = (lang: string) => {
     setLanguageState(lang)
     storeLanguage(lang)
+    window.history.replaceState(window.history.state, '', `${pagePath(lang)}${window.location.hash}`)
   }
 
   useEffect(() => {
     document.documentElement.lang = language
-    updateUrlLanguage(language)
   }, [language])
 
   const typo = (text: string) => (language === 'fr' ? frenchTypography(text) : text)

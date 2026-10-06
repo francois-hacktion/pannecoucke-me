@@ -24,6 +24,7 @@ export const resumeConfig: ResumeConfig = {
   personal: {
     name: 'François Pannecoucke',
     photo: '/images/profil.jpg',
+    photoSmall: '/images/profil-300.jpg',
     photoBackEmoji: '🚀',
     title: {
       fr: 'Product leader/builder | Transformation digitale',

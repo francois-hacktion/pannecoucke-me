@@ -55,7 +55,8 @@ export function useSectionNav(
   bodyRef: RefObject<HTMLElement | null>,
   stickyNavRef: RefObject<HTMLElement | null>,
 ) {
-  const [active, setActive] = useState<SectionId>(() => readHash() ?? 'profil')
+  // "profil" au rendu serveur comme à l'hydratation ; le hash éventuel est appliqué au montage
+  const [active, setActive] = useState<SectionId>('profil')
   const locked = useRef(false)
   const lockTimer = useRef<number | undefined>(undefined)
 
@@ -117,6 +118,9 @@ export function useSectionNav(
   useEffect(() => {
     const initial = readHash()
     if (initial) {
+      // Synchronisation avec une source externe (l'URL), au montage uniquement
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setActive(initial)
       lockSpy()
       scrollToSection(initial, 'auto')
     }
