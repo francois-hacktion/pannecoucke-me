@@ -20,7 +20,7 @@ Tout a été fait en vibe coding avec Claude Code, de la maquette à la mise en 
 - Mode clair et mode sombre
 - Le CV en PDF, téléchargé seulement quand on clique
 - Lisible par Google, les ATS et les IA, même sans JavaScript (avec un `llms.txt`)
-- Lighthouse : 100 partout en desktop, 99/100/100/100 en mobile
+- Lighthouse : 100/100/100/100, en mobile comme en desktop (mesuré en production)
 
 ## Mettre à jour le contenu
 

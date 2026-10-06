@@ -101,7 +101,7 @@ Lignes simples, sans filets, en grille 2×2 avec les engagements. Les loisirs s'
 
 ### `languages`
 
-Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique de l'ajouter aussi au script inline de `index.html` (redirection `?lang=`).
+Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique aussi de compléter le script inline de `index.html`, `LANGUAGE_PATHS` dans `functions/_middleware.ts` (redirection `?lang=`), `public/404.html` et `public/sitemap.xml`.
 
 ### `pdf`
 
@@ -127,6 +127,10 @@ Tous les libellés de l'interface (navigation, titres de section, boutons, texte
 │   ├── lib/                      # Langues, thème, navigation, SEO
 │   ├── entry-server.tsx          # Rendu utilisé par le pré-rendu
 │   └── globals.css               # Tokens Hacktion OS 2 (clair/sombre) et polices
-├── public/                       # CV PDF, polices, images, llms.txt, robots.txt, sitemap.xml, _headers
+├── public/                       # CV PDF, polices, images, llms.txt, robots.txt, sitemap.xml
+│   ├── 404.html                  # Page 404 (FR/EN)
+│   ├── _headers                  # En-têtes Cloudflare : cache, sécurité, noindex hors domaine
+│   └── _routes.json              # Routes qui passent par la Function de domaine
+├── functions/_middleware.ts      # Domaine unique : redirections 301 vers pannecoucke.me
 └── scripts/prerender.mjs         # Une page HTML complète par langue au build
 ```
