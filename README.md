@@ -41,6 +41,8 @@ Le site tourne sur [http://localhost:5173](http://localhost:5173).
 
 Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm run build`, dossier `dist`, Node 20). Le build génère une page HTML complète par langue, puis React prend le relais dans le navigateur.
 
+Un seul domaine fait foi : `pannecoucke.me`. Les autres adresses (`pannecoucke-me.pages.dev`, `www`) redirigent vers lui, et les adresses inconnues renvoient une vraie page 404.
+
 ## Sous le capot
 
 Vite, React 19, TypeScript et Tailwind CSS v4. Polices Geist et Geist Mono (licence OFL), icônes Phosphor (licence MIT). Pas de cookie, aucun script tiers dans le code : la seule mesure d'audience est Cloudflare Web Analytics, sans cookie, ajoutée par l'hébergement.

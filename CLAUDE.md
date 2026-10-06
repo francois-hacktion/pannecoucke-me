@@ -29,6 +29,8 @@ CV interactif de François Pannecoucke. Vite + React 19 + TypeScript + Tailwind 
 - **Glyphes décoratifs** (`#`, `$`, `→`) : pseudo-éléments `glyph-*` avec texte alternatif vide, ignorés par les lecteurs d'écran et le calcul de contraste.
 - **Contraste** : `text-muted-strong` (#4d6b84) pour le petit texte sur fond beige (barre d'état, cartes mission, URL), le `text-muted` du handoff y tombait à 4,2:1.
 - **Images** : photo en 440 px et 300 px (`srcset`), sans métadonnées EXIF ; le PDF n'est chargé qu'au clic. Un nouveau PDF doit avoir ses métadonnées (titre, auteur, langue) et des images rééchantillonnées (~300 dpi).
+- **Domaine unique** : `functions/_middleware.ts` (Pages Function) redirige en 301 tout autre domaine (`pannecoucke-me.pages.dev`, `www.pannecoucke.me`) vers `https://pannecoucke.me`, ainsi que `?lang=xx` vers `/` ou `/en/`. Les aperçus de PR (`*.pannecoucke-me.pages.dev`) restent accessibles, en `noindex` (`public/_headers`). `public/_routes.json` limite la Function aux pages, PDF et fichiers texte : assets, polices et images restent statiques (gratuits, hors quota). Logique testée hors Cloudflare en appelant `onRequest` avec Node.
+- **404** : `public/404.html` (à la charte, bilingue, `noindex`) ; sa présence fait renvoyer un vrai 404 par Cloudflare Pages au lieu de l'accueil.
 - **Documentation** : `README.md` (présentation, ton de François), `docs/CONTENU.md` (mise à jour du contenu, ajout d'une mission), ce fichier (choix techniques).
 
 ## Règles de copy
