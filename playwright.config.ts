@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test'
 /**
  * Tests de bout en bout sur le build de production (HTML pré-rendu puis hydraté),
  * servi par vite preview. Lancer `npm run build` avant `npm test`.
+ * Chromium complet (channel chromium) et non chrome-headless-shell : ce dernier élargit le texte
+ * d'environ 7 % (pas de positionnement sous-pixel), loin du rendu des téléphones.
  * PLAYWRIGHT_CHROMIUM : chemin d'un Chromium déjà installé, si sa version diffère de celle attendue.
  */
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM || undefined
@@ -24,7 +26,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], launchOptions: { executablePath } },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', launchOptions: { executablePath } },
     },
   ],
   webServer: {

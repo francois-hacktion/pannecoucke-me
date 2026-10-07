@@ -44,7 +44,7 @@ npm run build
 npm test
 ```
 
-Playwright vérifie le site construit, en français et en anglais : aucun débordement de 320 à 1440px, accessibilité (axe, WCAG 2.2 AA, en clair et en sombre), parcours principaux (langue, thème, accordéon, liens, PDF, photo) et captures de référence. À chaque pull request, GitHub Actions lance le lint, le build et les tests, hors captures.
+Playwright vérifie le site construit, en français et en anglais : aucun débordement de 320 à 1440px, accessibilité (axe, WCAG 2.2 AA, en clair et en sombre), parcours principaux (langue, thème, accordéon, liens, PDF, photo) et captures de référence. À chaque pull request, GitHub Actions lance le lint, le build et les tests.
 
 ## Mise en ligne
 

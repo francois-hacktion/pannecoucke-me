@@ -3,9 +3,8 @@ import { LANGUAGES, freezeMotion, useDarkTheme } from './helpers'
 
 /**
  * Captures de référence : elles figent le rendu actuel pour la migration vers Astro (étape 3).
- * Le rendu des polices varie selon l'OS et la version de Chromium : références générées sous Linux
- * avec le Chromium du conteneur Claude Code, rejouées dans le même environnement.
- * Exclues de la CI (tag @visual), dont le Chromium est plus récent.
+ * Le rendu des polices varie selon l'OS : références générées sous Linux, rejouées en CI.
+ * Mettre à jour : `npm run test:update` sous Linux, puis vérifier les images avant de committer.
  */
 const WIDTHS = [360, 412, 768, 1280]
 

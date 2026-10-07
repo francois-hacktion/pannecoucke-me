@@ -25,9 +25,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      # Captures de référence exclues : générées avec un autre Chromium (voir tests/visual.spec.ts)
-      - run: npm test -- --grep-invert @visual
+      - run: npx playwright install --with-deps --no-shell chromium
+      - run: npm test
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
