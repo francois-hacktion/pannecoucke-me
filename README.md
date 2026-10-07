@@ -37,9 +37,18 @@ npm run dev
 
 Le site tourne sur [http://localhost:5173](http://localhost:5173).
 
+## Tests
+
+```bash
+npm run build
+npm test
+```
+
+Playwright vérifie le site construit, en français et en anglais : aucun débordement de 320 à 1440px, accessibilité (axe, WCAG 2.2 AA, en clair et en sombre), parcours principaux (langue, thème, accordéon, liens, PDF, photo) et captures de référence. À chaque pull request, GitHub Actions lance le lint, le build et les tests.
+
 ## Mise en ligne
 
-Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm run build`, dossier `dist`, Node 20). Le build génère une page HTML complète par langue, puis React prend le relais dans le navigateur.
+Chaque push sur `main` part en production sur Cloudflare Pages (commande `npm run build`, dossier `dist`, Node 24). Le build génère une page HTML complète par langue, puis React prend le relais dans le navigateur.
 
 Un seul domaine fait foi : `pannecoucke.me`. Les autres adresses (`pannecoucke-me.pages.dev`, `www`) redirigent vers lui, et les adresses inconnues renvoient une vraie page 404.
 

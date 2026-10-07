@@ -31,3 +31,7 @@ cv_source.pdf
 
 # Config locale de l'aperçu Claude Code
 .claude/
+
+# Playwright
+playwright-report/
+test-results/
