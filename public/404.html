@@ -20,8 +20,8 @@
   <style>
     @font-face { font-family: 'Geist'; font-weight: 400 800; font-display: swap; src: url('/fonts/geist-latin.woff2') format('woff2'); }
     @font-face { font-family: 'Geist Mono'; font-weight: 400 700; font-display: swap; src: url('/fonts/geist-mono-latin.woff2') format('woff2'); }
-    :root { --desk: #f5f3ee; --content: #fff; --ink: #0d1f2d; --body: #2b5170; --muted: #4d6b84; --eyebrow: #7a6216; --border: rgba(26, 58, 82, .22); --rule: rgba(26, 58, 82, .14); --bar: linear-gradient(#fbfaf7, #efebe3); --sunken: #f8f6f1; }
-    .dark { --desk: #0d1f2d; --content: #13293b; --ink: #f5f3ee; --body: #c9d5de; --muted: #a3b6c5; --eyebrow: #e6cc75; --border: rgba(255, 255, 255, .1); --rule: rgba(255, 255, 255, .08); --bar: linear-gradient(#183549, #122a3c); --sunken: #10283a; }
+    :root { --desk: #f5f3ee; --content: #fff; --ink: #0d1f2d; --body: #2b5170; --muted: #4d6b84; --eyebrow: #7a6216; --border: rgba(26, 58, 82, .22); --rule: rgba(26, 58, 82, .14); --bar: linear-gradient(#fbfaf7, #efebe3); --sunken: #f8f6f1; --focus: #1a3a52; }
+    .dark { --desk: #0d1f2d; --content: #13293b; --ink: #f5f3ee; --body: #c9d5de; --muted: #a3b6c5; --eyebrow: #e6cc75; --border: rgba(255, 255, 255, .1); --rule: rgba(255, 255, 255, .08); --bar: linear-gradient(#183549, #122a3c); --sunken: #10283a; --focus: #e6cc75; }
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100dvh; display: grid; place-items: center; padding: 16px; background: var(--desk); color: var(--body); font-family: 'Geist', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
     .window { width: 100%; max-width: 600px; overflow: hidden; border-radius: 10px; border: 1px solid var(--border); background: var(--content); box-shadow: 0 1px 2px rgba(13, 31, 45, .06), 0 24px 48px -16px rgba(13, 31, 45, .22); }
@@ -38,7 +38,7 @@
     .btn { display: inline-flex; align-items: center; padding: 12px 22px; border-radius: 4px; font-weight: 700; text-decoration: none; transition: transform 150ms, box-shadow 150ms; box-shadow: 4px 4px 0 0 #1a3a52; }
     .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 #1a3a52; }
     .btn:active { transform: translate(4px, 4px); box-shadow: none; }
-    .btn:focus-visible, .switch:focus-visible { outline: 2px solid #d4af37; outline-offset: 4px; }
+    .btn:focus-visible, .switch:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
     .primary { border: 2px solid #000; background: #d4af37; color: #0d1f2d; }
     .secondary { border: 2px solid #1a3a52; background: #fff; color: #1a3a52; }
     .switch { display: inline-block; margin-top: 26px; font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--muted); text-decoration-color: #d4af37; text-underline-offset: 3px; }
