@@ -5,7 +5,8 @@ CV interactif de François Pannecoucke. Astro 7 (site statique, sans JavaScript 
 ## Commandes
 
 - `npm run dev` : serveur de dev (port 4321)
-- `npm run build` : `astro check` (types des .astro et .ts) puis `astro build` vers `dist/`. Doit passer sans erreur avant toute PR.
+- `npm run build` : `astro check` (types des .astro), `tsc --noEmit` (types des .ts, tests compris, et options dépréciées du tsconfig, qu'`astro check` ne signale pas) puis `astro build` vers `dist/`. Doit passer sans erreur avant toute PR.
+- Versions : ESLint 10, TypeScript 6.0. TypeScript 7 compile le projet sans erreur (essayé en octobre 2026), mais `typescript-eslint` (< 6.1) et `@astrojs/check` (5 ou 6) ne l'acceptent pas encore : y passer quand ils le permettront. Pas de `baseUrl` dans le tsconfig (déprécié en 6, supprimé en 7) : les alias `@/` reposent sur `paths` seul.
 - `npx astro preview --port 4173` puis `npx lighthouse@12 http://localhost:4173/` : contrôle Lighthouse (production : 100/100/100/100 en mobile et desktop, à préserver)
 - `npm run lint` : ESLint
 - `npm test` : Playwright sur le build servi par `astro preview` (lancer `npm run build` avant). `npm run test:update` régénère les captures. Dans le conteneur Claude Code, ajouter `PLAYWRIGHT_CHROMIUM=/opt/pw-browsers/chromium` (Chromium préinstallé, d'une autre version que celui de Playwright)
