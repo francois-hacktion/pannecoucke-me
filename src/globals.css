@@ -192,8 +192,7 @@
 
 @layer base {
   html,
-  body,
-  #root {
+  body {
     height: 100%;
   }
 
@@ -264,4 +263,46 @@
     --tw-content: '→' / '';
     content: var(--tw-content);
   }
+}
+
+/* Teintes des tags (TechBadge) : classes plutôt qu'attribut style, que la CSP bloquerait */
+@utility tone-blue {
+  background-color: var(--tone-blue-bg);
+  border-color: var(--tone-blue-border);
+  color: var(--tone-blue-fg);
+}
+@utility tone-violet {
+  background-color: var(--tone-violet-bg);
+  border-color: var(--tone-violet-border);
+  color: var(--tone-violet-fg);
+}
+@utility tone-emerald {
+  background-color: var(--tone-emerald-bg);
+  border-color: var(--tone-emerald-border);
+  color: var(--tone-emerald-fg);
+}
+@utility tone-amber {
+  background-color: var(--tone-amber-bg);
+  border-color: var(--tone-amber-border);
+  color: var(--tone-amber-fg);
+}
+@utility tone-cyan {
+  background-color: var(--tone-cyan-bg);
+  border-color: var(--tone-cyan-border);
+  color: var(--tone-cyan-fg);
+}
+@utility tone-rose {
+  background-color: var(--tone-rose-bg);
+  border-color: var(--tone-rose-border);
+  color: var(--tone-rose-fg);
+}
+@utility tone-navy {
+  background-color: var(--tone-navy-bg);
+  border-color: var(--tone-navy-border);
+  color: var(--tone-navy-fg);
+}
+@utility tone-gold {
+  background-color: var(--tone-gold-bg);
+  border-color: var(--tone-gold-border);
+  color: var(--tone-gold-fg);
 }

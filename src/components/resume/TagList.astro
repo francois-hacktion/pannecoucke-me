@@ -1,0 +1,17 @@
+---
+import type { Tag } from '@/data/types'
+import type { Translator } from '@/lib/i18n'
+import TechBadge from '@/components/ui/TechBadge.astro'
+
+const { tags, t, size = 'sm' } = Astro.props as { tags: Tag[]; t: Translator['t']; size?: 'sm' | 'xs' }
+---
+
+<ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
+  {
+    tags.map((tag) => (
+      <li class="flex">
+        <TechBadge tone={tag.tone} size={size}>{t(tag.label)}</TechBadge>
+      </li>
+    ))
+  }
+</ul>

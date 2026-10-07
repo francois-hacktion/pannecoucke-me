@@ -1,0 +1,106 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import type { Translator } from '@/lib/i18n'
+import SectionEyebrow from '@/components/ui/SectionEyebrow.astro'
+import RichText from '@/components/ui/RichText.astro'
+
+/**
+ * Formation, Engagements, En dehors du travail et Langues en grille 2×2 (une colonne sur mobile),
+ * sans filets entre les lignes, comme sur le CV PDF. Ancre de navigation : "formation".
+ * Lignes datées : période en mono à gauche (au-dessus sur mobile), titre et détail à droite.
+ */
+const { t } = Astro.props.tr as Translator
+const { education, engagements, hobbies, spokenLanguages, labels } = resumeConfig
+
+const BLOCK = 'flex min-w-0 flex-col'
+const LIST = 'm-0 flex list-none flex-col gap-4 p-0'
+const ROW = 'grid gap-x-4 gap-y-0.5 sm:grid-cols-[96px_minmax(0,1fr)]'
+const PERIOD = 'font-mono text-[13px] text-muted sm:pt-0.5'
+---
+
+<section
+  data-anchor="formation"
+  aria-label={t(labels.nav.formation)}
+  class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] gap-x-12 gap-y-12"
+>
+  <div class={BLOCK}>
+    <SectionEyebrow as="h2" id="formation-title" rule="fit" class="mb-5">{t(labels.education.eyebrow)}</SectionEyebrow>
+    <ul aria-labelledby="formation-title" class={LIST}>
+      {
+        education.map((item) => (
+          <li class={ROW}>
+            <span class={PERIOD}>{item.period}</span>
+            <div class="flex min-w-0 flex-col gap-0.5">
+              <span class="text-base text-ink">
+                <strong class="font-bold">{t(item.degree)}</strong>
+              </span>
+              <span class="text-[15px] text-body">
+                {[item.school, item.details && t(item.details)].filter(Boolean).join(' · ')}
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  {
+    engagements && engagements.length > 0 && (
+      <div class={BLOCK}>
+        <SectionEyebrow as="h2" id="engagements-title" rule="fit" class="mb-5">
+          {t(labels.engagements.eyebrow)}
+        </SectionEyebrow>
+        <ul aria-labelledby="engagements-title" class={LIST}>
+          {engagements.map((engagement) => (
+            <li class={ROW}>
+              <span class={PERIOD}>{t(engagement.period)}</span>
+              <div class="flex min-w-0 flex-col gap-0.5">
+                <span class="text-base text-ink">
+                  <RichText text={t(engagement.title)} />
+                </span>
+                <span class="text-[15px] text-body">{t(engagement.detail)}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    hobbies && hobbies.length > 0 && (
+      <div class={BLOCK}>
+        <SectionEyebrow as="h2" id="loisirs-title" rule="fit" class="mb-5">
+          {t(labels.hobbies.eyebrow)}
+        </SectionEyebrow>
+        <ul aria-labelledby="loisirs-title" class={LIST}>
+          {hobbies.map((hobby) => (
+            <li class="text-[15px] leading-[1.5] text-body">
+              <strong class="text-base font-bold text-ink">{t(hobby.title)}</strong>
+              {' · '}
+              {t(hobby.description)}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    spokenLanguages && spokenLanguages.length > 0 && (
+      <div class={BLOCK}>
+        <SectionEyebrow as="h2" id="langues-title" rule="fit" class="mb-5">
+          {t(labels.languages.eyebrow)}
+        </SectionEyebrow>
+        <ul aria-labelledby="langues-title" class={LIST}>
+          {spokenLanguages.map((lang) => (
+            <li class="flex justify-between gap-3 text-base">
+              <strong class="font-bold text-ink">{t(lang.name)}</strong>
+              <span class="text-muted">{t(lang.level)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</section>

@@ -1,0 +1,26 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import { getContact } from '@/lib/resume'
+import type { Translator } from '@/lib/i18n'
+
+/** Barre d'état en pied de fenêtre, masquée sous 760px. */
+const { t } = Astro.props as { t: Translator['t'] }
+const { name, city, status } = resumeConfig.personal
+const email = getContact('email')
+---
+
+<footer
+  class="hidden h-[30px] flex-none items-center justify-between gap-4 overflow-hidden whitespace-nowrap border-t border-rule bg-sunken px-4 font-mono text-[11.5px] text-muted-strong os:flex"
+>
+  {/* Année du build */}
+  <span>© {new Date().getFullYear()} {name} · {city}</span>
+  {email && <a href={email.href} class="text-muted-strong no-underline hover:text-ink">{email.label}</a>}
+  {
+    status && (
+      <span class="flex items-center gap-1.5">
+        <span aria-hidden="true" class="size-[7px] rounded-full bg-status" />
+        {t(status)}
+      </span>
+    )
+  }
+</footer>

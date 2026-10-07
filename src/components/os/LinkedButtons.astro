@@ -1,0 +1,74 @@
+---
+import { cn } from '@/lib/utils'
+import Icon, { type IconName } from '@/components/ui/Icon.astro'
+import { headerButtonClass, type LinkedPosition } from './headerButtonClass'
+
+export interface LinkedItem {
+  id: string
+  label: string
+  href: string
+  lang?: string
+  /** Icône qui remplace le libellé sous 640px en mode fill (le libellé reste lu par les lecteurs d'écran) */
+  icon?: IconName
+}
+
+interface Props {
+  items: LinkedItem[]
+  /** Élément actif au rendu (aria-current) */
+  value: string
+  ariaLabel: string
+  /** Navigation des sections : le script de navigation pilote aria-current */
+  sectionNav?: boolean
+  /**
+   * Sous 640px, le groupe occupe toute la largeur et ses boutons se compactent
+   * (barre de navigation mobile : les 5 sections tiennent sans défilement dès 311px).
+   */
+  fill?: boolean
+}
+
+/**
+ * Mode fill : boutons étirés et compacts sous 640px, taille normale au-dessus.
+ * Paliers mesurés pour que les libellés français tiennent jusqu'à 311px.
+ */
+const FILL_ITEM =
+  'max-sm:flex-auto max-sm:px-1 max-sm:text-[11.5px] min-[360px]:max-sm:px-1.5 min-[360px]:max-sm:text-[12px] min-[410px]:max-sm:px-2 min-[410px]:max-sm:text-[13px]'
+
+function position(index: number, count: number): LinkedPosition | undefined {
+  if (count === 1) return undefined
+  if (index === 0) return 'first'
+  return index === count - 1 ? 'last' : 'middle'
+}
+
+const { items, value, ariaLabel, sectionNav, fill } = Astro.props
+---
+
+<nav
+  aria-label={ariaLabel}
+  data-section-nav={sectionNav ? '' : undefined}
+  class={cn('inline-flex', fill && 'max-sm:flex max-sm:w-full')}
+>
+  {
+    items.map((item, i) => (
+      <a
+        href={item.href}
+        hreflang={item.lang}
+        lang={item.lang}
+        data-section={sectionNav ? item.id : undefined}
+        data-lang-switch={sectionNav ? undefined : item.lang}
+        aria-current={item.id === value ? 'true' : undefined}
+        class={cn(headerButtonClass({ linked: position(i, items.length) }), fill && FILL_ITEM)}
+      >
+        {fill && item.icon ? (
+          <>
+            <span aria-hidden="true" class="flex text-[17px] sm:hidden">
+              <Icon name={item.icon} />
+            </span>
+            <span class="max-sm:sr-only">{item.label}</span>
+          </>
+        ) : (
+          item.label
+        )}
+      </a>
+    ))
+  }
+</nav>

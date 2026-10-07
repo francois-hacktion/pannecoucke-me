@@ -1,0 +1,38 @@
+---
+import Icon, { type IconName } from '@/components/ui/Icon.astro'
+
+const WINDOW_DOTS: { color: string; icon: IconName }[] = [
+  { color: 'bg-[#ef4444]', icon: 'x' },
+  { color: 'bg-[#eab308]', icon: 'minus' },
+  { color: 'bg-[#22c55e]', icon: 'arrows-out' },
+]
+
+/**
+ * Headerbar (source : ds-source/HeaderBar.jsx).
+ * Grille minmax(0,1fr) auto minmax(0,1fr) : les deux côtés ont toujours la même largeur,
+ * le centre (navigation, masquée sous le point de rupture "nav") est donc centré sur la fenêtre.
+ */
+const hasCenter = Astro.slots.has('center')
+---
+
+<header
+  class="grid h-[52px] flex-none select-none grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-(color:--hb-border) px-3.5 [background:var(--hb-bg)] nav:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]"
+>
+  <div class="flex min-w-0 items-center gap-3">
+    {/* Pastilles de fenêtre : purement décoratives (aucune action), icône au survol */}
+    <div aria-hidden="true" class="group flex flex-none gap-2 max-[359px]:hidden">
+      {
+        WINDOW_DOTS.map(({ color, icon }) => (
+          <span
+            class={`flex size-[13px] items-center justify-center rounded-full border border-[rgba(13,31,45,.18)] text-[rgba(13,31,45,.7)] opacity-90 ${color}`}
+          >
+            <Icon name={icon} size={8} strokeWidth={28} class="opacity-0 transition-opacity group-hover:opacity-100" />
+          </span>
+        ))
+      }
+    </div>
+    <slot name="start" />
+  </div>
+  {hasCenter && <div class="hidden justify-center nav:flex"><slot name="center" /></div>}
+  <div class="flex min-w-0 items-center justify-end gap-1.5"><slot name="end" /></div>
+</header>

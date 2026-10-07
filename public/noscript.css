@@ -1,0 +1,2 @@
+/* Sans JavaScript (cf. layouts/Base.astro) : les détails repliés du parcours restent lisibles */
+[data-collapse]{grid-template-rows:1fr!important;opacity:1!important}

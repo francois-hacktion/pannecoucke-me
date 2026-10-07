@@ -1,0 +1,104 @@
+---
+import { Picture } from 'astro:assets'
+import { resumeConfig } from '@/data/resume-config'
+import { getContact, getPdfPath } from '@/lib/resume'
+import type { Translator } from '@/lib/i18n'
+import Button from '@/components/ui/Button.astro'
+import SectionEyebrow from '@/components/ui/SectionEyebrow.astro'
+import profil from '@/assets/profil.jpg'
+
+const { t, language } = Astro.props.tr as Translator
+const { personal, labels } = resumeConfig
+const [firstName, ...rest] = personal.name.split(' ')
+const email = getContact('email')
+const pdfPath = getPdfPath(language)
+---
+
+<section data-anchor="profil" aria-labelledby="profil-title" class="flex flex-col gap-10">
+  <div class="flex flex-wrap-reverse items-center gap-x-10 gap-y-7 sm:gap-y-10">
+    <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-5">
+      <SectionEyebrow class="mb-0 tracking-[0.02em]">{t(personal.headline)}</SectionEyebrow>
+      <h1
+        id="profil-title"
+        class="m-0 text-[clamp(44px,6vw,64px)] leading-none font-extrabold tracking-[-0.035em] text-ink"
+      >
+        {firstName}<br /><span class="text-muted">{rest.join(' ')}</span>
+      </h1>
+      <p class="m-0 max-w-[560px] text-xl leading-[1.6] text-pretty text-body">{t(personal.intro)}</p>
+      {
+        personal.tagline && (
+          <p class="m-0 max-w-[560px] text-[17px] leading-[1.6] text-muted">{t(personal.tagline)}</p>
+        )
+      }
+      <div class="mt-1 flex flex-wrap gap-3">
+        {
+          email?.href && (
+            <Button variant="primary" href={email.href} icon="envelope">
+              {t(labels.actions.contactMe)}
+            </Button>
+          )
+        }
+        {
+          pdfPath && (
+            <Button variant="secondary" href={pdfPath} download={pdfPath.split('/').pop()} icon="download">
+              {t(labels.actions.downloadCv)}
+            </Button>
+          )
+        }
+      </div>
+    </div>
+    {
+      personal.photo && (
+        /*
+         * Photo 220×264 (150×180 sur mobile) qui fait un tour complet en 3D au clic, aller puis retour,
+         * avec l'emoji au dos. Transition CSS déclenchée par data-spinning (src/scripts/app.ts),
+         * coupée si l'utilisateur demande moins d'animations.
+         */
+        <div class="h-[180px] flex-[0_0_150px] [perspective:900px] sm:h-[264px] sm:flex-[0_0_220px]">
+          <button
+            type="button"
+            data-photo
+            aria-label={t(labels.actions.flipPhoto)}
+            class="relative block size-full cursor-pointer rounded-lg transition-transform duration-800 ease-in-out [transform-style:preserve-3d] [transform:rotateY(0deg)] data-spinning:[transform:rotateY(360deg)] motion-reduce:transition-none"
+          >
+            <span class="absolute inset-0 overflow-hidden rounded-lg border border-card-border bg-sunken [backface-visibility:hidden]">
+              <Picture
+                src={profil}
+                formats={['avif', 'webp']}
+                widths={[300, 440]}
+                sizes="(min-width: 640px) 220px, 150px"
+                alt={personal.name}
+                width={220}
+                height={264}
+                loading="eager"
+                fetchpriority="high"
+                pictureAttributes={{ class: 'contents' }}
+                class="block size-full object-cover"
+              />
+            </span>
+            <span
+              aria-hidden="true"
+              class="absolute inset-0 flex items-center justify-center rounded-lg border border-card-border bg-navy text-6xl [backface-visibility:hidden] [transform:rotateY(180deg)]"
+            >
+              {personal.photoBackEmoji ?? '🚀'}
+            </span>
+          </button>
+        </div>
+      )
+    }
+  </div>
+
+  {
+    personal.mantra && (
+      <figure class="m-0 border-y border-rule py-10 text-center">
+        <figcaption class="mb-4 font-mono text-xs tracking-[0.12em] text-eyebrow uppercase">
+          {t(labels.mantra)}
+        </figcaption>
+        <blockquote class="mx-auto my-0 max-w-[720px] text-[clamp(22px,3vw,28px)] leading-[1.35] font-medium tracking-[-0.015em] text-balance text-ink">
+          {t(personal.mantra)}
+        </blockquote>
+        <div aria-hidden="true" class="mx-auto mt-5 h-[3px] w-14 bg-gold" />
+      </figure>
+    )
+  }
+</section>

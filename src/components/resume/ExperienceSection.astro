@@ -1,0 +1,145 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import type { Translator } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
+import Icon from '@/components/ui/Icon.astro'
+import Collapse from '@/components/ui/Collapse.astro'
+import SectionEyebrow from '@/components/ui/SectionEyebrow.astro'
+import SectionTitle from '@/components/ui/SectionTitle.astro'
+import ExperienceHeading from './ExperienceHeading.astro'
+import TagList from './TagList.astro'
+import TaskList from './TaskList.astro'
+
+/**
+ * Parcours en accordéon (motif WAI-ARIA) : un titre h3 (ou h4 pour une mission) contient le bouton,
+ * nommé par le seul intitulé (aria-labelledby), le résumé en description (aria-describedby).
+ * Une seule ligne ou mission ouverte à la fois (src/scripts/app.ts). Par défaut, la mission en cours.
+ */
+const tr = Astro.props.tr as Translator
+const { t, tArray } = tr
+const { experiences, labels } = resumeConfig
+
+/** Colonne période + colonne contenu. Sous 640px, la période passe au-dessus du contenu. */
+const ROW_GRID = 'grid gap-x-[clamp(12px,3vw,24px)] sm:grid-cols-[minmax(88px,140px)_minmax(0,1fr)]'
+const CARET = 'flex-none text-[18px] text-muted transition-transform duration-200 group-aria-expanded:rotate-180'
+const BUTTON = 'group w-full cursor-pointer text-left'
+
+const defaultOpen = experiences.flatMap((exp) => exp.missions ?? []).find((mission) => mission.isOngoing)?.id
+---
+
+<section data-anchor="parcours" aria-labelledby="parcours-title" class="flex flex-col">
+  <SectionEyebrow rule="long">{t(labels.experience.eyebrow)}</SectionEyebrow>
+  <SectionTitle id="parcours-title" class="mb-2.5">{t(labels.experience.title)}</SectionTitle>
+  <p class="m-0 mb-7 text-base text-muted">{t(labels.experience.hint)}</p>
+
+  <ol class="m-0 list-none p-0" data-accordion>
+    {
+      experiences.map((experience) =>
+        experience.missions?.length ? (
+          // Ligne avec missions imbriquées : la ligne elle-même n'est pas dépliable
+          <li class={cn(ROW_GRID, 'gap-y-1.5 border-t border-rule py-[22px] last:border-b')}>
+            <span class="font-mono text-[13px] text-muted sm:pt-1">{t(experience.period)}</span>
+            <div class="flex min-w-0 flex-col gap-3.5">
+              <div class="flex flex-col gap-2">
+                <ExperienceHeading experience={experience} t={t} heading />
+                <p class="m-0 text-base leading-[1.55] text-body">{t(experience.description)}</p>
+              </div>
+              {experience.missions.map((mission) => {
+                const open = mission.id === defaultOpen
+                const id = `mission-${mission.id}`
+                const heading = [t(labels.experience.mission), mission.client, mission.title && t(mission.title)]
+                  .filter(Boolean)
+                  .join(' · ')
+                return (
+                  <div class="rounded-lg border border-card-border bg-sunken">
+                    <h4 class="m-0">
+                      <button
+                        type="button"
+                        aria-expanded={open ? 'true' : 'false'}
+                        aria-controls={id}
+                        aria-labelledby={`${id}-title`}
+                        aria-describedby={`${id}-summary`}
+                        class={cn(BUTTON, 'flex items-start justify-between gap-4 rounded-lg px-[18px] py-4')}
+                      >
+                        <span class="flex min-w-0 flex-col gap-1.5">
+                          <span class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                            <span
+                              id={`${id}-title`}
+                              class="glyph-dollar font-mono text-sm font-semibold text-ink before:mr-[1ch] before:text-gold"
+                            >
+                              {heading}
+                            </span>
+                            {mission.isOngoing ? (
+                              <span class="inline-flex items-center gap-1.5 font-mono text-xs text-muted-strong">
+                                <span aria-hidden="true" class="size-[7px] rounded-full bg-status" />
+                                {t(labels.experience.ongoing)}
+                              </span>
+                            ) : (
+                              mission.period && (
+                                <span class="font-mono text-xs text-muted-strong">{t(mission.period)}</span>
+                              )
+                            )}
+                          </span>
+                          <span id={`${id}-summary`} class="text-[15.5px] leading-[1.55] text-pretty text-body">
+                            {t(mission.description)}
+                          </span>
+                        </span>
+                        <Icon name="caret-down" class={CARET} />
+                      </button>
+                    </h4>
+                    <Collapse open={open} id={id}>
+                      <div class="flex flex-col gap-3.5 px-[18px] pb-[18px]">
+                        <TaskList tasks={tArray(mission.tasks)} class="border-t border-rule pt-3.5" />
+                        <TagList tags={mission.tags} t={t} />
+                      </div>
+                    </Collapse>
+                  </div>
+                )
+              })}
+            </div>
+          </li>
+        ) : (
+          // Ligne dépliable : période, titre + badge, résumé, chevron ; détail en dessous
+          <li class="border-t border-rule last:border-b">
+            <h3 class="m-0">
+              <button
+                type="button"
+                aria-expanded={experience.id === defaultOpen ? 'true' : 'false'}
+                aria-controls={`experience-${experience.id}`}
+                aria-labelledby={`experience-${experience.id}-title`}
+                aria-describedby={`experience-${experience.id}-summary`}
+                class={cn(
+                  BUTTON,
+                  'grid grid-cols-[minmax(0,1fr)_auto] gap-x-[clamp(12px,3vw,24px)] gap-y-1.5 py-[22px] sm:grid-cols-[minmax(88px,140px)_minmax(0,1fr)_auto]',
+                )}
+              >
+                <span class="col-span-2 sm:col-span-1">
+                  <span class="font-mono text-[13px] text-muted sm:pt-1">{t(experience.period)}</span>
+                </span>
+                <span class="flex min-w-0 flex-col gap-1.5">
+                  <ExperienceHeading experience={experience} t={t} titleId={`experience-${experience.id}-title`} />
+                  <span
+                    id={`experience-${experience.id}-summary`}
+                    class="text-base leading-[1.55] text-pretty text-body"
+                  >
+                    {t(experience.description)}
+                  </span>
+                </span>
+                <Icon name="caret-down" class={cn(CARET, 'sm:mt-1')} />
+              </button>
+            </h3>
+            <Collapse open={experience.id === defaultOpen} id={`experience-${experience.id}`}>
+              <div class={cn(ROW_GRID, 'pb-[22px]')}>
+                <span aria-hidden="true" class="hidden sm:block" />
+                <div class="flex flex-col gap-3.5">
+                  {experience.tasks && <TaskList tasks={tArray(experience.tasks)} />}
+                  {experience.tags && <TagList tags={experience.tags} t={t} />}
+                </div>
+              </div>
+            </Collapse>
+          </li>
+        ),
+      )
+    }
+  </ol>
+</section>

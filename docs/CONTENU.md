@@ -44,7 +44,7 @@ URL canonique (JSON-LD) et domaine affiché dans la headerbar, suivi de la secti
 | Champ | Rôle |
 |---|---|
 | `name` | Le premier mot s'affiche sur la ligne 1 du H1, le reste sur la ligne 2 |
-| `photo`, `photoSmall`, `photoBackEmoji` | Photo du hero (portrait 440×528), variante mobile optionnelle (300×360) et emoji au dos, visible au clic (flip 3D) |
+| `photo`, `photoBackEmoji` | Photo publique (JSON-LD) et emoji au dos de la photo du hero, visible au clic (flip 3D). Le hero affiche `src/assets/profil.jpg` (portrait 440×528), décliné en AVIF et WebP par Astro : remplacer les deux fichiers ensemble |
 | `title` | Intitulé pour le SEO et le JSON-LD |
 | `headline` | Eyebrow du hero |
 | `intro`, `tagline` | Les deux paragraphes du hero |
@@ -89,7 +89,7 @@ Une mission (`missions[]`) reprend `client`, `title`, `period`, `description`, `
 
 ### `skills`
 
-Quatre blocs, comme sur le CV PDF : un identifiant façon variable (`strategie_produit`, affiché `$ strategie_produit` en mono) et trois lignes courtes. Une ligne peut regrouper deux notions (`No-code, vibe coding`) : elles sont séparées dans le JSON-LD.
+Quatre blocs, comme sur le CV PDF : un identifiant façon variable (`strategie_produit`, affiché `$ strategie_produit` en mono) et trois lignes courtes. Une ligne peut regrouper deux notions (`No-code, vibe coding`) : elles sont séparées dans le JSON-LD. `spoken` donne la forme lue par les lecteurs d'écran (`Stratégie produit`).
 
 ### `engagements`
 
@@ -101,7 +101,7 @@ Lignes simples, sans filets, en grille 2×2 avec les engagements. Les loisirs s'
 
 ### `languages`
 
-Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique aussi de compléter le script inline de `index.html`, `LANGUAGE_PATHS` dans `functions/_middleware.ts` (redirection `?lang=`), `public/404.html` et `public/sitemap.xml`.
+Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique aussi de créer `src/pages/<code>/index.astro`, de compléter le script inline de `src/layouts/Base.astro`, `LANGUAGE_PATHS` dans `functions/_middleware.ts` (redirection `?lang=`), `public/404.html` et `public/sitemap.xml`.
 
 ### `pdf`
 
@@ -109,7 +109,7 @@ Un chemin commun ou un chemin par langue. Le fichier se place dans `public/cv/`.
 
 ### `theme`
 
-`defaultMode` : `'light'`, `'dark'`, `'system'`, ou absent (selon l'heure). Le choix du visiteur est mémorisé.
+`defaultMode` : `'light'`, `'dark'` ou `'system'` (par défaut : suit le réglage du système, en direct). Le choix du visiteur est mémorisé.
 
 ### `labels`
 
@@ -121,16 +121,20 @@ Tous les libellés de l'interface (navigation, titres de section, boutons, texte
 ├── src/
 │   ├── data/resume-config.ts     # Le contenu du CV
 │   ├── data/types.ts             # Le schéma du contenu
-│   ├── components/os/            # Fenêtre, headerbar, boutons liés, barre d'état
-│   ├── components/ui/            # Boutons, tags, eyebrows, accordéon
-│   ├── components/Resume/        # Les sections du CV
-│   ├── lib/                      # Langues, thème, navigation, SEO
-│   ├── entry-server.tsx          # Rendu utilisé par le pré-rendu
+│   ├── assets/                   # Photo et logos, déclinés en AVIF/WebP au build
+│   ├── components/os/            # Headerbar, boutons liés, barre d'état
+│   ├── components/ui/            # Boutons, tags, eyebrows, icônes, panneau dépliable
+│   ├── components/resume/        # La fenêtre et les sections du CV
+│   ├── layouts/Base.astro        # <head> (SEO, CSP, thème avant affichage) et corps
+│   ├── pages/                    # Une page par langue : / et /en/
+│   ├── scripts/app.ts            # Seul JavaScript : thème, langue, navigation, accordéon, photo
+│   ├── lib/                      # Traduction, SEO, utilitaires
 │   └── globals.css               # Tokens Hacktion OS 2 (clair/sombre) et polices
 ├── public/                       # CV PDF, polices, images, llms.txt, robots.txt, sitemap.xml
 │   ├── 404.html                  # Page 404 (FR/EN)
 │   ├── _headers                  # En-têtes Cloudflare : cache, sécurité, noindex hors domaine
 │   └── _routes.json              # Routes qui passent par la Function de domaine
 ├── functions/_middleware.ts      # Domaine unique : redirections 301 vers pannecoucke.me
-└── scripts/prerender.mjs         # Une page HTML complète par langue au build
+├── tests/                        # Playwright : responsive, accessibilité, CSP, parcours, captures
+└── astro.config.mjs              # Site statique, CSP, Tailwind
 ```

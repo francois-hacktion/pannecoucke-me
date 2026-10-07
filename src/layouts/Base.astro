@@ -1,0 +1,104 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import { headData } from '@/lib/seo'
+import '@/globals.css'
+
+/**
+ * Page complète d'une langue : <head> (SEO, polices, thème) et corps.
+ * Le seul JavaScript est natif : le script inline ci-dessous (avant le premier affichage)
+ * et src/scripts/app.ts (thème, navigation, accordéon, photo), chargé en module.
+ */
+const { language } = Astro.props as { language: string }
+const head = headData(language)
+const defaultMode = resumeConfig.theme?.defaultMode ?? 'system'
+---
+
+<!doctype html>
+<html lang={language} data-default-theme={defaultMode}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    {/* Couleur du bureau, reprise par la barre d'adresse mobile (mise à jour avec le thème) */}
+    <meta name="theme-color" content="#f5f3ee" />
+
+    {/*
+      Avant le premier affichage : langue demandée (?lang=, en développement ; 301 en production)
+      ou mémorisée, puis thème (choix mémorisé, sinon réglage du système).
+    */}
+    <script is:inline>
+      ;(function () {
+        try {
+          var KEY = 'resume-language',
+            path = location.pathname
+          var asked = new URLSearchParams(location.search).get('lang')
+          if (asked !== 'fr' && asked !== 'en') asked = null
+          if (asked) localStorage.setItem(KEY, asked)
+          // Un chemin de langue (/en/) est explicite : seule la page par défaut suit le choix mémorisé
+          var wanted = asked || (path === '/' ? localStorage.getItem(KEY) : null)
+          var target = wanted === 'en' ? '/en/' : wanted === 'fr' ? '/' : null
+          if (target && target !== path) return location.replace(target + location.hash)
+          if (asked) history.replaceState(null, '', path + location.hash)
+        } catch (e) {}
+        var root = document.documentElement,
+          stored = null
+        try {
+          stored = localStorage.getItem('resume-theme')
+        } catch (e) {}
+        var mode = root.dataset.defaultTheme
+        var dark =
+          stored === 'dark' ||
+          (stored !== 'light' &&
+            (mode === 'dark' || (mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)))
+        root.classList.toggle('dark', dark)
+        if (dark) document.querySelector('meta[name="theme-color"]').content = '#0d1f2d'
+      })()
+    </script>
+
+    {/* Polices hébergées sur le site (licence OFL, public/fonts) */}
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <title>{head.title}</title>
+    <meta name="description" content={head.description} />
+    <link rel="canonical" href={head.url} />
+    {head.alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
+    <meta property="og:url" content={head.url} />
+    <meta property="og:title" content={head.title} />
+    <meta property="og:description" content={head.description} />
+    <meta property="og:locale" content={head.ogLocale} />
+    {head.ogLocaleAlternates.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
+    <meta name="twitter:title" content={head.title} />
+    <meta name="twitter:description" content={head.description} />
+    <script type="application/ld+json" is:inline set:html={head.jsonLd} />
+
+    <meta name="author" content="François Pannecoucke" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="François Pannecoucke" />
+    <meta property="og:image" content="https://pannecoucke.me/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+    <meta property="og:image:alt" content="François Pannecoucke, product leader/builder" />
+    <meta property="profile:first_name" content="François" />
+    <meta property="profile:last_name" content="Pannecoucke" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://pannecoucke.me/images/og-image.jpg" />
+    <meta name="twitter:image:alt" content="François Pannecoucke, product leader/builder" />
+
+    {/* Sans JavaScript, les détails repliés du parcours restent lisibles (fichier et non style inline : CSP) */}
+    <noscript><link rel="stylesheet" href="/noscript.css" /></noscript>
+  </head>
+
+  <body>
+    {/* email_off : empêche l'obfuscation d'e-mails de Cloudflare de réécrire les liens (son script serait bloqué par la CSP) */}
+    <Fragment set:html="<!--email_off-->" />
+    <slot />
+    <Fragment set:html="<!--/email_off-->" />
+    <script>
+      import '@/scripts/app'
+    </script>
+  </body>
+</html>

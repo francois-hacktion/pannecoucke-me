@@ -1,0 +1,45 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import type { Translator } from '@/lib/i18n'
+import SectionEyebrow from '@/components/ui/SectionEyebrow.astro'
+import SectionTitle from '@/components/ui/SectionTitle.astro'
+
+/**
+ * Compétences en carte à 4 colonnes, comme sur le CV PDF : titre mono "$ variable", liste simple.
+ * Le titre affiché (strategie_produit) est remplacé pour les lecteurs d'écran par sa forme lisible (spoken).
+ */
+const { t } = Astro.props.tr as Translator
+const { skills, labels } = resumeConfig
+---
+
+<section data-anchor="competences" aria-labelledby="competences-title" class="flex flex-col">
+  <SectionEyebrow rule="long">{t(labels.skills.eyebrow)}</SectionEyebrow>
+  <SectionTitle id="competences-title" class="mb-7">{t(labels.skills.title)}</SectionTitle>
+
+  {/* 4 colonnes calées sur leur contenu sur grand écran, 2 sur tablette, 1 sur petit mobile */}
+  <div
+    class="grid grid-cols-1 gap-x-8 gap-y-6 rounded-lg border border-card-border bg-sunken p-[clamp(18px,3vw,26px)] min-[480px]:grid-cols-2 lg:grid-cols-[repeat(4,max-content)] lg:justify-between"
+  >
+    {
+      skills.map((category) => (
+        <div class="flex min-w-0 flex-col gap-2">
+          <h3 class="glyph-dollar m-0 font-mono text-[15px] font-semibold break-words text-ink before:mr-[1ch] before:text-gold">
+            {category.spoken ? (
+              <>
+                <span aria-hidden="true">{t(category.title)}</span>
+                <span class="sr-only">{t(category.spoken)}</span>
+              </>
+            ) : (
+              t(category.title)
+            )}
+          </h3>
+          <ul class="m-0 flex list-none flex-col gap-1 p-0 text-[15.5px] leading-[1.5] text-body">
+            {category.items.map((item) => (
+              <li>{t(item)}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>

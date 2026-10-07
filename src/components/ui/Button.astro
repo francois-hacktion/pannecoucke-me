@@ -1,0 +1,39 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { cn } from '@/lib/utils'
+import Icon, { type IconName } from './Icon.astro'
+
+/**
+ * Bouton du design system Hacktion (source : ds-source/Button.jsx), variante "signature"
+ * à ombre dure qui s'enfonce au survol et à la pression.
+ * Rendu en lien : tous les boutons du CV mènent quelque part (mailto, PDF, LinkedIn).
+ */
+interface Props extends HTMLAttributes<'a'> {
+  href: string
+  variant?: 'primary' | 'secondary'
+  icon?: IconName
+}
+
+const HARD_SHADOW =
+  'shadow-[4px_4px_0_0_var(--color-navy)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_var(--color-navy)] active:translate-x-1 active:translate-y-1 active:shadow-none'
+
+const VARIANTS = {
+  // Texte navy et non blanc (écart au handoff) : contraste 8:1 au lieu de 2,1:1, comme le bouton or de la headerbar
+  primary: cn('rounded-[4px] border-2 border-black bg-gold text-[#0d1f2d]', HARD_SHADOW),
+  secondary: cn('rounded-[4px] border-2 border-navy bg-white text-navy', HARD_SHADOW),
+}
+
+const { variant = 'primary', icon, class: className, ...props } = Astro.props
+---
+
+<a
+  class={cn(
+    'inline-flex select-none items-center justify-center gap-2 whitespace-nowrap px-6 py-3 font-sans text-base leading-5 font-bold no-underline transition-all duration-150',
+    VARIANTS[variant],
+    className,
+  )}
+  {...props}
+>
+  {icon && <span class="flex text-[18px]"><Icon name={icon} /></span>}
+  <slot />
+</a>

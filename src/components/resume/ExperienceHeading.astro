@@ -1,0 +1,31 @@
+---
+import type { Experience } from '@/data/types'
+import type { Translator } from '@/lib/i18n'
+import TechBadge from '@/components/ui/TechBadge.astro'
+
+/**
+ * Titre et badges d'une expérience. "heading" : vrai titre h3 (ligne non dépliable) ;
+ * sinon un span nommé, car un bouton d'accordéon ne peut contenir que du texte (le h3 l'entoure).
+ */
+interface Props {
+  experience: Experience
+  t: Translator['t']
+  heading?: boolean
+  titleId?: string
+}
+
+const { experience, t, heading, titleId } = Astro.props
+const Wrapper = heading ? 'div' : 'span'
+const Title = heading ? 'h3' : 'strong'
+---
+
+<Wrapper class="flex flex-wrap items-center gap-x-2.5 gap-y-2">
+  <Title id={titleId} class="m-0 text-[19px] font-bold text-ink">
+    {experience.title ? t(experience.title) : experience.company}
+  </Title>
+  {
+    experience.badges.map((badge) => (
+      <TechBadge tone={badge.tone} size="xs">{t(badge.label)}</TechBadge>
+    ))
+  }
+</Wrapper>

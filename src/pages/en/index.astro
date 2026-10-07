@@ -1,0 +1,9 @@
+---
+import Base from '@/layouts/Base.astro'
+import Resume from '@/components/resume/Resume.astro'
+import { translator } from '@/lib/i18n'
+
+const tr = translator('en')
+---
+
+<Base language="en"><Resume tr={tr} /></Base>

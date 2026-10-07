@@ -73,6 +73,8 @@ export interface Experience {
 export interface SkillCategory {
   /** Identifiant affiché en mono, façon variable : strategie_produit */
   title: LocalizedString
+  /** Libellé lu par les lecteurs d'écran à la place de l'identifiant (strategie_produit → Stratégie produit) */
+  spoken?: LocalizedString
   items: LocalizedString[]
 }
 
@@ -157,10 +159,8 @@ export interface ResumeConfig {
   }
   personal: {
     name: string
-    /** Photo du hero, portrait 440×528 */
+    /** Photo publique (JSON-LD). Le hero affiche src/assets/profil.jpg, décliné en AVIF/WebP par Astro */
     photo?: string
-    /** Variante 300×360 pour mobile (optionnelle, servie via srcset) */
-    photoSmall?: string
     photoBackEmoji?: string
     /** Intitulé (SEO, JSON-LD) */
     title: LocalizedString
