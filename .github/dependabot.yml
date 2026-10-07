@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Versions majeures traitées à la main, dans le plan (migration Astro, ESLint 10, TypeScript 7)
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
     groups:
       dependances:
         patterns: ['*']
