@@ -91,3 +91,22 @@ test.describe('parcours principaux', () => {
     await expect(photo).not.toHaveAttribute('data-spinning', { timeout: 3000 })
   })
 })
+
+test.describe('partage et agents IA', () => {
+  for (const path of ['/', '/en/']) {
+    test(`${path} : image de partage 1200×630 servie`, async ({ page, request }) => {
+      await page.goto(path)
+      const url = new URL((await page.locator('meta[property="og:image"]').getAttribute('content'))!)
+      expect(await page.locator('meta[property="og:image:height"]').getAttribute('content')).toBe('630')
+      const response = await request.get(url.pathname)
+      expect(response.ok()).toBe(true)
+      expect(response.headers()['content-type']).toContain('image/jpeg')
+    })
+  }
+
+  test('llms.txt : titre H1 et liens Markdown (format llmstxt.org)', async ({ request }) => {
+    const text = await (await request.get('/llms.txt')).text()
+    expect(text).toMatch(/^# \S/)
+    expect(text.match(/^- \[[^\]]+\]\(https?:\/\/[^)]+\)/gm)?.length).toBeGreaterThanOrEqual(3)
+  })
+})

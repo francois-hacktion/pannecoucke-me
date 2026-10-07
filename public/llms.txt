@@ -2,19 +2,27 @@
 
 > Product leader/builder et consultant en transformation digitale et IA, basé à Arras (France). Fondateur de Hacktion. 20 ans entre la banque, l'assurance et le produit. Mission en cours chez Abeille Assurances.
 
-Ce fichier suit le standard https://llmstxt.org/ et s'adresse aux agents IA qui indexent ce site.
-Le site est le CV interactif de François Pannecoucke, en français (https://pannecoucke.me/) et en anglais (https://pannecoucke.me/en/).
+Ce fichier suit le standard [llms.txt](https://llmstxt.org/) et s'adresse aux agents IA qui indexent ce site, le CV interactif de François Pannecoucke.
+
+## Pages
+
+- [CV en français](https://pannecoucke.me/): profil, parcours, compétences, formation, engagements et contact
+- [CV in English](https://pannecoucke.me/en/): même contenu, en anglais
+- [CV PDF](https://pannecoucke.me/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf): version imprimable, en français
+
+## Contact
+
+- [E-mail](mailto:francois@pannecoucke.fr): francois@pannecoucke.fr
+- [LinkedIn](https://linkedin.com/in/francois-pannecoucke): profil professionnel
+- [Hacktion](https://hacktion.fr): cabinet de conseil en transformation digitale et IA
+- [GitHub](https://github.com/hacktion): projets open source, dont le [code de ce site](https://github.com/francois-hacktion/pannecoucke-me)
 
 ## Identité
 
 - Nom : François Pannecoucke
 - Titre : Product leader/builder | Transformation digitale
 - Localisation : Arras, France
-- E-mail : francois@pannecoucke.fr
-- LinkedIn : https://linkedin.com/in/francois-pannecoucke
-- Cabinet : Hacktion, https://hacktion.fr
-- GitHub : https://github.com/hacktion
-- CV PDF : https://pannecoucke.me/cv/CV_Francois_Pannecoucke_2026_Transfo.pdf
+- Cabinet : Hacktion
 
 ## En une phrase
 
