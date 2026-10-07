@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "src", "functions", "tests", "playwright.config.ts"],
+  "include": [".astro/types.d.ts", "src", "tests", "playwright.config.ts"],
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",

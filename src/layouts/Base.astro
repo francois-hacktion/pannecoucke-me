@@ -22,11 +22,16 @@ const defaultMode = resumeConfig.theme?.defaultMode ?? 'system'
     <meta name="theme-color" content="#f5f3ee" />
 
     {/*
-      Avant le premier affichage : langue demandée (?lang=, en développement ; 301 en production)
-      ou mémorisée, puis thème (choix mémorisé, sinon réglage du système).
+      Avant le premier affichage : domaine unique, langue demandée (?lang=, anciens liens) ou mémorisée,
+      puis thème (choix mémorisé, sinon réglage du système). Site 100 % statique : pas de fonction serveur.
     */}
     <script is:inline>
       ;(function () {
+        // Domaine unique : les autres adresses du site renvoient vers pannecoucke.me.
+        // Les aperçus de PR (<branche>.pannecoucke-me.pages.dev) restent consultables.
+        var host = location.hostname
+        if (host === 'www.pannecoucke.me' || host === 'pannecoucke-me.pages.dev')
+          return location.replace('https://pannecoucke.me' + location.pathname + location.search + location.hash)
         try {
           var KEY = 'resume-language',
             path = location.pathname

@@ -101,7 +101,7 @@ Lignes simples, sans filets, en grille 2×2 avec les engagements. Les loisirs s'
 
 ### `languages`
 
-Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique aussi de créer `src/pages/<code>/index.astro`, de compléter le script inline de `src/layouts/Base.astro`, `LANGUAGE_PATHS` dans `functions/_middleware.ts` (redirection `?lang=`), `public/404.html` et `public/sitemap.xml`.
+Chaque langue a sa page pré-rendue : `/` pour la langue par défaut, `/<code>/` pour les autres. Ajouter une langue implique aussi de créer `src/pages/<code>/index.astro`, de compléter le script inline de `src/layouts/Base.astro` (redirection `?lang=` et langue mémorisée), `public/404.html` et `public/sitemap.xml`.
 
 ### `pdf`
 
@@ -132,9 +132,7 @@ Tous les libellés de l'interface (navigation, titres de section, boutons, texte
 │   └── globals.css               # Tokens Hacktion OS 2 (clair/sombre) et polices
 ├── public/                       # CV PDF, polices, images, llms.txt, robots.txt, sitemap.xml
 │   ├── 404.html                  # Page 404 (FR/EN)
-│   ├── _headers                  # En-têtes Cloudflare : cache, sécurité, noindex hors domaine
-│   └── _routes.json              # Routes qui passent par la Function de domaine
-├── functions/_middleware.ts      # Domaine unique : redirections 301 vers pannecoucke.me
+│   └── _headers                  # En-têtes Cloudflare : cache, sécurité, noindex hors domaine
 ├── tests/                        # Playwright : responsive, accessibilité, CSP, parcours, captures
 └── astro.config.mjs              # Site statique, CSP, Tailwind
 ```
