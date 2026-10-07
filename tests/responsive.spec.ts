@@ -34,6 +34,14 @@ for (const { lang, path, sections } of LANGUAGES) {
         expect(sticky, 'débordement de la barre de nav sticky').toBeLessThanOrEqual(0)
       }
 
+      // Les boutons restent dans la nav : sinon ils mangent la marge intérieure de la barre
+      // sans que scrollWidth ne le signale
+      const spill = await nav.evaluate((el) => {
+        const last = el.lastElementChild!.getBoundingClientRect().right
+        return Math.round(last - el.getBoundingClientRect().right)
+      })
+      expect(spill, 'boutons qui dépassent de la nav').toBeLessThanOrEqual(0)
+
       for (const link of await links.all()) {
         const box = (await link.boundingBox())!
         expect(box.x, `${await link.textContent()} : bord gauche`).toBeGreaterThanOrEqual(0)
