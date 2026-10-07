@@ -80,7 +80,7 @@ export const resumeConfig: ResumeConfig = {
     { type: 'email', label: 'francois@pannecoucke.fr' },
     { type: 'phone', label: '+33 6 07 69 98 34', href: 'tel:+33607699834' },
     { type: 'linkedin', label: 'François Pannecoucke', href: 'https://linkedin.com/in/francois-pannecoucke' },
-    { type: 'github', label: 'hacktion', href: 'https://github.com/hacktion' },
+    { type: 'github', label: 'francois-hacktion', href: 'https://github.com/francois-hacktion' },
     { type: 'website', label: 'hacktion.fr', href: 'https://hacktion.fr' },
     { type: 'location', label: 'Arras, France' },
   ],
