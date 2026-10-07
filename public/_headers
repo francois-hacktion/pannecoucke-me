@@ -6,7 +6,8 @@
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Strict-Transport-Security: max-age=31536000
+  # HTTPS imposé au domaine et à ses sous-domaines (seuls pannecoucke.me et www existent, tous deux en HTTPS)
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 # Fichiers versionnés par Astro (nom avec empreinte) : cache d'un an
 /assets/*
