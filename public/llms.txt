@@ -15,7 +15,7 @@ Ce fichier suit le standard [llms.txt](https://llmstxt.org/) et s'adresse aux ag
 - [E-mail](mailto:francois@pannecoucke.fr): francois@pannecoucke.fr
 - [LinkedIn](https://linkedin.com/in/francois-pannecoucke): profil professionnel
 - [Hacktion](https://hacktion.fr): cabinet de conseil en transformation digitale et IA
-- [GitHub](https://github.com/hacktion): projets open source, dont le [code de ce site](https://github.com/francois-hacktion/pannecoucke-me)
+- [GitHub](https://github.com/francois-hacktion): projets open source, dont le [code de ce site](https://github.com/francois-hacktion/pannecoucke-me)
 
 ## Identité
 
