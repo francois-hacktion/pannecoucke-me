@@ -9,7 +9,7 @@ export default defineConfig({
   site: 'https://pannecoucke.me',
   trailingSlash: 'ignore',
   build: {
-    // Nom du dossier des fichiers versionnés : /assets/ (cache d'un an, cf. public/_headers et _routes.json)
+    // Nom du dossier des fichiers versionnés : /assets/ (cache d'un an, cf. public/_headers)
     assets: 'assets',
     // CSS inlinée (~8 Ko gzip) : aucune requête bloquante avant le premier affichage
     inlineStylesheets: 'always',
