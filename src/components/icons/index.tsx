@@ -91,6 +91,14 @@ export function LinkedinLogoIcon(props: IconProps) {
   )
 }
 
+export function HouseIcon(props: IconProps) {
+  return (
+    <PhosphorIcon {...props}>
+      <path d="M104,216V152h48v64h56V120a8,8,0,0,0-2.34-5.66l-80-80a8,8,0,0,0-11.32,0l-80,80A8,8,0,0,0,32,120v96Z" />
+    </PhosphorIcon>
+  )
+}
+
 export function XIcon(props: IconProps) {
   return (
     <PhosphorIcon {...props}>

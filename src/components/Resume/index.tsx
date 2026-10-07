@@ -6,7 +6,7 @@ import { resumeConfig } from '@/data/resume-config'
 import type { SectionId } from '@/data/types'
 import { SECTION_IDS, getPdfPath, pagePath } from '@/lib/resume'
 import { assetUrl } from '@/lib/utils'
-import { DownloadSimpleIcon, MoonIcon, SunIcon } from '@/components/icons'
+import { DownloadSimpleIcon, HouseIcon, MoonIcon, SunIcon } from '@/components/icons'
 import { HeaderBar } from '@/components/os/HeaderBar'
 import { HeaderButton, HeaderLink } from '@/components/os/HeaderButton'
 import { LinkedButtons } from '@/components/os/LinkedButtons'
@@ -36,12 +36,20 @@ export function Resume() {
     go(id)
   }
 
-  const nav = (
+  const navItems = SECTION_IDS.map((id) => ({
+    id,
+    label: resolve(labels.nav[id]),
+    href: `#${id}`,
+    icon: id === 'profil' ? <HouseIcon /> : undefined,
+  }))
+
+  const nav = (fill?: boolean) => (
     <LinkedButtons
       ariaLabel={resolve(labels.navAriaLabel)}
       value={active}
       onSelect={onNavigate}
-      items={SECTION_IDS.map((id) => ({ id, label: resolve(labels.nav[id]), href: `#${id}` }))}
+      items={navItems}
+      fill={fill}
     />
   )
 
@@ -70,7 +78,7 @@ export function Resume() {
           </span>
         </>
       }
-      center={nav}
+      center={nav()}
       end={
         <>
           {languages.available.length > 1 && (
@@ -99,10 +107,12 @@ export function Resume() {
               suggested
               href={assetUrl(pdfPath)}
               download={pdfPath.split('/').pop()}
-              label={resolve(labels.actions.downloadCv)}
+              title={resolve(labels.actions.downloadCv)}
               icon={<DownloadSimpleIcon />}
               className="min-w-[34px] px-2 wide:px-3"
             >
+              {/* Nom accessible = texte visible quand il est affiché (WCAG 2.5.3), sinon libellé complet */}
+              <span className="sr-only wide:hidden">{resolve(labels.actions.downloadCv)}</span>
               <span className="hidden wide:inline">{resolve(labels.actions.downloadCvShort)}</span>
             </HeaderLink>
           )}
@@ -118,11 +128,12 @@ export function Resume() {
         className="pointer-events-none absolute inset-0 bg-(image:--texture-noise) opacity-80 mix-blend-multiply [background-size:200px]"
       />
       <OsWindow header={header} footer={<StatusBar />} bodyRef={bodyRef}>
+        {/* Barre pleine largeur sous 640px ; défilement horizontal en secours sous 320px (écrans pliés fermés) */}
         <div
           ref={stickyNavRef}
-          className="scrollbar-none sticky top-0 z-[5] overflow-x-auto border-b border-rule bg-content px-4 py-2.5 [mask-image:linear-gradient(to_right,transparent,#000_14px,#000_calc(100%-14px),transparent)] nav:hidden"
+          className="scrollbar-none sticky top-0 z-[5] overflow-x-auto border-b border-rule bg-content px-2 py-2.5 sm:px-4 nav:hidden"
         >
-          {nav}
+          {nav(true)}
         </div>
         <div className="mx-auto flex max-w-[1000px] flex-col gap-[72px] px-[clamp(18px,5vw,56px)] pt-[clamp(28px,5vw,60px)] pb-[72px]">
           <ProfileSection />
