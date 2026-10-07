@@ -29,7 +29,7 @@ interface LinkedButtonsProps<T extends string> {
  * Paliers mesurés pour que les libellés français tiennent jusqu'à 320px.
  */
 const FILL_ITEM =
-  'max-sm:flex-auto max-sm:px-1 max-sm:text-[12px] min-[360px]:max-sm:px-1.5 min-[410px]:max-sm:px-2 min-[410px]:max-sm:text-[13px]'
+  'max-sm:flex-auto max-sm:px-1 max-sm:text-[11.5px] min-[360px]:max-sm:px-1.5 min-[360px]:max-sm:text-[12px] min-[410px]:max-sm:px-2 min-[410px]:max-sm:text-[13px]'
 
 function ItemContent({ label, icon }: { label: string; icon?: ReactNode }) {
   if (!icon) return label
