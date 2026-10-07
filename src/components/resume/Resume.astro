@@ -114,10 +114,10 @@ const navAriaLabel = t(labels.navAriaLabel)
       </Fragment>
     </HeaderBar>
     <main class="scrollbar-thin relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
-      {/* Barre pleine largeur sous 640px ; défilement horizontal en secours sous 311px (écrans pliés fermés) */}
+      {/* Barre pleine largeur sous 640px, centrée de 640 à 880px ; défilement horizontal en secours sous 311px (écrans pliés fermés) */}
       <div
         data-sticky-nav
-        class="scrollbar-none sticky top-0 z-[5] overflow-x-auto border-b border-rule bg-content px-2 py-2.5 sm:px-4 nav:hidden"
+        class="scrollbar-none sticky top-0 z-[5] overflow-x-auto border-b border-rule bg-content px-2 py-2.5 sm:px-4 sm:max-nav:flex sm:max-nav:justify-center-safe nav:hidden"
       >
         <LinkedButtons items={navItems} value="profil" ariaLabel={navAriaLabel} sectionNav fill />
       </div>

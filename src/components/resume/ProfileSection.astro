@@ -12,25 +12,40 @@ const { personal, labels } = resumeConfig
 const [firstName, ...rest] = personal.name.split(' ')
 const email = getContact('email')
 const pdfPath = getPdfPath(language)
+// Le séparateur reste collé au mot qui le précède : jamais de "·" en début de ligne
+const headline = t(personal.headline).replace(/ · /g, '\u00a0· ')
 ---
 
 <section data-anchor="profil" aria-labelledby="profil-title" class="flex flex-col gap-10">
-  <div class="flex flex-wrap-reverse items-center gap-x-10 gap-y-7 sm:gap-y-10">
-    <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-5">
-      <SectionEyebrow class="mb-0 tracking-[0.02em]">{t(personal.headline)}</SectionEyebrow>
+  {/*
+    Sous 640px : grille, photo réduite à côté de l'eyebrow et du nom, texte et boutons en dessous,
+    pour que "Me contacter" et le CV tiennent dans le premier écran (tests/above-the-fold.spec.ts).
+    Au-dessus : flex, photo à droite du texte (180×216 de 640 à 1024px, 220×264 au-delà), au-dessus quand la place manque.
+  */}
+  <div
+    class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3.5 sm:flex sm:flex-wrap-reverse sm:items-center sm:gap-x-10 sm:gap-y-10"
+  >
+    <div class="contents sm:flex sm:min-w-0 sm:flex-[1_1_320px] sm:flex-col sm:gap-5">
+      <SectionEyebrow class="col-start-2 row-start-1 mb-0 tracking-[0.02em] max-sm:self-end max-sm:text-[12px]">
+        {headline}
+      </SectionEyebrow>
       <h1
         id="profil-title"
-        class="m-0 text-[clamp(44px,6vw,64px)] leading-none font-extrabold tracking-[-0.035em] text-ink"
+        class="col-start-2 row-start-2 m-0 text-[clamp(26px,8.6vw,44px)] leading-none font-extrabold tracking-[-0.035em] text-ink max-sm:self-start sm:text-[clamp(44px,6vw,64px)]"
       >
         {firstName}<br /><span class="text-muted">{rest.join(' ')}</span>
       </h1>
-      <p class="m-0 max-w-[560px] text-xl leading-[1.6] text-pretty text-body">{t(personal.intro)}</p>
+      <p class="col-span-2 m-0 max-w-[560px] text-[17px] leading-[1.55] text-pretty text-body sm:text-xl sm:leading-[1.6]">
+        {t(personal.intro)}
+      </p>
       {
         personal.tagline && (
-          <p class="m-0 max-w-[560px] text-[17px] leading-[1.6] text-muted">{t(personal.tagline)}</p>
+          <p class="col-span-2 m-0 max-w-[560px] text-[15px] leading-[1.55] text-muted sm:text-[17px] sm:leading-[1.6]">
+            {t(personal.tagline)}
+          </p>
         )
       }
-      <div class="mt-1 flex flex-wrap gap-3">
+      <div class="col-span-2 mt-1 flex flex-wrap gap-3">
         {
           email?.href && (
             <Button variant="primary" href={email.href} icon="envelope">
@@ -40,8 +55,16 @@ const pdfPath = getPdfPath(language)
         }
         {
           pdfPath && (
-            <Button variant="secondary" href={pdfPath} download={pdfPath.split('/').pop()} icon="download">
-              {t(labels.actions.downloadCv)}
+            <Button
+              variant="secondary"
+              href={pdfPath}
+              download={pdfPath.split('/').pop()}
+              title={t(labels.actions.downloadCv)}
+              icon="download"
+            >
+              {/* Libellé court sous 640px, pour tenir sur la ligne de "Me contacter" ; nom accessible = texte visible */}
+              <span class="sm:hidden">{t(labels.actions.downloadCvShort)}</span>
+              <span class="max-sm:hidden">{t(labels.actions.downloadCv)}</span>
             </Button>
           )
         }
@@ -54,7 +77,7 @@ const pdfPath = getPdfPath(language)
          * avec l'emoji au dos. Transition CSS déclenchée par data-spinning (src/scripts/app.ts),
          * coupée si l'utilisateur demande moins d'animations.
          */
-        <div class="h-[180px] flex-[0_0_150px] [perspective:900px] sm:h-[264px] sm:flex-[0_0_220px]">
+        <div class="col-start-1 row-span-2 row-start-1 h-[106px] w-[88px] [perspective:900px] sm:h-[216px] sm:w-auto sm:flex-[0_0_180px] lg:h-[264px] lg:flex-[0_0_220px]">
           <button
             type="button"
             data-photo
@@ -66,7 +89,7 @@ const pdfPath = getPdfPath(language)
                 src={profil}
                 formats={['avif', 'webp']}
                 widths={[300, 440]}
-                sizes="(min-width: 640px) 220px, 150px"
+                sizes="(min-width: 1024px) 220px, (min-width: 640px) 180px, 88px"
                 alt={personal.name}
                 width={220}
                 height={264}
@@ -78,7 +101,7 @@ const pdfPath = getPdfPath(language)
             </span>
             <span
               aria-hidden="true"
-              class="absolute inset-0 flex items-center justify-center rounded-lg border border-card-border bg-navy text-6xl [backface-visibility:hidden] [transform:rotateY(180deg)]"
+              class="absolute inset-0 flex items-center justify-center rounded-lg border border-card-border bg-navy text-4xl sm:text-6xl [backface-visibility:hidden] [transform:rotateY(180deg)]"
             >
               {personal.photoBackEmoji ?? '🚀'}
             </span>

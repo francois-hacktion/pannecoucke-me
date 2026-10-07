@@ -28,7 +28,7 @@ const { variant = 'primary', icon, class: className, ...props } = Astro.props
 
 <a
   class={cn(
-    'inline-flex select-none items-center justify-center gap-2 whitespace-nowrap px-6 py-3 font-sans text-base leading-5 font-bold no-underline transition-all duration-150',
+    'inline-flex select-none items-center justify-center gap-2 whitespace-nowrap px-6 py-3 max-sm:px-4 font-sans text-base leading-5 font-bold no-underline transition-all duration-150',
     VARIANTS[variant],
     className,
   )}
