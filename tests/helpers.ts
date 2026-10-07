@@ -9,20 +9,10 @@ export const LANGUAGES = [
 export const sectionNav = (page: Page, label: string = LANGUAGES[0].sections) =>
   page.locator(`nav[aria-label="${label}"]:visible`)
 
-/**
- * Le client s'hydrate après la première frame (scripts/prerender.mjs) :
- * on attend que React se soit attaché aux boutons avant d'interagir.
- */
+/** Attend que src/scripts/app.ts ait branché les interactions (html[data-ready]). */
 export async function gotoHydrated(page: Page, path: string) {
   await page.goto(path)
-  await expect
-    .poll(() =>
-      page.evaluate(() => {
-        const button = document.querySelector('header button')
-        return !!button && Object.keys(button).some((key) => key.startsWith('__reactProps'))
-      }),
-    )
-    .toBe(true)
+  await expect(page.locator('html')).toHaveAttribute('data-ready', '')
 }
 
 /** Coupe transitions et animations : évite les faux positifs de contraste et les captures instables. */
@@ -32,7 +22,7 @@ export async function freezeMotion(page: Page) {
   })
 }
 
-/** Thème sombre posé comme le fait le script inline de index.html, avant le premier rendu. */
+/** Thème sombre mémorisé : appliqué par le script inline de layouts/Base.astro, avant le premier affichage. */
 export async function useDarkTheme(page: Page) {
   await page.addInitScript(() => localStorage.setItem('resume-theme', 'dark'))
 }

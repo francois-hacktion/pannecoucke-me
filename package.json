@@ -1,6 +1,6 @@
 {
   "name": "pannecoucke-me",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "description": "CV en ligne de François Pannecoucke : product leader/builder, transformation digitale. Design system Hacktion OS 2, pré-rendu statique, FR/EN.",
   "homepage": "https://pannecoucke.me",
@@ -13,46 +13,38 @@
     "cv",
     "resume",
     "portfolio",
-    "react",
     "typescript",
     "tailwindcss",
-    "vite",
     "ssg",
-    "hacktion"
+    "hacktion",
+    "astro"
   ],
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "dev": "astro dev",
+    "build": "astro check && astro build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "astro preview",
     "test": "playwright test",
     "test:update": "playwright test --update-snapshots"
   },
   "dependencies": {
+    "astro": "^7.3.6",
     "clsx": "^2.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "agentation": "^2.2.1",
     "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "tailwindcss": "^4.1.18",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.48.0",
-    "vite": "^7.3.1"
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.48.0"
   }
 }

@@ -24,7 +24,6 @@ export const resumeConfig: ResumeConfig = {
   personal: {
     name: 'François Pannecoucke',
     photo: '/images/profil.jpg',
-    photoSmall: '/images/profil-300.jpg',
     photoBackEmoji: '🚀',
     title: {
       fr: 'Product leader/builder | Transformation digitale',
@@ -263,6 +262,7 @@ export const resumeConfig: ResumeConfig = {
   skills: [
     {
       title: { fr: 'strategie_produit', en: 'product_strategy' },
+      spoken: { fr: 'Stratégie produit', en: 'Product strategy' },
       items: [
         { fr: 'Roadmap produit', en: 'Product roadmap' },
         { fr: 'Business model', en: 'Business model' },
@@ -271,6 +271,7 @@ export const resumeConfig: ResumeConfig = {
     },
     {
       title: { fr: 'transformation', en: 'transformation' },
+      spoken: { fr: 'Transformation', en: 'Transformation' },
       items: [
         { fr: 'Conduite du changement', en: 'Change management' },
         { fr: 'Diagnostic organisationnel', en: 'Organisational diagnosis' },
@@ -279,6 +280,7 @@ export const resumeConfig: ResumeConfig = {
     },
     {
       title: { fr: 'data_ia_delivery', en: 'data_ai_delivery' },
+      spoken: { fr: 'Data, IA et delivery', en: 'Data, AI and delivery' },
       items: [
         { fr: 'Data & IA', en: 'Data & AI' },
         { fr: 'No-code, vibe coding', en: 'No-code, vibe coding' },
@@ -287,6 +289,7 @@ export const resumeConfig: ResumeConfig = {
     },
     {
       title: { fr: 'secteur', en: 'industry' },
+      spoken: { fr: 'Secteur', en: 'Industry' },
       items: [
         { fr: 'Assurance & banque', en: 'Insurance & banking' },
         { fr: 'B2B et B2C', en: 'B2B and B2C' },
@@ -380,7 +383,7 @@ export const resumeConfig: ResumeConfig = {
 
   // ===== THÈME =====
   theme: {
-    defaultMode: 'light',
+    defaultMode: 'system',
   },
 
   // ===== LABELS UI =====

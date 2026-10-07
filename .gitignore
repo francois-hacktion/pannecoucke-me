@@ -35,3 +35,6 @@ cv_source.pdf
 # Playwright
 playwright-report/
 test-results/
+
+# Astro
+.astro/

@@ -1,0 +1,17 @@
+---
+import { cn } from '@/lib/utils'
+import RichText from '@/components/ui/RichText.astro'
+
+/** Liste de réalisations, chaque ligne préfixée d'une flèche or. */
+const { tasks, class: className } = Astro.props as { tasks: string[]; class?: string }
+---
+
+<ul class={cn('m-0 flex list-none flex-col gap-2 p-0 text-[15px] leading-[1.55] text-body', className)}>
+  {
+    tasks.map((task) => (
+      <li class="glyph-arrow flex gap-2.5 before:font-bold before:text-gold">
+        <span><RichText text={task} /></span>
+      </li>
+    ))
+  }
+</ul>

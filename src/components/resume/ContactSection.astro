@@ -1,0 +1,48 @@
+---
+import { resumeConfig } from '@/data/resume-config'
+import { getContact } from '@/lib/resume'
+import type { Translator } from '@/lib/i18n'
+import Button from '@/components/ui/Button.astro'
+
+/** Bloc navy de fin de page. */
+const { t } = Astro.props.tr as Translator
+const { labels, personal } = resumeConfig
+const email = getContact('email')
+const phone = getContact('phone')
+const linkedin = getContact('linkedin')
+const LINK = 'text-[#c9d5de] underline hover:text-[#e6cc75]'
+---
+
+<section
+  data-anchor="contact"
+  aria-labelledby="contact-title"
+  class="flex flex-wrap items-center justify-between gap-7 rounded-[10px] border border-(color:--os-contact-border) bg-navy p-[clamp(24px,4vw,40px)] text-[#f5f3ee]"
+>
+  <div class="flex min-w-0 flex-col gap-2.5">
+    <p class="m-0 font-mono text-[13px] text-[#e6cc75]">{labels.contact.prompt}</p>
+    <h2 id="contact-title" class="m-0 text-[28px] leading-tight font-bold tracking-[-0.02em]">
+      {t(labels.contact.title)}
+    </h2>
+    <div class="flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[13.5px] text-[#c9d5de]">
+      {email && <a href={email.href} class={LINK}>{email.label}</a>}
+      {phone && <a href={phone.href} class={LINK}>{phone.label}</a>}
+      <span>{personal.location}</span>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-3">
+    {
+      email?.href && (
+        <Button variant="primary" href={email.href} icon="envelope">
+          {t(labels.actions.sendEmail)}
+        </Button>
+      )
+    }
+    {
+      linkedin?.href && (
+        <Button variant="secondary" href={linkedin.href} target="_blank" rel="noopener noreferrer" icon="linkedin">
+          {t(labels.actions.linkedin)}
+        </Button>
+      )
+    }
+  </div>
+</section>

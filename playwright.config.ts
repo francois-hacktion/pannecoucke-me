@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Tests de bout en bout sur le build de production (HTML pré-rendu puis hydraté),
- * servi par vite preview. Lancer `npm run build` avant `npm test`.
+ * servi par astro preview. Lancer `npm run build` avant `npm test`.
  * Chromium complet (channel chromium) et non chrome-headless-shell : ce dernier élargit le texte
  * d'environ 7 % (pas de positionnement sous-pixel), loin du rendu des téléphones.
  * PLAYWRIGHT_CHROMIUM : chemin d'un Chromium déjà installé, si sa version diffère de celle attendue.
@@ -18,6 +18,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     trace: 'on-first-retry',
+    // Les tests injectent du CSS (transitions coupées) : la CSP est vérifiée à part (tests/csp.spec.ts)
+    bypassCSP: true,
   },
   expect: {
     toHaveScreenshot: { maxDiffPixelRatio: 0.01, animations: 'disabled' },
@@ -30,7 +32,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx vite preview --port 4173 --strictPort',
+    command: 'npx astro preview --port 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
   },

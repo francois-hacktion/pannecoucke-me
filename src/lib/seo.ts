@@ -3,15 +3,10 @@ import type { LocalizedString } from '@/data/types'
 import { pageUrl } from '@/lib/resume'
 
 /**
- * Balises <head> d'une page de langue, injectées au build par scripts/prerender.mjs :
- * titre, description, canonical, hreflang, Open Graph, Twitter et JSON-LD.
+ * Données SEO d'une page de langue : titre, description, canonical, hreflang, Open Graph et JSON-LD.
  */
 
 const OG_LOCALES: Record<string, string> = { fr: 'fr_FR', en: 'en_US' }
-
-function escapeHtml(value: string): string {
-  return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-}
 
 /** Retire le balisage **gras** des textes riches. */
 function plain(value: string): string {
@@ -78,30 +73,21 @@ export function buildJsonLd(language: string) {
   }
 }
 
-export function buildHead(language: string): string {
+/** Balises du <head> propres à une langue (le reste est commun, cf. layouts/Base.astro). */
+export function headData(language: string) {
   const t = translator(language)
   const { seo, languages } = resumeConfig
-  const title = escapeHtml(t(seo.title))
-  const description = escapeHtml(t(seo.description))
-  const url = pageUrl(language)
-  // "<" échappé pour qu'aucune chaîne ne puisse fermer la balise <script>
-  const jsonLd = JSON.stringify(buildJsonLd(language)).replace(/</g, '\\u003c')
-
-  return [
-    `<title>${title}</title>`,
-    `<meta name="description" content="${description}" />`,
-    `<link rel="canonical" href="${url}" />`,
-    ...languages.available.map((lang) => `<link rel="alternate" hreflang="${lang}" href="${pageUrl(lang)}" />`),
-    `<link rel="alternate" hreflang="x-default" href="${pageUrl(languages.default)}" />`,
-    `<meta property="og:url" content="${url}" />`,
-    `<meta property="og:title" content="${title}" />`,
-    `<meta property="og:description" content="${description}" />`,
-    `<meta property="og:locale" content="${OG_LOCALES[language] ?? language}" />`,
-    ...languages.available
-      .filter((lang) => lang !== language)
-      .map((lang) => `<meta property="og:locale:alternate" content="${OG_LOCALES[lang] ?? lang}" />`),
-    `<meta name="twitter:title" content="${title}" />`,
-    `<meta name="twitter:description" content="${description}" />`,
-    `<script type="application/ld+json">${jsonLd}</script>`,
-  ].join('\n  ')
+  return {
+    title: t(seo.title),
+    description: t(seo.description),
+    url: pageUrl(language),
+    alternates: [
+      ...languages.available.map((lang) => ({ hreflang: lang, href: pageUrl(lang) })),
+      { hreflang: 'x-default', href: pageUrl(languages.default) },
+    ],
+    ogLocale: OG_LOCALES[language] ?? language,
+    ogLocaleAlternates: languages.available.filter((lang) => lang !== language).map((lang) => OG_LOCALES[lang] ?? lang),
+    // "<" échappé pour qu'aucune chaîne ne puisse fermer la balise <script>
+    jsonLd: JSON.stringify(buildJsonLd(language)).replace(/</g, '\\u003c'),
+  }
 }

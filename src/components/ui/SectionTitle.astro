@@ -1,0 +1,9 @@
+---
+import { cn } from '@/lib/utils'
+
+const { id, class: className } = Astro.props as { id?: string; class?: string }
+---
+
+<h2 id={id} class={cn('m-0 text-[32px] leading-[1.15] font-bold tracking-[-0.02em] text-ink', className)}>
+  <slot />
+</h2>

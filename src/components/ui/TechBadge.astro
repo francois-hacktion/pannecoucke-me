@@ -1,0 +1,21 @@
+---
+import type { Tone } from '@/data/types'
+import { cn } from '@/lib/utils'
+
+interface Props {
+  tone: Tone
+  /** sm : tags de détail · xs : badges de titre */
+  size?: 'sm' | 'xs'
+}
+
+const { tone, size = 'sm' } = Astro.props
+---
+
+{/* Teinte par classe tone-* (globals.css) et non par attribut style : compatible avec la CSP */}
+<span
+  class={cn(
+    `tone-${tone}`,
+    'inline-flex items-center whitespace-nowrap rounded-[4px] border px-[7px] font-sans text-xs leading-[1.33] font-semibold',
+    size === 'xs' ? 'py-px' : 'py-[3px]',
+  )}><slot /></span
+>

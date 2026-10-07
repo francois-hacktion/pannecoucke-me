@@ -2,19 +2,22 @@ import { expect, test } from '@playwright/test'
 import { gotoHydrated, sectionNav } from './helpers'
 
 test.describe('parcours principaux', () => {
-  test('bascule FR/EN sans rechargement', async ({ page }) => {
-    await gotoHydrated(page, '/')
+  test('bascule FR/EN : page de la langue, section conservée, choix mémorisé', async ({ page }) => {
+    await gotoHydrated(page, '/#parcours')
     await expect(page.locator('html')).toHaveAttribute('lang', 'fr')
-    const marker = await page.evaluate(() => ((window as unknown as { __marker: number }).__marker = 1))
 
     await page.getByRole('navigation', { name: 'Langue' }).getByRole('link', { name: 'EN' }).click()
+    await expect(page).toHaveURL(/\/en\/#parcours$/)
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await expect(page.locator('section[data-anchor="parcours"]')).toBeInViewport()
+
+    // "/" suit ensuite la langue mémorisée
+    await page.goto('/')
     await expect(page).toHaveURL(/\/en\/$/)
-    await expect(page.getByRole('navigation', { name: 'Language' })).toBeVisible()
-    expect(await page.evaluate(() => (window as unknown as { __marker?: number }).__marker)).toBe(marker)
 
     await page.getByRole('navigation', { name: 'Language' }).getByRole('link', { name: 'FR' }).click()
     await expect(page).toHaveURL(/\/$/)
-    await expect(page.getByRole('navigation', { name: 'Langue' })).toBeVisible()
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fr')
   })
 
   test('/en/ est servi en anglais', async ({ page }) => {
@@ -83,8 +86,8 @@ test.describe('parcours principaux', () => {
     await gotoHydrated(page, '/')
     const photo = page.getByRole('button', { name: 'Retourner la photo' })
     await photo.click()
-    await expect(photo).toHaveAttribute('style', /rotateY\(360deg\)/)
-    // Retour à 0 à la fin de la transition (800 ms)
-    await expect(photo).toHaveAttribute('style', /rotateY\(0deg\)/, { timeout: 3000 })
+    await expect(photo).toHaveAttribute('data-spinning', '')
+    // Retour à la fin de la transition (800 ms)
+    await expect(photo).not.toHaveAttribute('data-spinning', { timeout: 3000 })
   })
 })

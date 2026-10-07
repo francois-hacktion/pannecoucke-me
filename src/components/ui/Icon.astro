@@ -1,0 +1,46 @@
+---
+/**
+ * Icônes Phosphor (graisse "regular", licence MIT : https://phosphoricons.com),
+ * en SVG inline pour éviter une dépendance et un chargement de police.
+ * Taille : 1em par défaut, à piloter via font-size (comme la police d'icônes d'origine).
+ */
+const ICONS = {
+  'caret-down': '<polyline points="208 96 128 176 48 96"/>',
+  moon: '<path d="M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z"/>',
+  sun: '<line x1="128" y1="40" x2="128" y2="16"/><circle cx="128" cy="128" r="56"/><line x1="65.77" y1="65.77" x2="48.8" y2="48.8"/><line x1="65.77" y1="190.23" x2="48.8" y2="207.2"/><line x1="190.23" y1="65.77" x2="207.2" y2="48.8"/><line x1="190.23" y1="190.23" x2="207.2" y2="207.2"/><line x1="40" y1="128" x2="16" y2="128"/><line x1="128" y1="216" x2="128" y2="240"/><line x1="216" y1="128" x2="240" y2="128"/>',
+  download: '<line x1="128" y1="144" x2="128" y2="32"/><polyline points="216 144 216 208 40 208 40 144"/><polyline points="168 104 128 144 88 104"/>',
+  envelope: '<path d="M32,56H224a0,0,0,0,1,0,0V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56A0,0,0,0,1,32,56Z"/><polyline points="224 56 128 144 32 56"/>',
+  linkedin: '<rect x="32" y="32" width="192" height="192" rx="8"/><line x1="120" y1="112" x2="120" y2="176"/><line x1="88" y1="112" x2="88" y2="176"/><path d="M120,140a28,28,0,0,1,56,0v36"/><circle cx="88" cy="84" r="12" fill="currentColor" stroke="none"/>',
+  house: '<path d="M104,216V152h48v64h56V120a8,8,0,0,0-2.34-5.66l-80-80a8,8,0,0,0-11.32,0l-80,80A8,8,0,0,0,32,120v96Z"/>',
+  x: '<line x1="200" y1="56" x2="56" y2="200"/><line x1="200" y1="200" x2="56" y2="56"/>',
+  minus: '<line x1="40" y1="128" x2="216" y2="128"/>',
+  'arrows-out': '<polyline points="160 48 208 48 208 96"/><line x1="144" y1="112" x2="208" y2="48"/><polyline points="96 208 48 208 48 160"/><line x1="112" y1="144" x2="48" y2="208"/>',
+} as const
+
+export type IconName = keyof typeof ICONS
+
+interface Props {
+  name: IconName
+  size?: number | string
+  strokeWidth?: number
+  class?: string
+}
+
+const { name, size = '1em', strokeWidth = 16, class: className } = Astro.props
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 256 256"
+  width={size}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+  set:html={ICONS[name]}
+/>

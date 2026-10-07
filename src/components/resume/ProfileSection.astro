@@ -1,0 +1,127 @@
+---
+import { Picture } from 'astro:assets'
+import { resumeConfig } from '@/data/resume-config'
+import { getContact, getPdfPath } from '@/lib/resume'
+import type { Translator } from '@/lib/i18n'
+import Button from '@/components/ui/Button.astro'
+import SectionEyebrow from '@/components/ui/SectionEyebrow.astro'
+import profil from '@/assets/profil.jpg'
+
+const { t, language } = Astro.props.tr as Translator
+const { personal, labels } = resumeConfig
+const [firstName, ...rest] = personal.name.split(' ')
+const email = getContact('email')
+const pdfPath = getPdfPath(language)
+// Le séparateur reste collé au mot qui le précède : jamais de "·" en début de ligne
+const headline = t(personal.headline).replace(/ · /g, '\u00a0· ')
+---
+
+<section data-anchor="profil" aria-labelledby="profil-title" class="flex flex-col gap-10">
+  {/*
+    Sous 640px : grille, photo réduite à côté de l'eyebrow et du nom, texte et boutons en dessous,
+    pour que "Me contacter" et le CV tiennent dans le premier écran (tests/above-the-fold.spec.ts).
+    Au-dessus : flex, photo à droite du texte (180×216 de 640 à 1024px, 220×264 au-delà), au-dessus quand la place manque.
+  */}
+  <div
+    class="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3.5 sm:flex sm:flex-wrap-reverse sm:items-center sm:gap-x-10 sm:gap-y-10"
+  >
+    <div class="contents sm:flex sm:min-w-0 sm:flex-[1_1_320px] sm:flex-col sm:gap-5">
+      <SectionEyebrow class="col-start-2 row-start-1 mb-0 tracking-[0.02em] max-sm:self-end max-sm:text-[12px]">
+        {headline}
+      </SectionEyebrow>
+      <h1
+        id="profil-title"
+        class="col-start-2 row-start-2 m-0 text-[clamp(26px,8.6vw,44px)] leading-none font-extrabold tracking-[-0.035em] text-ink max-sm:self-start sm:text-[clamp(44px,6vw,64px)]"
+      >
+        {firstName}<br /><span class="text-muted">{rest.join(' ')}</span>
+      </h1>
+      <p class="col-span-2 m-0 max-w-[560px] text-[17px] leading-[1.55] text-pretty text-body sm:text-xl sm:leading-[1.6]">
+        {t(personal.intro)}
+      </p>
+      {
+        personal.tagline && (
+          <p class="col-span-2 m-0 max-w-[560px] text-[15px] leading-[1.55] text-muted sm:text-[17px] sm:leading-[1.6]">
+            {t(personal.tagline)}
+          </p>
+        )
+      }
+      <div class="col-span-2 mt-1 flex flex-wrap gap-3">
+        {
+          email?.href && (
+            <Button variant="primary" href={email.href} icon="envelope">
+              {t(labels.actions.contactMe)}
+            </Button>
+          )
+        }
+        {
+          pdfPath && (
+            <Button
+              variant="secondary"
+              href={pdfPath}
+              download={pdfPath.split('/').pop()}
+              title={t(labels.actions.downloadCv)}
+              icon="download"
+            >
+              {/* Libellé court sous 640px, pour tenir sur la ligne de "Me contacter" ; nom accessible = texte visible */}
+              <span class="sm:hidden">{t(labels.actions.downloadCvShort)}</span>
+              <span class="max-sm:hidden">{t(labels.actions.downloadCv)}</span>
+            </Button>
+          )
+        }
+      </div>
+    </div>
+    {
+      personal.photo && (
+        /*
+         * Photo 220×264 (150×180 sur mobile) qui fait un tour complet en 3D au clic, aller puis retour,
+         * avec l'emoji au dos. Transition CSS déclenchée par data-spinning (src/scripts/app.ts),
+         * coupée si l'utilisateur demande moins d'animations.
+         */
+        <div class="col-start-1 row-span-2 row-start-1 h-[106px] w-[88px] [perspective:900px] sm:h-[216px] sm:w-auto sm:flex-[0_0_180px] lg:h-[264px] lg:flex-[0_0_220px]">
+          <button
+            type="button"
+            data-photo
+            aria-label={t(labels.actions.flipPhoto)}
+            class="relative block size-full cursor-pointer rounded-lg transition-transform duration-800 ease-in-out [transform-style:preserve-3d] [transform:rotateY(0deg)] data-spinning:[transform:rotateY(360deg)] motion-reduce:transition-none"
+          >
+            <span class="absolute inset-0 overflow-hidden rounded-lg border border-card-border bg-sunken [backface-visibility:hidden]">
+              <Picture
+                src={profil}
+                formats={['avif', 'webp']}
+                widths={[300, 440]}
+                sizes="(min-width: 1024px) 220px, (min-width: 640px) 180px, 88px"
+                alt={personal.name}
+                width={220}
+                height={264}
+                loading="eager"
+                fetchpriority="high"
+                pictureAttributes={{ class: 'contents' }}
+                class="block size-full object-cover"
+              />
+            </span>
+            <span
+              aria-hidden="true"
+              class="absolute inset-0 flex items-center justify-center rounded-lg border border-card-border bg-navy text-4xl sm:text-6xl [backface-visibility:hidden] [transform:rotateY(180deg)]"
+            >
+              {personal.photoBackEmoji ?? '🚀'}
+            </span>
+          </button>
+        </div>
+      )
+    }
+  </div>
+
+  {
+    personal.mantra && (
+      <figure class="m-0 border-y border-rule py-10 text-center">
+        <figcaption class="mb-4 font-mono text-xs tracking-[0.12em] text-eyebrow uppercase">
+          {t(labels.mantra)}
+        </figcaption>
+        <blockquote class="mx-auto my-0 max-w-[720px] text-[clamp(22px,3vw,28px)] leading-[1.35] font-medium tracking-[-0.015em] text-balance text-ink">
+          {t(personal.mantra)}
+        </blockquote>
+        <div aria-hidden="true" class="mx-auto mt-5 h-[3px] w-14 bg-gold" />
+      </figure>
+    )
+  }
+</section>

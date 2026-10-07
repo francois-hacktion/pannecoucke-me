@@ -1,0 +1,18 @@
+---
+/**
+ * Panneau dépliable en CSS pur : hauteur auto animée via grid-template-rows (0fr → 1fr),
+ * 200ms, ease-out, sans rebond. Le contenu reste dans le HTML (référencement, ATS) ;
+ * replié, il est inerte (ni focus ni lecteur d'écran). Le script d'accordéon ne bascule
+ * que l'attribut inert, le style suit.
+ */
+const { open, id } = Astro.props as { open: boolean; id: string }
+---
+
+<div
+  id={id}
+  data-collapse
+  inert={!open}
+  class="grid grid-rows-[1fr] opacity-100 transition-[grid-template-rows,opacity] duration-200 ease-out inert:grid-rows-[0fr] inert:opacity-0 motion-reduce:transition-none"
+>
+  <div class="min-h-0 overflow-hidden"><slot /></div>
+</div>

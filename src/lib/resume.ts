@@ -30,10 +30,3 @@ export function pagePath(language: string): string {
 export function pageUrl(language: string): string {
   return `${resumeConfig.site.url}${pagePath(language)}`
 }
-
-/** Langue déduite du chemin de l'URL ("/en/…" → "en"). */
-export function languageFromPath(pathname: string): string {
-  const segment = pathname.split('/')[1] ?? ''
-  const { available, default: defaultLanguage } = resumeConfig.languages
-  return available.includes(segment) ? segment : defaultLanguage
-}

@@ -1,0 +1,136 @@
+---
+import { Picture } from 'astro:assets'
+import { resumeConfig } from '@/data/resume-config'
+import { SECTION_IDS, getPdfPath, pagePath } from '@/lib/resume'
+import type { Translator } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
+import Icon from '@/components/ui/Icon.astro'
+import HeaderBar from '@/components/os/HeaderBar.astro'
+import LinkedButtons from '@/components/os/LinkedButtons.astro'
+import StatusBar from '@/components/os/StatusBar.astro'
+import { headerButtonClass } from '@/components/os/headerButtonClass'
+import ProfileSection from './ProfileSection.astro'
+import ExperienceSection from './ExperienceSection.astro'
+import SkillsSection from './SkillsSection.astro'
+import EducationSection from './EducationSection.astro'
+import ContactSection from './ContactSection.astro'
+import markLight from '@/assets/hacktion-mark.png'
+import markDark from '@/assets/hacktion-mark-on-dark.png'
+
+/**
+ * Bureau papier + fenêtre unique. Pas de scroll global : seul le corps de la fenêtre (<main>) défile.
+ * La navigation vit dans la headerbar, ou dans une barre sticky en haut du corps sous 880px.
+ * Section active, hash et défilement : src/scripts/app.ts.
+ */
+const tr = Astro.props.tr as Translator
+const { t, language } = tr
+const { site, languages, labels } = resumeConfig
+const pdfPath = getPdfPath(language)
+
+const navItems = SECTION_IDS.map((id) => ({
+  id,
+  label: t(labels.nav[id]),
+  href: `#${id}`,
+  icon: id === 'profil' ? ('house' as const) : undefined,
+}))
+const languageItems = languages.available.map((lang) => ({
+  id: lang,
+  label: languages.labels[lang],
+  href: pagePath(lang),
+  lang,
+}))
+const navAriaLabel = t(labels.navAriaLabel)
+---
+
+<div class="relative h-dvh bg-desk p-[clamp(8px,2.4vw,28px)] transition-[background-color] duration-300">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-(image:--texture-noise) opacity-80 mix-blend-multiply [background-size:200px]"
+  >
+  </div>
+  {/* Fenêtre unique posée sur le bureau (source : ds-source/HeaderBar.jsx, OsWindow) */}
+  <div
+    class="relative mx-auto flex h-full max-w-[1280px] flex-col overflow-hidden rounded-[10px] border border-(color:--os-window-border) bg-content shadow-(--os-window-shadow) transition-colors duration-300"
+  >
+    <HeaderBar>
+      <Fragment slot="start">
+        <Picture
+          src={markLight}
+          formats={['avif', 'webp']}
+          widths={[58, 116, 174]}
+          sizes="58px"
+          alt="Hacktion"
+          width={58}
+          height={40}
+          loading="eager"
+          pictureAttributes={{ class: 'contents' }}
+          class="-my-1 block h-10 w-auto flex-none dark:hidden"
+        />
+        <Picture
+          src={markDark}
+          formats={['avif', 'webp']}
+          widths={[58, 116, 174]}
+          sizes="58px"
+          alt="Hacktion"
+          width={58}
+          height={40}
+          loading="lazy"
+          pictureAttributes={{ class: 'contents' }}
+          class="-my-1 hidden h-10 w-auto flex-none dark:block"
+        />
+        <span class="hidden truncate font-mono text-[12.5px] text-muted-strong wide:block">
+          {site.domain}<span data-url-section></span>
+        </span>
+      </Fragment>
+      <LinkedButtons slot="center" items={navItems} value="profil" ariaLabel={navAriaLabel} sectionNav />
+      <Fragment slot="end">
+        {
+          languages.available.length > 1 && (
+            <LinkedButtons items={languageItems} value={language} ariaLabel={t(labels.actions.language)} />
+          )
+        }
+        {/* Icône et nom accessible suivent la classe .dark (CSS) : justes dès le premier affichage */}
+        <button type="button" data-theme-toggle class={headerButtonClass({ iconOnly: true })}>
+          <span class="flex text-[17px] dark:hidden"><Icon name="moon" /></span>
+          <span class="hidden text-[17px] dark:flex"><Icon name="sun" /></span>
+          <span class="sr-only dark:hidden">{t(labels.actions.switchToDark)}</span>
+          <span class="sr-only hidden dark:inline">{t(labels.actions.switchToLight)}</span>
+        </button>
+        {
+          pdfPath && (
+            <a
+              href={pdfPath}
+              download={pdfPath.split('/').pop()}
+              title={t(labels.actions.downloadCv)}
+              class={cn(headerButtonClass({ suggested: true }), 'min-w-[34px] px-2 wide:px-3')}
+            >
+              <span class="flex text-[17px]"><Icon name="download" /></span>
+              {/* Nom accessible = texte visible quand il est affiché (WCAG 2.5.3), sinon libellé complet */}
+              <span class="sr-only wide:hidden">{t(labels.actions.downloadCv)}</span>
+              <span class="hidden wide:inline">{t(labels.actions.downloadCvShort)}</span>
+            </a>
+          )
+        }
+      </Fragment>
+    </HeaderBar>
+    <main class="scrollbar-thin relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      {/* Barre pleine largeur sous 640px, centrée de 640 à 880px ; défilement horizontal en secours sous 311px (écrans pliés fermés) */}
+      <div
+        data-sticky-nav
+        class="scrollbar-none sticky top-0 z-[5] overflow-x-auto border-b border-rule bg-content px-2 py-2.5 sm:px-4 sm:max-nav:flex sm:max-nav:justify-center-safe nav:hidden"
+      >
+        <LinkedButtons items={navItems} value="profil" ariaLabel={navAriaLabel} sectionNav fill />
+      </div>
+      <div
+        class="mx-auto flex max-w-[1000px] flex-col gap-[72px] px-[clamp(18px,5vw,56px)] pt-[clamp(28px,5vw,60px)] pb-[72px]"
+      >
+        <ProfileSection tr={tr} />
+        <ExperienceSection tr={tr} />
+        <SkillsSection tr={tr} />
+        <EducationSection tr={tr} />
+        <ContactSection tr={tr} />
+      </div>
+    </main>
+    <StatusBar t={t} />
+  </div>
+</div>
