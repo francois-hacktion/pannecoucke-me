@@ -23,6 +23,8 @@ const { experiences, labels } = resumeConfig
 const ROW_GRID = 'grid gap-x-[clamp(12px,3vw,24px)] sm:grid-cols-[minmax(88px,140px)_minmax(0,1fr)]'
 const CARET = 'flex-none text-[18px] text-muted transition-transform duration-200 group-aria-expanded:rotate-180'
 const BUTTON = 'group w-full cursor-pointer text-left'
+/** Mesure des textes courants : 34em ≈ 77 caractères par ligne en Geist (WCAG 1.4.8 : 80 au plus), sans effet sous 830px environ */
+const MEASURE = 'max-w-[34em]'
 
 const defaultOpen = experiences.flatMap((exp) => exp.missions ?? []).find((mission) => mission.isOngoing)?.id
 ---
@@ -38,11 +40,11 @@ const defaultOpen = experiences.flatMap((exp) => exp.missions ?? []).find((missi
         experience.missions?.length ? (
           // Ligne avec missions imbriquées : la ligne elle-même n'est pas dépliable
           <li class={cn(ROW_GRID, 'gap-y-1.5 border-t border-rule py-[22px] last:border-b')}>
-            <span class="font-mono text-[13px] text-muted sm:pt-1">{t(experience.period)}</span>
+            <span class="font-mono text-[13px] text-muted-strong sm:pt-1">{t(experience.period)}</span>
             <div class="flex min-w-0 flex-col gap-3.5">
               <div class="flex flex-col gap-2">
                 <ExperienceHeading experience={experience} t={t} heading />
-                <p class="m-0 text-base leading-[1.55] text-body">{t(experience.description)}</p>
+                <p class={cn(MEASURE, 'm-0 text-base leading-[1.55] text-body')}>{t(experience.description)}</p>
               </div>
               {experience.missions.map((mission) => {
                 const open = mission.id === defaultOpen
@@ -80,7 +82,10 @@ const defaultOpen = experiences.flatMap((exp) => exp.missions ?? []).find((missi
                               )
                             )}
                           </span>
-                          <span id={`${id}-summary`} class="text-[15.5px] leading-[1.55] text-pretty text-body">
+                          <span
+                            id={`${id}-summary`}
+                            class={cn(MEASURE, 'text-[15.5px] leading-[1.55] text-pretty text-body')}
+                          >
                             {t(mission.description)}
                           </span>
                         </span>
@@ -114,13 +119,13 @@ const defaultOpen = experiences.flatMap((exp) => exp.missions ?? []).find((missi
                 )}
               >
                 <span class="col-span-2 sm:col-span-1">
-                  <span class="font-mono text-[13px] text-muted sm:pt-1">{t(experience.period)}</span>
+                  <span class="font-mono text-[13px] text-muted-strong sm:pt-1">{t(experience.period)}</span>
                 </span>
                 <span class="flex min-w-0 flex-col gap-1.5">
                   <ExperienceHeading experience={experience} t={t} titleId={`experience-${experience.id}-title`} />
                   <span
                     id={`experience-${experience.id}-summary`}
-                    class="text-base leading-[1.55] text-pretty text-body"
+                    class={cn(MEASURE, 'text-base leading-[1.55] text-pretty text-body')}
                   >
                     {t(experience.description)}
                   </span>

@@ -42,7 +42,13 @@ const languageItems = languages.available.map((lang) => ({
 const navAriaLabel = t(labels.navAriaLabel)
 ---
 
-<div class="relative h-dvh bg-desk p-[clamp(8px,2.4vw,28px)] transition-[background-color] duration-300">
+{/*
+  Bureau : marge latérale selon la largeur, marge haute et basse plus fine (la place verticale est la plus rare),
+  selon la hauteur et jamais plus des 2/3 de la marge latérale : 6px sur téléphone, 10 à 14px sur PC.
+*/}
+<div
+  class="relative h-dvh bg-desk px-[clamp(8px,2.4vw,28px)] py-[clamp(6px,min(1.4dvh,1.6vw),14px)] transition-[background-color] duration-300"
+>
   <div
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 bg-(image:--texture-noise) opacity-80 mix-blend-multiply [background-size:200px]"
@@ -121,8 +127,9 @@ const navAriaLabel = t(labels.navAriaLabel)
       >
         <LinkedButtons items={navItems} value="profil" ariaLabel={navAriaLabel} sectionNav fill />
       </div>
+      {/* Espacements verticaux resserrés sur mobile ; écart entre sections de 56px (mobile) à 72px (desktop) */}
       <div
-        class="mx-auto flex max-w-[1000px] flex-col gap-[72px] px-[clamp(18px,5vw,56px)] pt-[clamp(28px,5vw,60px)] pb-[72px]"
+        class="mx-auto flex max-w-[1000px] flex-col gap-[clamp(56px,7vw,72px)] px-[clamp(18px,5vw,56px)] pt-[clamp(20px,4vw,40px)] pb-[clamp(24px,4vw,40px)]"
       >
         <ProfileSection tr={tr} />
         <ExperienceSection tr={tr} />
